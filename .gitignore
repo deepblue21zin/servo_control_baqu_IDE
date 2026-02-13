@@ -39,3 +39,20 @@
 
 # debug information files
 *.dwo
+
+# STM32CubeIDE build outputs
+Debug/
+Release/
+*.elf
+*.map
+*.list
+*.su
+*.cyclo
+
+# IDE local files
+.settings/
+*.launch
+
+# local temp/backup
+README.local.md
+FETCH_HEAD
