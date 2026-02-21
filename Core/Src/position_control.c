@@ -1,13 +1,18 @@
 #include "position_control.h"
 #include "encoder_reader.h"      // 엔코더 읽기
 #include "pulse_control.h"       // 펄스 출력
+#include "relay_control.h"       // 릴레이 제어 (EmergencyStop에서 사용)
 #include <stdio.h>
 #include <stdint.h>              // uint32_t, int32_t
-#include <stdbool.h>             // bool
 #include <math.h>                // fabsf
+#include "main.h"
+
 //의존성
 
 // 내부 변수 지정
+static volatile uint8_t debug_enabled = 0; // 디버그 메시지 출력 여부
+static volatile uint8_t fault_flag = 0; // 안전 관련 플래그
+
 static PID_Params_t pid_params = {
     .Kp = 500.0f,           // 초기값 (실험으로 튜닝 필요)
     .Ki = 5.0f,
@@ -31,7 +36,7 @@ static PositionControl_State_t state = {
     .stable_time_ms = 0
 };
 
-static bool control_enabled = false;
+static volatile bool control_enabled = false;
 static PosCtrl_Stats_t stats = {0};
 
 // ========== 초기화 ==========
@@ -109,6 +114,14 @@ void PositionControl_Update(void) {
     // 4. 시간 계산
     uint32_t current_time = HAL_GetTick();
     float dt = (current_time - pid_state.last_time_ms) / 1000.0f;  // ms → s
+    //dt가 0 이되면 0으로 나누는게 되버림(D항 계산에서 폭주 가능), dt가 너무 크면 제어 성능 저하, 0.001s(1ms)보다 너무 크면 제어 성능 저하, 0.001s보다 너무 작으면 D항 계산에서 노이즈 영향 커짐
+    if (dt <= 0.0f) {
+        dt = 0.001f;  // 최소 dt 보장 (1ms)
+        
+    }else if (dt > 0.1f) {
+        dt = 0.1f;    // 최대 dt 제한 (100ms)
+    }
+
     pid_state.last_time_ms = current_time;
     
     // 5. PID 계산
@@ -119,7 +132,7 @@ void PositionControl_Update(void) {
     
     // 7. 안정화 판단
     if (fabsf(state.error) < POSITION_TOLERANCE) {
-        state.stable_time_ms++;
+        state.stable_time_ms += (uint32_t)(dt * 1000.0f); // 안정 유지 시간 누적
         if (state.stable_time_ms > 100) {  // 100ms 이상 안정
             state.is_stable = true;
         }
@@ -133,16 +146,16 @@ void PositionControl_Update(void) {
 int PositionControl_SetTarget(float target_deg) {
     // 범위 체크
     if (target_deg > MAX_ANGLE_DEG || target_deg < MIN_ANGLE_DEG) {
-        printf("[PosCtrl] ERROR: Target out of range: %.2f\n", target_deg);
-        return POS_CTRL_ERR_OVER_LIMIT;  // 범위 초과 에러
+        return POS_CTRL_ERR_OVER_LIMIT;
     }
 
+    __disable_irq();
     state.target_angle = target_deg;
     state.is_stable = false;
     state.stable_time_ms = 0;
+    __enable_irq();
 
-    printf("[PosCtrl] Target set: %.2f deg\n", target_deg);
-    return POS_CTRL_OK;  // 성공
+    return POS_CTRL_OK;
 }
 
 // ========== 상태 읽기 ==========
@@ -222,15 +235,13 @@ bool PositionControl_CheckSafety(void) {
     // 각도 범위 체크
     if (state.current_angle > MAX_ANGLE_DEG + 5.0f || 
         state.current_angle < MIN_ANGLE_DEG - 5.0f) {
-        printf("[PosCtrl] ERROR: Angle out of range! %.2f\n", 
-               state.current_angle);
+        fault_flag = 1;
         return false;
     }
     
     // 오차가 너무 큰 경우
     if (fabsf(state.error) > 60.0f) {
-        printf("[PosCtrl] ERROR: Error too large! %.2f\n", 
-               state.error);
+        fault_flag = 2;
         return false;
     }
     
@@ -245,6 +256,7 @@ void PositionControl_EmergencyStop(void) {
     PulseControl_Stop();
     pid_state.integral = 0.0f;
     printf("[PosCtrl] EMERGENCY STOP!\n");
+    Relay_Emergency();
 }
 // ========== 성능 모니터링 ==========
 PosCtrl_Stats_t PositionControl_GetStats(void) {
