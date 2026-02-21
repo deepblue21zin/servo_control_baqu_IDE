@@ -1,0 +1,10 @@
+../Core/Src/ethernet_communication.c:46:5:EthComm_Init	6
+../Core/Src/ethernet_communication.c:67:6:EthComm_Update	3
+../Core/Src/ethernet_communication.c:86:6:EthComm_IsInitialized	1
+../Core/Src/ethernet_communication.c:91:5:EthComm_SendString	4
+../Core/Src/ethernet_communication.c:113:5:EthComm_HandleLine	5
+../Core/Src/ethernet_communication.c:139:12:EthComm_ReadRxByte	2
+../Core/Src/ethernet_communication.c:155:12:EthComm_ProcessRxByte	5
+../Core/Src/ethernet_communication.c:185:12:EthComm_ParseCommand	11
+../Core/Src/ethernet_communication.c:240:12:EthComm_DispatchCommand	8
+../Core/Src/ethernet_communication.c:274:12:EthComm_SendStatus	2
