@@ -53,3 +53,8 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+Debug/
+FETCH_HEAD
+.settings/
+Debug.launch
