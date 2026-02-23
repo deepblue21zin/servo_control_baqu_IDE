@@ -16,6 +16,8 @@
 #include "position_control.h"
 #include "pulse_control.h"
 #include "relay_control.h"
+#include "lwip/udp.h"
+#include "lwip/pbuf.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -288,4 +290,120 @@ static int EthComm_SendStatus(void)
 
     /* TODO: 실제 네트워크 전송 함수로 교체 */
     return EthComm_SendString((char *)g_eth.cfg.tx_buffer);
+}
+
+/* ============================================================
+ * UDP 자율주행 수신 구현
+ * ============================================================ */
+
+static struct udp_pcb      *g_udp_pcb   = NULL;
+static AutoDrive_Packet_t   g_latest_pkt;
+static volatile bool        g_new_data  = false;
+
+/**
+ * @brief LwIP가 UDP 패킷 수신 시 자동 호출하는 콜백
+ *
+ * 흐름:
+ *   인지PC 브로드캐스트 → 이더넷 허브 → STM32 NIC
+ *   → LwIP 스택 → ethernetif_input() → udp_input()
+ *   → 이 콜백 호출
+ *
+ * [필터링 로직]
+ *   header == 0xAA   : 우리 시스템 패킷인지 확인
+ *   msg_type == 0x01 : 제어 메시지인지 확인 (속도·조향·ASMS)
+ *   → 두 조건 모두 만족할 때만 g_latest_pkt에 저장
+ */
+static void udp_recv_cb(void *arg,
+                        struct udp_pcb *pcb,
+                        struct pbuf *p,
+                        const ip_addr_t *addr,
+                        u16_t port)
+{
+    (void)arg; (void)pcb; (void)addr; (void)port;
+
+    if (p == NULL) {
+        return;
+    }
+
+    /* 패킷 크기 확인 (잘린 패킷 방어) */
+    if (p->tot_len < (u16_t)sizeof(AutoDrive_Packet_t)) {
+        printf("[EthComm] RX too short: %u bytes\r\n", p->tot_len);
+        pbuf_free(p);
+        return;
+    }
+
+    /* pbuf → 로컬 구조체로 복사 (pbuf가 체인일 수 있어서 copy_partial 사용) */
+    AutoDrive_Packet_t pkt;
+    pbuf_copy_partial(p, &pkt, sizeof(pkt), 0);
+    pbuf_free(p);   /* LwIP 메모리 즉시 해제 (필수!) */
+
+    /* ── 필터 1: 헤더 확인 (다른 시스템 패킷 걸러냄) ── */
+    if (pkt.header != AUTODRIVE_PKT_HEADER) {
+        return;
+    }
+
+    /* ── 필터 2: 타입 확인 (제어 메시지만 처리) ── */
+    if (pkt.msg_type != AUTODRIVE_MSG_CTRL) {
+        return;
+    }
+
+    /* ── 안전 검증: 조향각 범위 ── */
+    if (pkt.steering_angle < -90.0f || pkt.steering_angle > 90.0f) {
+        printf("[EthComm] Invalid angle: %.1f\r\n", pkt.steering_angle);
+        return;
+    }
+
+    /* ── 비상정지 플래그 확인 (bit0 = 1이면 비상정지) ── */
+    if (pkt.flags & 0x01) {
+        PositionControl_Disable();
+        PulseControl_Stop();
+        printf("[EthComm] EMG STOP from perception!\r\n");
+        return;
+    }
+
+    /* ── 데이터 저장 ── */
+    g_latest_pkt = pkt;
+    g_new_data   = true;
+}
+
+/**
+ * @brief UDP 수신 소켓 초기화 (MX_LWIP_Init() 이후 1회 호출)
+ */
+void EthComm_UDP_Init(void)
+{
+    g_udp_pcb = udp_new();
+    if (g_udp_pcb == NULL) {
+        printf("[EthComm] ERROR: udp_new() failed\r\n");
+        return;
+    }
+
+    err_t err = udp_bind(g_udp_pcb, IP_ADDR_ANY, AUTODRIVE_UDP_PORT);
+    if (err != ERR_OK) {
+        printf("[EthComm] ERROR: udp_bind() failed (%d)\r\n", (int)err);
+        udp_remove(g_udp_pcb);
+        g_udp_pcb = NULL;
+        return;
+    }
+
+    udp_recv(g_udp_pcb, udp_recv_cb, NULL);
+    printf("[EthComm] UDP ready  IP:10.177.21.100  PORT:%d\r\n",
+           AUTODRIVE_UDP_PORT);
+}
+
+/**
+ * @brief 새 패킷 수신 여부 확인
+ * @return true : 새 데이터 있음 → EthComm_GetLatestData() 로 읽을 것
+ */
+bool EthComm_HasNewData(void)
+{
+    return g_new_data;
+}
+
+/**
+ * @brief 가장 최근 수신 패킷 반환 (플래그 초기화)
+ */
+AutoDrive_Packet_t EthComm_GetLatestData(void)
+{
+    g_new_data = false;
+    return g_latest_pkt;
 }

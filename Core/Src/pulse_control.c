@@ -145,10 +145,13 @@ void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim) {
 
 /**
   * @brief 강제 정지
+  * [수정] PID 모드(non-IT)와 Step 모드(IT) 모두 대응:
+  * - Stop_IT → HAL State=READY 후 Stop → State!=BUSY → HAL_ERROR로 상태 꼬이던 문제 해결
+  * - CC 인터럽트를 직접 끄고, HAL_TIM_PWM_Stop 한 번만 호출
   */
 void PulseControl_Stop(void) {
-    HAL_TIM_PWM_Stop_IT(p_htim1, TIM_CHANNEL_1);
-    HAL_TIM_PWM_Stop(p_htim1, TIM_CHANNEL_1); // IT가 아닌 것도 확실히 끔
+    __HAL_TIM_DISABLE_IT(p_htim1, TIM_IT_CC1); // Step 모드 잔여 인터럽트 방지
+    HAL_TIM_PWM_Stop(p_htim1, TIM_CHANNEL_1);  // PWM 출력 정지, HAL State=READY 복구
     remaining_steps = 0;
     is_busy = 0;
 }
