@@ -302,11 +302,13 @@ static AutoDrive_Packet_t   g_latest_pkt;
 static volatile bool        g_new_data  = false;
 static volatile SteerMode_t g_current_mode = STEER_MODE_NONE;
 static volatile bool        g_emergency_request = false;
+static volatile uint32_t    g_last_rx_tick = 0U;
 
 #define ASMS_IP_LAST_OCTET   5U
 #define PC_IP_LAST_OCTET     1U
 #define ASMS_PACKET_SIZE     5U
 #define PC_PACKET_SIZE       9U
+#define ETHCOMM_DEBUG        0
 
 static float clamp_deg(float v)
 {
@@ -331,9 +333,8 @@ static float joy_to_deg(int16_t joy_y)
  *   → 이 콜백 호출
  *
  * [필터링 로직]
- *   header == 0xAA   : 우리 시스템 패킷인지 확인
- *   msg_type == 0x01 : 제어 메시지인지 확인 (속도·조향·ASMS)
- *   → 두 조건 모두 만족할 때만 g_latest_pkt에 저장
+ *   - ASMS 5B: sender .5 만 허용, mode + joy_y 처리
+ *   - PC   9B: sender .1 만 허용, AUTO 모드에서 steer 처리
  */
 static void udp_recv_cb(void *arg,
                         struct udp_pcb *pcb,
@@ -359,31 +360,32 @@ static void udp_recv_cb(void *arg,
     pbuf_free(p);   /* LwIP 메모리 즉시 해제 (필수!) */
 
     if (addr == NULL || !IP_IS_V4(addr)) {
-        printf("[EthComm][RX] drop: non-IPv4\r\n");
         return;
     }
     uint8_t sender = ip4_addr4(ip_2_ip4(addr));
+#if ETHCOMM_DEBUG
     printf("[EthComm][RX] len:%u sender:%u port:%u\r\n",
            (unsigned)len, (unsigned)sender, (unsigned)port);
+#endif
 
-    /* ── 5 bytes: ASMS mode + joystick ──
-     * 테스트 편의:
-     * - 실제 운용은 ASMS(.5)만 허용
-     * - 단일 PC 송신 테스트 시 PC(.1)도 임시 허용
-     */
-    if (len == ASMS_PACKET_SIZE &&
-        (sender == ASMS_IP_LAST_OCTET || sender == PC_IP_LAST_OCTET)) {
+    /* ── 5 bytes: ASMS mode + joystick ── */
+    if (len == ASMS_PACKET_SIZE && sender == ASMS_IP_LAST_OCTET) {
         uint8_t mode = buffer[0];
         int16_t joy_y = (int16_t)((buffer[4] << 8) | buffer[3]);
 
         if (mode <= (uint8_t)STEER_MODE_ESTOP) {
             g_current_mode = (SteerMode_t)mode;
+#if ETHCOMM_DEBUG
             printf("[EthComm][ASMS] mode:%u joyY:%d\r\n",
                    (unsigned)mode, (int)joy_y);
+#endif
         }
+        g_last_rx_tick = HAL_GetTick();
 
         if (g_current_mode == STEER_MODE_MANUAL) {
             g_latest_pkt.steering_angle = joy_to_deg(joy_y);
+            g_latest_pkt.speed = 0U;
+            g_latest_pkt.misc = 0U;
             g_new_data = true;
         } else if (g_current_mode == STEER_MODE_ESTOP) {
             g_emergency_request = true;
@@ -394,7 +396,9 @@ static void udp_recv_cb(void *arg,
     /* ── 9 bytes: PC steer/speed/misc (AUTO mode only) ── */
     if (len == PC_PACKET_SIZE && sender == PC_IP_LAST_OCTET) {
         if (g_current_mode != STEER_MODE_AUTO) {
+#if ETHCOMM_DEBUG
             printf("[EthComm][PC] ignored: mode=%d\r\n", (int)g_current_mode);
+#endif
             return;
         }
 
@@ -404,22 +408,30 @@ static void udp_recv_cb(void *arg,
             ((uint32_t)buffer[2] << 16) |
             ((uint32_t)buffer[3] << 24));
         uint8_t pc_misc = buffer[8];
+        uint32_t pc_speed = (uint32_t)(
+            ((uint32_t)buffer[4]) |
+            ((uint32_t)buffer[5] << 8) |
+            ((uint32_t)buffer[6] << 16) |
+            ((uint32_t)buffer[7] << 24));
 
         if ((pc_misc >> 7) & 0x01U) {
             g_emergency_request = true;
             g_current_mode = STEER_MODE_ESTOP;
+            g_last_rx_tick = HAL_GetTick();
             return;
         }
 
         g_latest_pkt.steering_angle = clamp_deg((float)pc_steer);
+        g_latest_pkt.speed = pc_speed;
+        g_latest_pkt.misc = pc_misc;
         g_new_data = true;
+        g_last_rx_tick = HAL_GetTick();
+#if ETHCOMM_DEBUG
         printf("[EthComm][PC] steer:%ld -> %.1f\r\n",
                (long)pc_steer, g_latest_pkt.steering_angle);
+#endif
         return;
     }
-
-    printf("[EthComm][RX] ignored: len=%u sender=%u\r\n",
-           (unsigned)len, (unsigned)sender);
 }
 
 /**
@@ -473,4 +485,16 @@ bool EthComm_ConsumeEmergencyRequest(void)
     bool req = g_emergency_request;
     g_emergency_request = false;
     return req;
+}
+
+uint32_t EthComm_GetLastRxTick(void)
+{
+    return g_last_rx_tick;
+}
+
+void EthComm_ForceMode(SteerMode_t mode)
+{
+    if (mode <= STEER_MODE_ESTOP) {
+        g_current_mode = mode;
+    }
 }

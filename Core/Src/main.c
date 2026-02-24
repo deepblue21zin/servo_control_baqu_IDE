@@ -45,6 +45,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define AUTO_FIXED_PULSE_TEST  0
+#define AUTO_FIXED_PULSE_HZ    500000
 
 /* USER CODE END PD */
 
@@ -166,6 +168,15 @@ int main(void)
     MX_LWIP_Process();
 
     SteerMode_t mode = EthComm_GetCurrentMode();
+    uint32_t now_ms = HAL_GetTick();
+    uint32_t last_rx_ms = EthComm_GetLastRxTick();
+
+    /* ── 통신 타임아웃 fail-safe: AUTO/MANUAL에서 RX 끊기면 ESTOP ── */
+    if ((mode == STEER_MODE_AUTO || mode == STEER_MODE_MANUAL) &&
+        ((now_ms - last_rx_ms) > ETHCOMM_RX_TIMEOUT_MS)) {
+        EthComm_ForceMode(STEER_MODE_ESTOP);
+        mode = STEER_MODE_ESTOP;
+    }
 
     /* ── 모드 전이 처리 ── */
     if (mode == STEER_MODE_ESTOP) {
@@ -176,8 +187,9 @@ int main(void)
         if (prev_mode != STEER_MODE_NONE) {
             PositionControl_Disable();
         }
-    } else if (prev_mode == STEER_MODE_ESTOP &&
-               (mode == STEER_MODE_AUTO || mode == STEER_MODE_MANUAL)) {
+    } else if ((mode == STEER_MODE_AUTO || mode == STEER_MODE_MANUAL) &&
+               (prev_mode == STEER_MODE_NONE || prev_mode == STEER_MODE_ESTOP)) {
+        Relay_EmergencyRelease();
         PositionControl_Enable();
     }
 
@@ -199,7 +211,15 @@ int main(void)
     /* ── 1ms 제어 루프 ── */
     if (interrupt_flag) {
         interrupt_flag = 0;
+#if AUTO_FIXED_PULSE_TEST
+        if (mode == STEER_MODE_AUTO) {
+            PulseControl_SetFrequency(AUTO_FIXED_PULSE_HZ);
+        } else {
+            PulseControl_Stop();
+        }
+#else
         PositionControl_Update();
+#endif
 
         if (++debug_cnt >= 100) {
             uint32_t arr = __HAL_TIM_GET_AUTORELOAD(&htim1);
