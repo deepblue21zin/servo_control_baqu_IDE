@@ -183,40 +183,31 @@ while (1) {
 
 ## 패킷 구조 및 필터링
 
-### 현재 정의된 패킷 구조
+### 현재 적용된 패킷 구조 (모드 기반)
 
-> **주의:** 아래 구조는 인지파트 확인 전 임시 정의입니다.
-> 실제 인지파트 포맷으로 반드시 수정해야 합니다.
+#### 1) ASMS → Steer (5 bytes)
 
 ```c
-#pragma pack(push, 1)   // 패딩(빈 공간) 없이 딱 붙여서 저장
-typedef struct {
-    uint8_t  header;          // 1 byte: 0xAA (패킷 식별자)
-    uint8_t  msg_type;        // 1 byte: 0x01 (제어 메시지)
-    float    steering_angle;  // 4 byte: 조향각 (도, IEEE 754 단정밀도)
-    float    speed;           // 4 byte: 목표 속도 (m/s)
-    float    asms;            // 4 byte: ASMS 값
-    uint8_t  flags;           // 1 byte: 비트 플래그 (bit0=비상정지)
-    uint16_t checksum;        // 2 byte: 오류 검출
-} AutoDrive_Packet_t;         // 합계: 17 bytes
-#pragma pack(pop)
+byte[0] = mode      // 0 NONE, 1 AUTO, 2 MANUAL, 3 ESTOP
+byte[1] = joy_x L
+byte[2] = joy_x H
+byte[3] = joy_y L
+byte[4] = joy_y H
 ```
 
-### `#pragma pack(push, 1)` 이란?
+#### 2) PC → Steer (9 bytes)
 
-컴파일러는 메모리 접근 효율을 위해 구조체에 빈 공간(패딩)을 자동으로 넣습니다.
-
-```
-패딩 없을 때 (pack 1):    패딩 있을 때 (기본):
-[AA][01][ff ff ff ff]     [AA][01][??][??]  ← 2바이트 패딩 추가!
-[ff ff ff ff][ff ff ff]   [ff ff ff ff]
-[ff][xx xx]               [ff ff ff ff]
-                          [ff][??][??][??] ← 3바이트 패딩
-총 17 bytes               총 24 bytes (!)
+```c
+byte[0..3] = steer (int32, little-endian)
+byte[4..7] = speed (uint32, little-endian)
+byte[8]    = misc  (bit7=brake)
 ```
 
-네트워크 패킷은 바이트 단위로 전송되므로, 송수신 양쪽의 구조체 크기가 반드시 일치해야 합니다.
-`#pragma pack(1)`을 사용해 패딩을 제거하면 양쪽이 동일한 17바이트 구조가 됩니다.
+### 엔디안/길이 규칙
+
+- ASMS: 5 bytes 고정
+- PC: 9 bytes 고정 (`<iIB`, little-endian)
+- 현재 코드는 구조체 고정 크기 대신 **패킷 길이(5/9) + 발신자 IP**로 파싱합니다.
 
 ### 필터링 로직
 
@@ -225,28 +216,20 @@ typedef struct {
 
 ```c
 static void udp_recv_cb(...) {
-    AutoDrive_Packet_t pkt;
-    pbuf_copy_partial(p, &pkt, sizeof(pkt), 0);  // pbuf → 구조체 복사
+    uint8_t buffer[16] = {0};
+    uint16_t len = p->tot_len;
+    pbuf_copy_partial(p, buffer, len, 0);
     pbuf_free(p);  // LwIP 메모리 즉시 해제 (필수! 안 하면 메모리 누수)
 
-    // 필터 1: 우리 시스템 패킷인가?
-    if (pkt.header != 0xAA) return;    // 다른 UDP 트래픽 무시
+    uint8_t sender = ip4_addr4(ip_2_ip4(addr));
 
-    // 필터 2: 제어 명령 타입인가?
-    if (pkt.msg_type != 0x01) return;  // 속도/ASMS 등 다른 타입 무시
-
-    // 안전 검증: 조향각이 물리적으로 가능한 범위인가?
-    if (pkt.steering_angle < -45.0f || pkt.steering_angle > 45.0f) return;
-
-    // 비상정지 플래그 확인
-    if (pkt.flags & 0x01) {
-        PositionControl_Disable();
-        return;
+    if (len == 5 && sender == 5) {
+        // ASMS mode + joystick
+    } else if (len == 9 && sender == 1) {
+        // PC steer/speed/misc
+    } else {
+        // unknown packet ignore
     }
-
-    // 모든 필터 통과 → 데이터 저장
-    g_latest_pkt = pkt;
-    g_new_data   = true;
 }
 ```
 
@@ -328,12 +311,12 @@ STM32 제어 주기:   1ms (1000Hz)
 ```
 
 ### 2. 패킷 구조
-인지파트가 전송하는 실제 패킷 구조를 확인하여 `AutoDrive_Packet_t` 수정:
-- 각 필드의 데이터 타입 (float? int? 고정소수점?)
-- 필드 순서 및 크기
-- 엔디안 (Little-Endian / Big-Endian)
-- 헤더값과 메시지 타입값
-- 전체 패킷 크기
+인지파트와 아래 항목을 일치시켜야 합니다.
+- ASMS 패킷 5 bytes (mode + joystick)
+- PC 패킷 9 bytes (`<iIB`)
+- Little-endian
+- sender IP 기반 구분 (PC=.1, ASMS=.5)
+- 조향 입력 범위(clamp): 현재 코드 기준 `-360 ~ +360 deg`
 
 ### 3. 전송 방식
 - 브로드캐스트 (255.255.255.255) → 허브(더미 스위치)에 적합

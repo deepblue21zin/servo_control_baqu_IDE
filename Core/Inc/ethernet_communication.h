@@ -61,6 +61,13 @@ typedef struct {
     uint16_t tx_buffer_size;
 } EthComm_Config_t;
 
+typedef enum {
+    STEER_MODE_NONE = 0,
+    STEER_MODE_AUTO = 1,
+    STEER_MODE_MANUAL = 2,
+    STEER_MODE_ESTOP = 3
+} SteerMode_t;
+
 int EthComm_Init(const EthComm_Config_t *config);
 void EthComm_Update(void);
 bool EthComm_IsInitialized(void);
@@ -73,5 +80,7 @@ int EthComm_HandleLine(const char *line);
 void EthComm_UDP_Init(void);
 bool EthComm_HasNewData(void);
 AutoDrive_Packet_t EthComm_GetLatestData(void);
+SteerMode_t EthComm_GetCurrentMode(void);
+bool EthComm_ConsumeEmergencyRequest(void);
 
 #endif /* INC_ETHERNET_COMMUNICATION_H_ */

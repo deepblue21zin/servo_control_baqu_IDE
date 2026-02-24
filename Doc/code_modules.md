@@ -89,7 +89,7 @@
    ├── Relay_ServoOn()        SVON=LOW(ON) → 서보 활성화
    ├── HAL_Delay(500)         서보 안정화 대기
    ├── EncoderReader_Reset()  현재 위치를 0도 기준으로 설정
-   ├── PositionControl_SetTarget(10.0f) 초기 목표 10도 (UDP로 갱신됨)
+   ├── PositionControl_SetTarget(0.0f) 초기 목표 0도 (UDP로 갱신됨)
    ├── PositionControl_Enable() PID 제어 시작
    └── EthComm_UDP_Init()     UDP 수신 소켓 열기
 
@@ -134,10 +134,13 @@ MX_LWIP_Process();
 ```
 
 ```c
-// ③ UDP 데이터 위치제어 연동
+// ③ UDP 데이터 위치제어 연동 (모드 기반)
+SteerMode_t mode = EthComm_GetCurrentMode();
 if (EthComm_HasNewData()) {
     AutoDrive_Packet_t pkt = EthComm_GetLatestData();
-    PositionControl_SetTarget(pkt.steering_angle);  // 조향각 업데이트
+    if (mode == STEER_MODE_AUTO || mode == STEER_MODE_MANUAL) {
+        PositionControl_SetTarget(pkt.steering_angle);  // degree 기준 조향각 업데이트
+    }
 }
 ```
 
@@ -311,7 +314,7 @@ void EncoderReader_Reset(void) {
 }
 ```
 
-main.c에서 `EncoderReader_Reset()` 후 `PositionControl_SetTarget(10.0f)` 호출 →
+main.c에서 `EncoderReader_Reset()` 후 `PositionControl_SetTarget(0.0f)` 호출 →
 **현재 위치가 0도 기준점**이 됩니다.
 
 ---
@@ -549,9 +552,10 @@ void Relay_Emergency(void) {
 | 함수 | 역할 |
 |------|------|
 | `EthComm_UDP_Init()` | UDP 소켓 생성 및 포트 바인드, 콜백 등록 |
-| `udp_recv_cb()` (내부) | 패킷 수신 시 LwIP가 자동 호출, 필터링 후 저장 |
+| `udp_recv_cb()` (내부) | 패킷 수신 시 LwIP가 자동 호출, ASMS(5B)/PC(9B) 파싱 |
 | `EthComm_HasNewData()` | 새 패킷 수신 여부 확인 |
 | `EthComm_GetLatestData()` | 최신 패킷 반환 및 플래그 초기화 |
+| `EthComm_GetCurrentMode()` | 현재 모드(NONE/AUTO/MANUAL/ESTOP) 반환 |
 
 ---
 

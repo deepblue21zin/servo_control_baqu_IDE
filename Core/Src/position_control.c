@@ -223,16 +223,19 @@ int PositionControl_Enable(void) {
 }
 
 void PositionControl_Disable(void) {
+    if (!control_enabled) {
+        return;
+    }
     control_enabled = false;
     PulseControl_Stop();
-    printf("[PosCtrl] Disabled\n");
+    printf("[PosCtrl] Disabled\r\n");
 }
 
 void PositionControl_Reset(void) {
     pid_state.integral = 0.0f;
     pid_state.prev_error = 0.0f;
     state.target_angle = 0.0f;
-    printf("[PosCtrl] Reset\n");
+    printf("[PosCtrl] Reset\r\n");
 }
 
 // ========== 안전 기능 ==========

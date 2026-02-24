@@ -26,6 +26,8 @@
 | **15** | **2026-02-24** | **main.h, main.c, pulse_control.c** | **DIR 핀 PE11→PE10 정합화** | **Critical** | **완료** |
 | **16** | **2026-02-24** | **main.c** | **라인드라이버 단독 검증용 테스트 모드 적용/복구** | **Major** | **완료** |
 | **17** | **2026-02-24** | **ethernet_communication.c/h** | **UDP 포트 5000 적용 + 조향각 degree 검증 범위 정합화(±45°)** | **Major** | **완료** |
+| **18** | **2026-02-24** | **ethernet_communication.c/h, main.c** | **ASMS(5B)/PC(9B) 모드 기반 UDP 파싱 + NONE 모드 Disable 처리** | **Critical** | **완료** |
+| **19** | **2026-02-24** | **main.c, ethernet_communication.c** | **초기 목표각 0° 복구 + 네트워크 입력 범위 ±360°로 조정** | **Major** | **완료** |
 
 ---
 
@@ -320,7 +322,7 @@ HAL_GPIO_WritePin(DIR_PIN_GPIO_PORT, DIR_PIN_Pin, GPIO_PIN_RESET);  // 4개소 �
 ### 변경 이유
 
 - 상위 송신기 레거시 명세(Arduino 참고 코드) 포트가 5000이므로 수신 포트 일치 필요
-- 조향 명령 단위를 degree로 운영하기 위해 유효 범위를 실제 조향 범위(±45°)에 맞춤
+- 조향 명령 단위를 degree로 운영하기 위해 수신값 유효 범위를 추가
 
 ### 변경 전/후
 
@@ -339,11 +341,64 @@ if (pkt.steering_angle < -45.0f || pkt.steering_angle > 45.0f) { ... }
 - 송신측 UDP 포트 불일치로 인한 수신 실패 리스크 감소
 - 비정상 각도 패킷 조기 차단으로 안전성 향상
 
-### 변경 후
+---
+
+## 변경 #18: ASMS(5B)/PC(9B) 모드 기반 UDP 파싱 + NONE 모드 Disable 처리
+
+**날짜:** 2026-02-24  
+**파일:** `Core/Inc/ethernet_communication.h`, `Core/Src/ethernet_communication.c`, `Core/Src/main.c`  
+**심각도:** Critical
+
+### 변경 이유
+
+- 기존 `AutoDrive_Packet_t(17B)` 기반 파싱은 최신 송신 명세(ASMS 5B / PC 9B)와 불일치
+- `NONE` 모드에서 제어가 유지될 수 있는 위험을 차단할 필요
+
+### 변경 후 요약
+
+- UDP 콜백에서 **패킷 길이 + 발신자 IP** 기준 분기
+  - ASMS(5B, .5): 모드 갱신 + MANUAL일 때 joy_y 반영
+  - PC(9B, .1): AUTO일 때만 steer 반영, misc bit7은 ESTOP 요청
+- main 루프 모드 처리 추가
+  - `STEER_MODE_NONE` → `PositionControl_Disable()`
+  - `STEER_MODE_ESTOP` → `PositionControl_EmergencyStop()`
+
+### 영향 범위
+
+- 통신 명세와 수신 파서 동기화
+- 모드 전이 시 의도치 않은 조향 유지 위험 완화
+
+---
+
+## 변경 #19: 초기 목표각 0° 복구 + 네트워크 입력 범위 ±360° 조정
+
+**날짜:** 2026-02-24  
+**파일:** `Core/Src/main.c`, `Core/Src/ethernet_communication.c`  
+**심각도:** Major
+
+### 변경 이유
+
+- 부팅 직후 목표각이 10°로 설정되어 통신 전에도 조향이 동작할 수 있었음
+- 운영 정책에 맞춰 네트워크 입력 한계를 ±360°로 확장 필요
+
+### 변경 전/후
 
 ```c
-HAL_GPIO_WritePin(DIR_PIN_GPIO_Port, DIR_PIN_Pin, GPIO_PIN_RESET);  // 4개소 모두
+// before
+PositionControl_SetTarget(10.0f);
+clamp_deg: [-45, +45]
+joy_to_deg: [-45, +45] 매핑
+
+// after
+PositionControl_SetTarget(0.0f);
+clamp_deg: [-360, +360]
+joy_to_deg: [-360, +360] 매핑
 ```
+
+### 영향 범위
+
+- 기동 시 초기 조향 안정성 개선
+- 통신 입력 스케일 정책과 제어기 제한값 일관성 확보
 
 ---
 
@@ -527,7 +582,7 @@ HAL_Delay(1000);
 // MX_LWIP_Init();  // 이더넷 테스트 전이므로 주석처리
 // Homing 블록 전체 주석처리 (테스트 모드)
 EncoderReader_Reset();                             // 현재 위치를 0도 기준으로
-PositionControl_SetTarget(10.0f);                  // 안전한 각도 (10도)
+PositionControl_SetTarget(0.0f);                   // 기동 초기 목표각 0도
 PositionControl_Enable();
 ```
 

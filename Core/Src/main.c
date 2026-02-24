@@ -147,7 +147,7 @@ int main(void)
   //}
   //HAL_Delay(500);
   EncoderReader_Reset(); // 엔코더 카운터 리셋 (0점 기준)
-  PositionControl_SetTarget(10.0f); // 자율주행 모드: 초기 목표 0° (UDP로 갱신됨)
+  PositionControl_SetTarget(0.0f); // 초기 목표 0° (UDP 수신값으로 갱신됨)
   PositionControl_Enable();
 
   EthComm_UDP_Init(); // UDP 수신 소켓 열기 (MX_LWIP_Init 이후 호출 필수)
@@ -156,6 +156,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   uint32_t debug_cnt = 0;
+  SteerMode_t prev_mode = STEER_MODE_NONE;
   while (1)
   {
     /* USER CODE END WHILE */
@@ -164,11 +165,36 @@ int main(void)
     /* ── LwIP 폴링: 이더넷 패킷 수신 처리 ── */
     MX_LWIP_Process();
 
-    /* ── UDP 수신 데이터 → 위치 제어 목표 갱신 ── */
+    SteerMode_t mode = EthComm_GetCurrentMode();
+
+    /* ── 모드 전이 처리 ── */
+    if (mode == STEER_MODE_ESTOP) {
+        if (prev_mode != STEER_MODE_ESTOP) {
+            PositionControl_EmergencyStop();
+        }
+    } else if (mode == STEER_MODE_NONE) {
+        if (prev_mode != STEER_MODE_NONE) {
+            PositionControl_Disable();
+        }
+    } else if (prev_mode == STEER_MODE_ESTOP &&
+               (mode == STEER_MODE_AUTO || mode == STEER_MODE_MANUAL)) {
+        PositionControl_Enable();
+    }
+
+    /* ── PC misc brake 등 one-shot ESTOP 요청 처리 ── */
+    if (EthComm_ConsumeEmergencyRequest()) {
+        PositionControl_EmergencyStop();
+        mode = STEER_MODE_ESTOP;
+    }
+
+    /* ── UDP 수신 데이터 → 모드별 목표 갱신 ── */
     if (EthComm_HasNewData()) {
         AutoDrive_Packet_t pkt = EthComm_GetLatestData();
-        PositionControl_SetTarget(pkt.steering_angle);
+        if (mode == STEER_MODE_AUTO || mode == STEER_MODE_MANUAL) {
+            PositionControl_SetTarget(pkt.steering_angle);  // degree 기준
+        }
     }
+    prev_mode = mode;
 
     /* ── 1ms 제어 루프 ── */
     if (interrupt_flag) {
@@ -182,7 +208,8 @@ int main(void)
             GPIO_PinState dir_state = HAL_GPIO_ReadPin(DIR_PIN_GPIO_Port, DIR_PIN_Pin);
             PositionControl_State_t s = PositionControl_GetState();
             debug_cnt = 0;
-            printf("[DIAG] MODE:%d T:%.2f C:%.2f E:%.2f O:%.0f ARR:%lu CCR:%lu DIR:%d ENC:%lu\r\n",
+            printf("[DIAG] COMM_MODE:%d CTRL_MODE:%d T:%.2f C:%.2f E:%.2f O:%.0f ARR:%lu CCR:%lu DIR:%d ENC:%lu\r\n",
+                   (int)mode,
                    (int)PositionControl_GetMode(),
                    s.target_angle,
                    s.current_angle,

@@ -27,6 +27,8 @@
 | **BUG-015** | **DIR 핀 매핑 불일치 (PE10 vs PE11)** | **main.h, main.c, pulse_control.c** | **Critical** | **해결 (2026-02-24)** |
 | **BUG-016** | **테스트 모드 잔류로 운영 루프 비활성화 위험** | **main.c** | **Major** | **해결 (2026-02-24)** |
 | **BUG-017** | **UDP 포트/조향 범위 명세 불일치** | **ethernet_communication.c/h** | **Major** | **해결 (2026-02-24)** |
+| **BUG-018** | **기동 초기 목표각/주석 불일치 + NONE 모드 미처리** | **main.c** | **Major** | **해결 (2026-02-24)** |
+| **BUG-019** | **통신 파서 명세 불일치 (17B vs 5/9B)** | **ethernet_communication.c/h** | **Critical** | **해결 (2026-02-24)** |
 | **NEW-002** | **통신 워치독 미구현** | **미정** | **Major** | **미해결 (Phase 2)** |
 | **NEW-003** | **시스템 상태 머신 미구현** | **미정** | **Major** | **미해결 (Phase 3)** |
 | **NEW-004** | **상수 중복 정의** | **constants.h, position_control.h** | **Minor** | **미해결** |
@@ -298,12 +300,50 @@ CubeMX 코드 재생성 시 이 영역이 **자동 삭제**되어 PID 루프, IW
 ### 문제
 
 - 수신 포트가 7000으로 되어 있어 레거시 송신기(5000)와 불일치
-- 조향 유효 범위 검증이 ±90°로 되어 있어 운영 각도 기준(±45°)과 불일치
+- 조향 유효 범위/스케일 정책이 코드와 명세 간 불일치
 
 ### 해결
 
 - `AUTODRIVE_UDP_PORT`를 5000으로 변경
-- `steering_angle` 유효 범위를 `-45.0f ~ +45.0f`로 조정
+- `steering_angle` 유효 범위/매핑 정책을 운영 기준에 맞춰 조정
+
+---
+
+## BUG-018: 기동 초기 목표각/주석 불일치 + NONE 모드 미처리
+
+**심각도:** Major  
+**상태:** **해결 완료 (2026-02-24)**  
+**파일:** `Core/Src/main.c`
+
+### 문제
+
+- 초기 목표각이 10.0f인데 주석은 0°로 표기되어 혼선 발생
+- `STEER_MODE_NONE`에서 제어 비활성화가 없어 마지막 목표를 계속 추종할 가능성
+
+### 해결
+
+- 초기 목표각 `10.0f → 0.0f`로 수정
+- `mode == STEER_MODE_NONE` 분기에서 `PositionControl_Disable()` 수행
+
+---
+
+## BUG-019: 통신 파서 명세 불일치 (17B vs 5/9B)
+
+**심각도:** Critical  
+**상태:** **해결 완료 (2026-02-24)**  
+**파일:** `Core/Inc/ethernet_communication.h`, `Core/Src/ethernet_communication.c`
+
+### 문제
+
+- 기존 구현은 `AutoDrive_Packet_t(17 bytes)` 중심
+- 실제 운영 명세는 ASMS 5 bytes / PC 9 bytes + sender IP 구분
+
+### 해결
+
+- UDP 콜백을 길이+발신자 IP 기반 파싱으로 전환
+  - ASMS(5B, .5): mode/joy 처리
+  - PC(9B, .1): AUTO 모드 steer 처리, misc bit7 ESTOP 처리
+- 모드 API 추가(`EthComm_GetCurrentMode`, `EthComm_ConsumeEmergencyRequest`)
 
 ---
 
