@@ -10,8 +10,8 @@
  * AutoDrive_Packet_t : 실제 패킷 구조와 일치하도록 수정
  * ========================================================= */
 
-/* UDP 포트 번호 -- 인지파트와 협의하여 맞출 것 */
-#define AUTODRIVE_UDP_PORT    7000
+/* UDP 포트 번호 (레거시 송신기 규격: 5000) */
+#define AUTODRIVE_UDP_PORT    5000
 
 /* 패킷 식별자 */
 #define AUTODRIVE_PKT_HEADER  0xAA

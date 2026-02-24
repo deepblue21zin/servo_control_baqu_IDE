@@ -23,6 +23,9 @@
 | **12** | **2026-02-21** | **main.c** | **debug_cnt 위치 수정 + USER CODE 블록 정리** | **Major** | **완료** |
 | **13** | **2026-02-21** | **CubeMX (.ioc)** | **ETH RMII + LwIP + IWDG + TIM4 Encoder 설정** | **Major** | **완료** |
 | **14** | **2026-02-21** | **main.c** | **초기화 순서 개선 + 테스트 모드 구성** | **Major** | **완료** |
+| **15** | **2026-02-24** | **main.h, main.c, pulse_control.c** | **DIR 핀 PE11→PE10 정합화** | **Critical** | **완료** |
+| **16** | **2026-02-24** | **main.c** | **라인드라이버 단독 검증용 테스트 모드 적용/복구** | **Major** | **완료** |
+| **17** | **2026-02-24** | **ethernet_communication.c/h** | **UDP 포트 5000 적용 + 조향각 degree 검증 범위 정합화(±45°)** | **Major** | **완료** |
 
 ---
 
@@ -258,6 +261,83 @@ CubeMX가 생성하는 매크로 이름은 `DIR_PIN_GPIO_Port` (소문자 `ort`)
 ```c
 HAL_GPIO_WritePin(DIR_PIN_GPIO_PORT, DIR_PIN_Pin, GPIO_PIN_RESET);  // 4개소 모두
 ```
+
+---
+
+## 변경 #15: DIR 핀 PE11 → PE10 정합화
+
+**날짜:** 2026-02-24  
+**파일:** `Core/Inc/main.h`, `Core/Src/main.c`, `Core/Src/pulse_control.c`  
+**심각도:** Critical
+
+### 변경 이유
+
+- `.ioc`의 DIR 라벨은 PE10인데, 코드/문서 일부가 PE11 기준으로 남아 있어 배선과 코드 해석에 혼선 발생
+- 실제 현장 검증 시 DIR 핀 불일치가 원인 분석을 지연시킴
+
+### 변경 후 요약
+
+- `DIR_PIN_Pin`을 `GPIO_PIN_10`으로 정합화
+- `main.c`의 USER CODE GPIO 재설정 핀도 `GPIO_PIN_10`으로 변경
+- `pulse_control.c` 하드웨어 주석을 PE10으로 갱신
+
+### 영향 범위
+
+- DIR 신호 경로가 `.ioc`/코드/문서에서 동일해짐
+- CubeMX 재생성 후 핀 정합성 검증이 단순해짐
+
+---
+
+## 변경 #16: 라인드라이버 단독 검증용 테스트 모드 적용/복구
+
+**날짜:** 2026-02-24  
+**파일:** `Core/Src/main.c`  
+**심각도:** Major
+
+### 변경 이유
+
+- 모터 미동작 원인 분리를 위해 PID/UDP 경로를 잠시 분리하고 PF 펄스 출력만 단독 검증 필요
+
+### 작업 내용
+
+1. 테스트 모드 적용: PID/UDP 루프 비활성화 + 고정 500Hz 출력
+2. 테스트 확장: 500→2000→5000Hz 자동 스윕 추가
+3. 검증 완료 후 운영 모드 복구: Ethernet + PID 루프 재활성화
+
+### 영향 범위
+
+- 라인드라이버/배선 검증과 제어 로직 검증을 분리 가능
+- 현재 기준 main 루프는 운영 모드(UDP 수신 + 1ms PID)로 복귀 완료
+
+---
+
+## 변경 #17: UDP 포트 5000 적용 + degree 검증 범위 정합화
+
+**날짜:** 2026-02-24  
+**파일:** `Core/Inc/ethernet_communication.h`, `Core/Src/ethernet_communication.c`  
+**심각도:** Major
+
+### 변경 이유
+
+- 상위 송신기 레거시 명세(Arduino 참고 코드) 포트가 5000이므로 수신 포트 일치 필요
+- 조향 명령 단위를 degree로 운영하기 위해 유효 범위를 실제 조향 범위(±45°)에 맞춤
+
+### 변경 전/후
+
+```c
+// before
+#define AUTODRIVE_UDP_PORT    7000
+if (pkt.steering_angle < -90.0f || pkt.steering_angle > 90.0f) { ... }
+
+// after
+#define AUTODRIVE_UDP_PORT    5000
+if (pkt.steering_angle < -45.0f || pkt.steering_angle > 45.0f) { ... }
+```
+
+### 영향 범위
+
+- 송신측 UDP 포트 불일치로 인한 수신 실패 리스크 감소
+- 비정상 각도 패킷 조기 차단으로 안전성 향상
 
 ### 변경 후
 

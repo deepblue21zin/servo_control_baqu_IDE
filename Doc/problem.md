@@ -24,7 +24,9 @@
 | **BUG-012** | **debug_cnt 타이밍 오류** | **main.c** | **Major** | **해결 (2026-02-21)** |
 | **BUG-013** | **USER CODE 블록 위치 오류** | **main.c** | **Major** | **해결 (2026-02-21)** |
 | **BUG-014** | **MX_LWIP_Init() IWDG 충돌 위험** | **main.c** | **Major** | **해결 (2026-02-21, 주석처리)** |
-| **NEW-001** | **이더넷 통신 LwIP UDP 미구현** | **ethernet_communication.c** | **Major** | **미해결 (Phase 2)** |
+| **BUG-015** | **DIR 핀 매핑 불일치 (PE10 vs PE11)** | **main.h, main.c, pulse_control.c** | **Critical** | **해결 (2026-02-24)** |
+| **BUG-016** | **테스트 모드 잔류로 운영 루프 비활성화 위험** | **main.c** | **Major** | **해결 (2026-02-24)** |
+| **BUG-017** | **UDP 포트/조향 범위 명세 불일치** | **ethernet_communication.c/h** | **Major** | **해결 (2026-02-24)** |
 | **NEW-002** | **통신 워치독 미구현** | **미정** | **Major** | **미해결 (Phase 2)** |
 | **NEW-003** | **시스템 상태 머신 미구현** | **미정** | **Major** | **미해결 (Phase 3)** |
 | **NEW-004** | **상수 중복 정의** | **constants.h, position_control.h** | **Minor** | **미해결** |
@@ -253,16 +255,57 @@ CubeMX 코드 재생성 시 이 영역이 **자동 삭제**되어 PID 루프, IW
 
 ## 미해결 이슈
 
-### NEW-001: 이더넷 통신 LwIP UDP 미구현
+## BUG-015: DIR 핀 매핑 불일치 (PE10 vs PE11)
 
-**심각도:** Major
-**상태:** 미해결 (Phase 2 예정)
-**파일:** `Core/Src/ethernet_communication.c`
+**심각도:** Critical  
+**상태:** **해결 완료 (2026-02-24)**  
+**파일:** `Core/Inc/main.h`, `Core/Src/main.c`, `Core/Src/pulse_control.c`
 
-- CubeMX에서 ETH + LwIP 설정 완료 (UDP Enabled, Static IP 192.168.1.100)
-- `ethernet_communication.c`는 text-based stub 상태
-- `MX_LWIP_Process()`가 main while 루프에 미추가
-- LwIP UDP API (`udp_new`, `udp_bind`, `udp_recv`, `udp_sendto`)로 재구현 필요
+### 문제
+
+- `.ioc`는 DIR가 PE10으로 설정되어 있었으나, 코드/주석 일부가 PE11 기준으로 남아 혼선 발생
+
+### 해결
+
+- `DIR_PIN_Pin`을 PE10으로 정합화
+- `main.c` GPIO 재설정 핀도 PE10으로 수정
+- `pulse_control.c` 주석 정합화
+
+---
+
+## BUG-016: 테스트 모드 잔류로 운영 루프 비활성화 위험
+
+**심각도:** Major  
+**상태:** **해결 완료 (2026-02-24)**  
+**파일:** `Core/Src/main.c`
+
+### 문제
+
+- 라인드라이버 검증을 위해 적용한 테스트 코드(고정/스윕 펄스)가 남으면 UDP+PID 운영 루프가 동작하지 않음
+
+### 해결
+
+- 검증 후 `MX_LWIP_Process()` + `EthComm_HasNewData()` + `PositionControl_Update()` 운영 루프로 복구
+
+---
+
+## BUG-017: UDP 포트/조향 범위 명세 불일치
+
+**심각도:** Major  
+**상태:** **해결 완료 (2026-02-24)**  
+**파일:** `Core/Inc/ethernet_communication.h`, `Core/Src/ethernet_communication.c`
+
+### 문제
+
+- 수신 포트가 7000으로 되어 있어 레거시 송신기(5000)와 불일치
+- 조향 유효 범위 검증이 ±90°로 되어 있어 운영 각도 기준(±45°)과 불일치
+
+### 해결
+
+- `AUTODRIVE_UDP_PORT`를 5000으로 변경
+- `steering_angle` 유효 범위를 `-45.0f ~ +45.0f`로 조정
+
+---
 
 ### NEW-002: 통신 워치독 미구현
 
@@ -304,4 +347,4 @@ CubeMX 코드 재생성 시 이 영역이 **자동 삭제**되어 PID 루프, IW
 
 ---
 
-*마지막 업데이트: 2026-02-21*
+*마지막 업데이트: 2026-02-24*

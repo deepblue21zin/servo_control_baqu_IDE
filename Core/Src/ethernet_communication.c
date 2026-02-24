@@ -348,7 +348,7 @@ static void udp_recv_cb(void *arg,
     }
 
     /* ── 안전 검증: 조향각 범위 ── */
-    if (pkt.steering_angle < -90.0f || pkt.steering_angle > 90.0f) {
+    if (pkt.steering_angle < -45.0f || pkt.steering_angle > 45.0f) {
         printf("[EthComm] Invalid angle: %.1f\r\n", pkt.steering_angle);
         return;
     }
@@ -386,8 +386,7 @@ void EthComm_UDP_Init(void)
     }
 
     udp_recv(g_udp_pcb, udp_recv_cb, NULL);
-    printf("[EthComm] UDP ready  IP:10.177.21.100  PORT:%d\r\n",
-           AUTODRIVE_UDP_PORT);
+    printf("[EthComm] UDP ready  PORT:%d\r\n", AUTODRIVE_UDP_PORT);
 }
 
 /**

@@ -5,7 +5,7 @@
  * Author: 고진성 (Modified by Baqu for PID Support)
  * * [Hardware Pin Map]
  * Pulse Output : PE9  (TIM1_CH1) -> SN75176 -> L7(Pin 9, PF+)
- * Dir Output   : PE11 (GPIO_OUT) -> SN75176 -> L7(Pin 11, PR+)
+ * Dir Output   : PE10 (GPIO_OUT) -> SN75176 -> L7(Pin 11, PR+)
  * * [Logic]
  * 1. Step Mode: TIM1 PWM Interrupt (정해진 거리 이동)
  * 2. Speed Mode: TIM1 Frequency Change (PID 제어용 연속 이동)
@@ -31,7 +31,7 @@ void PulseControl_Init(void) {
     is_busy = 0;
 
     // 방향 핀 초기 상태 설정 (Safety)
-    // CubeMX(main.c)에서 PE11을 GPIO_Output으로 설정했는지 꼭 확인하세요.
+    // CubeMX(main.c)에서 PE10을 GPIO_Output으로 설정했는지 꼭 확인하세요.
     HAL_GPIO_WritePin(DIR_PIN_GPIO_Port, DIR_PIN_Pin, GPIO_PIN_RESET);
 }
 
@@ -112,7 +112,7 @@ void PulseControl_SendSteps(uint32_t steps, MotorDirection dir) {
     remaining_steps = steps;
 
     // [방향 제어]
-    // PE11 핀의 High/Low 상태로 SN75176을 통해 L7 드라이브의 방향을 결정
+    // PE10 핀의 High/Low 상태로 SN75176을 통해 L7 드라이브의 방향을 결정
     if (dir == DIR_CW) {
         HAL_GPIO_WritePin(DIR_PIN_GPIO_Port, DIR_PIN_Pin, GPIO_PIN_SET);   // CW
     } else {

@@ -109,9 +109,9 @@ int main(void)
   MX_LWIP_Init();
   /* USER CODE BEGIN 2 */
 
-  // PE11을 TIM1_CH2 AF에서 GPIO Output으로 재설정 (방향 신호용)
+  // PE10(DIR)을 GPIO Output으로 명시 재설정 (방향 신호용)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  GPIO_InitStruct.Pin = GPIO_PIN_11;
+  GPIO_InitStruct.Pin = GPIO_PIN_10;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -147,7 +147,7 @@ int main(void)
   //}
   //HAL_Delay(500);
   EncoderReader_Reset(); // 엔코더 카운터 리셋 (0점 기준)
-  PositionControl_SetTarget(0.0f); // 자율주행 모드: 초기 목표 0° (UDP로 갱신됨)
+  PositionControl_SetTarget(10.0f); // 자율주행 모드: 초기 목표 0° (UDP로 갱신됨)
   PositionControl_Enable();
 
   EthComm_UDP_Init(); // UDP 수신 소켓 열기 (MX_LWIP_Init 이후 호출 필수)

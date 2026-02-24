@@ -41,7 +41,7 @@
                     │             ↓
                     │    ┌─────────────────┐
                     │    │ pulse_control.c  │ ──→ PE9 (PWM) ──→ RS422 ──→ 서보드라이브
-                    │    │  (PWM 주파수)   │ ──→ PE11 (DIR)──→ 방향신호 ──→ 서보드라이브
+                    │    │  (PWM 주파수)   │ ──→ PE10 (DIR)──→ 방향신호 ──→ 서보드라이브
                     │    └─────────────────┘
                     │
                     └──→ PositionControl_Disable() ──→ relay_control.c
@@ -80,7 +80,7 @@
    └── MX_LWIP_Init()        이더넷/LwIP 초기화
 
 4. USER CODE BEGIN 2
-   ├── PE11 → GPIO_Output 재설정 (TIM1_CH2 AF에서 변경)
+   ├── PE10(DIR) → GPIO_Output 재설정 (방향 신호용)
    ├── HAL_TIM_Encoder_Start(&htim4) TIM4 엔코더 모드 시작
    ├── Relay_Init()           SVON=HIGH(OFF), EMG=HIGH(정상)
    ├── PulseControl_Init()    DIR 핀 LOW(CCW 초기화)
@@ -89,7 +89,7 @@
    ├── Relay_ServoOn()        SVON=LOW(ON) → 서보 활성화
    ├── HAL_Delay(500)         서보 안정화 대기
    ├── EncoderReader_Reset()  현재 위치를 0도 기준으로 설정
-   ├── PositionControl_SetTarget(0.0f) 초기 목표 0도
+   ├── PositionControl_SetTarget(10.0f) 초기 목표 10도 (UDP로 갱신됨)
    ├── PositionControl_Enable() PID 제어 시작
    └── EthComm_UDP_Init()     UDP 수신 소켓 열기
 
@@ -311,7 +311,7 @@ void EncoderReader_Reset(void) {
 }
 ```
 
-main.c에서 `EncoderReader_Reset()` 후 `PositionControl_SetTarget(0.0f)` 호출 →
+main.c에서 `EncoderReader_Reset()` 후 `PositionControl_SetTarget(10.0f)` 호출 →
 **현재 위치가 0도 기준점**이 됩니다.
 
 ---
@@ -328,7 +328,7 @@ STM32 PE9 (PULS) ──→ RS422 모듈 ──→ 드라이브 PF+/PF-
                        각 펄스의 상승 에지 = 1스텝 이동
                        주파수 = 속도 (Hz가 높을수록 빠름)
 
-STM32 PE11 (SIGN) ──→ 드라이브 PR+
+STM32 PE10 (SIGN) ──→ 드라이브 PR+
                        HIGH (3.3V) = CW (시계 방향)
                        LOW  (0V)   = CCW (반시계 방향)
 ```
@@ -580,7 +580,7 @@ void MX_LWIP_Process(void) {
 
 이 함수가 main의 while(1)에서 호출될 때마다:
 1. 이더넷 NIC에 새 패킷이 있으면 가져와서 처리
-2. UDP 패킷이면 목적지 포트 확인 → 7000이면 `udp_recv_cb()` 호출
+2. UDP 패킷이면 목적지 포트 확인 → 5000이면 `udp_recv_cb()` 호출
 
 ---
 
