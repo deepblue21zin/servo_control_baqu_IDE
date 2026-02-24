@@ -28,6 +28,7 @@
 | **17** | **2026-02-24** | **ethernet_communication.c/h** | **UDP 포트 5000 적용 + 조향각 degree 검증 범위 정합화(±45°)** | **Major** | **완료** |
 | **18** | **2026-02-24** | **ethernet_communication.c/h, main.c** | **ASMS(5B)/PC(9B) 모드 기반 UDP 파싱 + NONE 모드 Disable 처리** | **Critical** | **완료** |
 | **19** | **2026-02-24** | **main.c, ethernet_communication.c** | **초기 목표각 0° 복구 + 네트워크 입력 범위 ±360°로 조정** | **Major** | **완료** |
+| **20** | **2026-02-24** | **main.c, ethernet_communication.c/h, position_control.c** | **AUTO/MANUAL 입력원 분리 + RX timeout(300ms) ESTOP + EMG 하드정지 복구 + CTRL_MODE 실상태화** | **Critical** | **완료** |
 
 ---
 
@@ -399,6 +400,47 @@ joy_to_deg: [-360, +360] 매핑
 
 - 기동 시 초기 조향 안정성 개선
 - 통신 입력 스케일 정책과 제어기 제한값 일관성 확보
+
+---
+
+## 변경 #20: AUTO/MANUAL 입력원 분리 + RX timeout ESTOP + EMG 하드정지 복구
+
+**날짜:** 2026-02-24  
+**파일:** `Core/Src/main.c`, `Core/Src/ethernet_communication.c`, `Core/Inc/ethernet_communication.h`, `Core/Src/position_control.c`  
+**심각도:** Critical
+
+### 변경 이유
+
+- AUTO 모드에서는 PC steer만, MANUAL 모드에서는 ASMS joy_y만 반영하도록 입력원 분리 필요
+- 통신 끊김 시 안전정지(ESTOP) 누락 리스크 존재
+- `PositionControl_GetMode()`가 고정값 반환이라 진단값 신뢰성 부족
+- `EmergencyStop()`에서 EMG 하드웨어 정지가 비활성 주석 상태
+
+### 변경 후 요약
+
+1. **입력원 분리**
+- ASMS(5B, sender=.5): mode + MANUAL 조향 입력 처리
+- PC(9B, sender=.1): AUTO 모드에서 steer 처리
+
+2. **통신 워치독**
+- `ETHCOMM_RX_TIMEOUT_MS=300` 추가
+- `AUTO/MANUAL` 상태에서 `last_rx_tick` 초과 시 `ESTOP` 강제 전이
+
+3. **모드 진단 정합**
+- `control_mode` 내부 상태 변수 도입
+- Enable/Disable/Emergency/SetMode에서 갱신
+- `PositionControl_GetMode()`는 실상태 반환
+
+4. **기능안전 복구**
+- `PositionControl_EmergencyStop()`에서 `Relay_Emergency()` 실제 호출
+- 제어 재활성화 시 `Relay_EmergencyRelease()` 수행
+
+### 영향 범위
+
+- AUTO/MANUAL 동작 의미가 명확해져 인지/수동 입력 경로 혼선 제거
+- 통신 단절 시 fail-safe 확보 (300ms)
+- DIAG의 `CTRL_MODE` 신뢰성 개선
+- ESTOP 시 소프트 정지 + 하드웨어 EMG 동시 보장
 
 ---
 

@@ -20,6 +20,28 @@
 
 ---
 
+## 2026-02-24 최신 반영 사항
+
+1. 수신자/길이 필터 정책 고정
+- ASMS: `len=5` && sender `.5`
+- PC: `len=9` && sender `.1`
+
+2. 모드별 반영 정책
+- ASMS는 mode를 갱신하고, `MANUAL`일 때만 joy_y를 조향각으로 반영
+- PC는 `AUTO`일 때만 steer를 조향각으로 반영
+
+3. 통신 타임아웃 안전정지
+- `ETHCOMM_RX_TIMEOUT_MS`(현재 300ms) 초과 시 main 루프에서 `ESTOP` 강제
+
+4. 내부 데이터 구조 정규화
+- 외부 패킷(ASMS 5B / PC 9B)을 내부 `AutoDrive_Packet_t`(`steering_angle`, `speed`, `misc`)로 통합 저장
+
+5. 디버그 로그 정책
+- `ETHCOMM_DEBUG` 매크로(기본 0)로 RX 상세 로그 On/Off
+- 운영 빌드는 상세 로그 비활성 권장
+
+---
+
 ## 전체 시스템 구조
 
 ```

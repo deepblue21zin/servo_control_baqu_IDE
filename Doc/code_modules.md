@@ -23,6 +23,32 @@
 
 ---
 
+## 2026-02-24 최신 반영 사항
+
+아래 항목은 현재 코드와 문서를 정합화하기 위한 최신 변경입니다.
+
+1. `main.c` 모드 처리
+- `AUTO`: PC 9B steer 기반 목표각 적용
+- `MANUAL`: ASMS 5B joy_y 기반 목표각 적용
+- `NONE`: 제어 비활성화
+- `ESTOP`: 비상정지 진입
+
+2. 통신 타임아웃 fail-safe
+- `ETHCOMM_RX_TIMEOUT_MS`(현재 300ms) 초과 시 `AUTO/MANUAL -> ESTOP` 강제 전이
+
+3. 제어 모드 진단값 정합
+- `PositionControl_GetMode()`가 고정값이 아닌 실제 내부 상태(`IDLE/POSITION/EMERGENCY`)를 반환
+
+4. 비상정지 하드웨어 경로 복구
+- `PositionControl_EmergencyStop()`에서 `Relay_Emergency()` 호출
+- 복귀 시 `Relay_EmergencyRelease()` 후 Enable
+
+5. 테스트 토글
+- `AUTO_FIXED_PULSE_TEST` 매크로 존재(기본 0=운영 경로)
+- 1이면 AUTO에서 고정 펄스 출력, 0이면 PID 경로 실행
+
+---
+
 ## 전체 모듈 관계도
 
 ```

@@ -29,8 +29,10 @@
 | **BUG-017** | **UDP 포트/조향 범위 명세 불일치** | **ethernet_communication.c/h** | **Major** | **해결 (2026-02-24)** |
 | **BUG-018** | **기동 초기 목표각/주석 불일치 + NONE 모드 미처리** | **main.c** | **Major** | **해결 (2026-02-24)** |
 | **BUG-019** | **통신 파서 명세 불일치 (17B vs 5/9B)** | **ethernet_communication.c/h** | **Critical** | **해결 (2026-02-24)** |
-| **NEW-002** | **통신 워치독 미구현** | **미정** | **Major** | **미해결 (Phase 2)** |
-| **NEW-003** | **시스템 상태 머신 미구현** | **미정** | **Major** | **미해결 (Phase 3)** |
+| **BUG-020** | **통신 끊김 fail-safe 미흡 (RX timeout 미구현)** | **main.c, ethernet_communication.c/h** | **Critical** | **해결 (2026-02-24)** |
+| **BUG-021** | **CTRL_MODE 진단값 고정 반환** | **position_control.c** | **Major** | **해결 (2026-02-24)** |
+| **BUG-022** | **EMG 하드웨어 정지 경로 비활성** | **position_control.c** | **Critical** | **해결 (2026-02-24)** |
+| **NEW-003** | **시스템 상태 머신 미구현(완전형)** | **미정** | **Major** | **미해결 (Phase 3)** |
 | **NEW-004** | **상수 중복 정의** | **constants.h, position_control.h** | **Minor** | **미해결** |
 
 ---
@@ -347,16 +349,38 @@ CubeMX 코드 재생성 시 이 영역이 **자동 삭제**되어 PID 루프, IW
 
 ---
 
-### NEW-002: 통신 워치독 미구현
+### BUG-020: 통신 끊김 fail-safe 미흡 (RX timeout 미구현)
+
+**심각도:** Critical
+**상태:** 해결 완료 (2026-02-24)
+
+- 문제: AUTO/MANUAL 운용 중 통신이 끊겨도 상태 유지 가능성 존재
+- 해결:
+  - `ETHCOMM_RX_TIMEOUT_MS` 추가(현재 300ms)
+  - `last_rx_tick` 기반으로 main 루프에서 timeout 감지 시 `ESTOP` 강제 전이
+- 결과: 통신 단절 시 소프트웨어가 안전 상태로 수렴
+
+### BUG-021: CTRL_MODE 진단값 고정 반환
 
 **심각도:** Major
-**상태:** 미해결 (Phase 2 예정)
+**상태:** 해결 완료 (2026-02-24)
 
-- 상위 제어기(Jetson/PC)와의 통신 두절 시 안전 대응 없음
-- 일정 시간(예: 500ms) 명령 미수신 → 자동 비상정지 필요
-- ADAS 조향 시스템에서 **필수** 안전 기능 (통신 실패 = 제어 불능)
+- 문제: `PositionControl_GetMode()`가 `CTRL_MODE_POSITION` 고정 반환
+- 해결: 내부 `control_mode` 상태 변수 도입 후 Enable/Disable/Emergency/SetMode에서 갱신
+- 결과: DIAG의 `CTRL_MODE`가 실제 제어 상태를 반영
 
-### NEW-003: 시스템 상태 머신 미구현
+### BUG-022: EMG 하드웨어 정지 경로 비활성
+
+**심각도:** Critical
+**상태:** 해결 완료 (2026-02-24)
+
+- 문제: `EmergencyStop()`에서 EMG 릴레이 호출이 비활성 주석 상태
+- 해결:
+  - `PositionControl_EmergencyStop()`에서 `Relay_Emergency()` 호출
+  - Enable 복귀 시 `Relay_EmergencyRelease()` 호출
+- 결과: 소프트 정지 + 하드 EMG 정지 동시 보장
+
+### NEW-003: 시스템 상태 머신 미구현(완전형)
 
 **심각도:** Major
 **상태:** 미해결 (Phase 3 예정)
