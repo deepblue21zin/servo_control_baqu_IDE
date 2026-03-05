@@ -57,4 +57,4 @@ dkms.conf
 Debug/
 FETCH_HEAD
 .settings/
-Debug.launch
+Debug.launch.metadata/
