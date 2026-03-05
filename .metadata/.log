@@ -1,0 +1,131 @@
+!SESSION 2026-03-06 01:44:30.367 -----------------------------------------------
+eclipse.buildId=Version 1.19.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=ko_KR
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2026-03-06 01:44:51.119
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-03-06 01:44:51.121
+!MESSAGE Log4j2 initialized with config file C:\Users\JSjeong\STM32CubeIDE\workspace_1.19.0\servo_control_baqu\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-03-06 01:44:56.564
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.core.jobs 2 2 2026-03-06 01:45:00.155
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.ui.internal.Workbench$39 RUNNING
+	 at java.base/java.io.RandomAccessFile.readBytes0(Native Method)
+	 at java.base/java.io.RandomAccessFile.readBytes(RandomAccessFile.java:400)
+	 at java.base/java.io.RandomAccessFile.read(RandomAccessFile.java:434)
+	 at java.base/java.io.RandomAccessFile.readFully(RandomAccessFile.java:498)
+	 at java.base/java.util.zip.ZipFile$Source.readFullyAt(ZipFile.java:1528)
+	 at java.base/java.util.zip.ZipFile$Source.initCEN(ZipFile.java:1679)
+	 at java.base/java.util.zip.ZipFile$Source.<init>(ZipFile.java:1495)
+	 at java.base/java.util.zip.ZipFile$Source.get(ZipFile.java:1458)
+	 at java.base/java.util.zip.ZipFile$CleanableResource.<init>(ZipFile.java:724)
+	 at java.base/java.util.zip.ZipFile.<init>(ZipFile.java:251)
+	 at java.base/java.util.zip.ZipFile.<init>(ZipFile.java:180)
+	 at java.base/java.util.jar.JarFile.<init>(JarFile.java:345)
+	 at java.base/java.util.jar.JarFile.<init>(JarFile.java:316)
+	 at java.base/java.util.jar.JarFile.<init>(JarFile.java:282)
+	 at com.st.microxplorer.plugin.PluginManage.loadPluginJar(PluginManage.java:313)
+	 at com.st.microxplorer.plugin.PluginManage.PluginSearch(PluginManage.java:224)
+	 at com.st.microxplorer.plugin.PluginManage.PluginDiscovery(PluginManage.java:67)
+	 at com.st.microxplorer.maingui.MainPanel.initialization(MainPanel.java:332)
+	 at com.st.microxplorer.maingui.AppletMainFrameCubeIde.init(AppletMainFrameCubeIde.java:242)
+	 at com.st.stm32cube.common.mx.core.CubeMxInstance.<init>(CubeMxInstance.java:117)
+	 at com.st.stm32cube.common.mx.core.CubeMxInstance.getInstance(CubeMxInstance.java:91)
+	 at com.st.stm32cube.common.mx.userauth.UserAuthAdapter.<init>(UserAuthAdapter.java:25)
+	 at com.st.stm32cube.common.mx.userauth.UserAuthProvider.getUserAuthAdapter(UserAuthProvider.java:16)
+	 at com.st.stm32cube.common.ecosystemintegration.ui.core.MCUEcoSystemIntegrationUiHelper.getUserAuth(MCUEcoSystemIntegrationUiHelper.java:100)
+	 at com.st.stm32cube.ide.mcu.userauth.UserAuthStartup.earlyStartup(UserAuthStartup.java:32)
+	 at org.eclipse.ui.internal.EarlyStartupRunnable.runEarlyStartup(EarlyStartupRunnable.java:79)
+	 at org.eclipse.ui.internal.EarlyStartupRunnable.run(EarlyStartupRunnable.java:55)
+	 at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	 at org.eclipse.ui.internal.Workbench$39.run(Workbench.java:2733)
+	 at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+!SESSION 2026-03-06 01:45:00.329 -----------------------------------------------
+eclipse.buildId=Version 1.19.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=ko_KR
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2026-03-06 01:45:43.100
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-03-06 01:45:43.103
+!MESSAGE Log4j2 initialized with config file C:\Users\JSjeong\STM32CubeIDE\workspace_1.19.0\servo_control_baqu\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-03-06 01:45:49.465
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 4 0 2026-03-06 01:46:01.692
+!MESSAGE Failed to parse wmic output
+!STACK 0
+org.xml.sax.SAXParseException; lineNumber: 1; columnNumber: 1; Premature end of file.
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342)
+	at com.st.stm32cube.ide.mpu.remote.serial.internal.SerialPortProviderWindows.run(SerialPortProviderWindows.java:127)
+	at java.base/java.util.TimerThread.mainLoop(Timer.java:566)
+	at java.base/java.util.TimerThread.run(Timer.java:516)
+
+!ENTRY com.st.stm32cube.ide.mpu.remote.serial 4 0 2026-03-06 01:46:02.396
+!MESSAGE Failed to parse wmic output
+!STACK 0
+org.xml.sax.SAXParseException; lineNumber: 1; columnNumber: 1; Premature end of file.
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:262)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:342)
+	at com.st.stm32cube.ide.mpu.remote.serial.internal.SerialPortProviderWindows.run(SerialPortProviderWindows.java:127)
+	at java.base/java.util.TimerThread.mainLoop(Timer.java:566)
+	at java.base/java.util.TimerThread.run(Timer.java:516)
+!SESSION 2026-03-06 01:46:05.020 -----------------------------------------------
+eclipse.buildId=Version 1.19.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=ko_KR
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2026-03-06 01:46:14.503
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2026-03-06 01:46:14.505
+!MESSAGE Log4j2 initialized with config file C:\Users\JSjeong\STM32CubeIDE\workspace_1.19.0\servo_control_baqu\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2026-03-06 01:46:22.276
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.core.jobs 2 2 2026-03-06 01:46:27.330
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.ui.internal.Workbench$39 RUNNING
+	 at java.base/java.io.RandomAccessFile.seek0(Native Method)
+	 at java.base/java.io.RandomAccessFile.seek(RandomAccessFile.java:636)
+	 at java.desktop/javax.imageio.stream.FileCacheImageInputStream.read(FileCacheImageInputStream.java:165)
+	 at java.desktop/com.sun.imageio.plugins.wbmp.WBMPImageReaderSpi.canDecodeInput(WBMPImageReaderSpi.java:88)
+	 at java.desktop/javax.imageio.ImageIO$CanDecodeInputFilter.filter(ImageIO.java:571)
+	 at java.desktop/javax.imageio.spi.FilterIterator.advance(ServiceRegistry.java:868)
+	 at java.desktop/javax.imageio.spi.FilterIterator.next(ServiceRegistry.java:886)
+	 at java.desktop/javax.imageio.ImageIO$ImageReaderIterator.next(ImageIO.java:531)
+	 at java.desktop/javax.imageio.ImageIO$ImageReaderIterator.next(ImageIO.java:516)
+	 at java.desktop/javax.imageio.ImageIO.read(ImageIO.java:1461)
+	 at java.desktop/javax.imageio.ImageIO.read(ImageIO.java:1363)
+	 at com.st.microxplorer.customgui.IconsList.getImage(IconsList.java:409)
+	 at com.st.microxplorer.customgui.IconsList.getImage(IconsList.java:470)
+	 at com.st.microxplorer.customgui.IconsList.getIcon(IconsList.java:487)
+	 at com.st.microxplorer.plugins.pinoutconfig.gui.PinOutPanel.<clinit>(PinOutPanel.java:184)
+	 at com.st.microxplorer.plugins.pinoutconfig.PinoutConfigView.getUI(PinoutConfigView.java:218)
+	 at com.st.microxplorer.plugin.PluginManage.PluginDiscovery(PluginManage.java:84)
+	 at com.st.microxplorer.maingui.MainPanel.initialization(MainPanel.java:332)
+	 at com.st.microxplorer.maingui.AppletMainFrameCubeIde.init(AppletMainFrameCubeIde.java:242)
+	 at com.st.stm32cube.common.mx.core.CubeMxInstance.<init>(CubeMxInstance.java:117)
+	 at com.st.stm32cube.common.mx.core.CubeMxInstance.getInstance(CubeMxInstance.java:91)
+	 at com.st.stm32cube.common.mx.userauth.UserAuthAdapter.<init>(UserAuthAdapter.java:25)
+	 at com.st.stm32cube.common.mx.userauth.UserAuthProvider.getUserAuthAdapter(UserAuthProvider.java:16)
+	 at com.st.stm32cube.common.ecosystemintegration.ui.core.MCUEcoSystemIntegrationUiHelper.getUserAuth(MCUEcoSystemIntegrationUiHelper.java:100)
+	 at com.st.stm32cube.ide.mcu.userauth.UserAuthStartup.earlyStartup(UserAuthStartup.java:32)
+	 at org.eclipse.ui.internal.EarlyStartupRunnable.runEarlyStartup(EarlyStartupRunnable.java:79)
+	 at org.eclipse.ui.internal.EarlyStartupRunnable.run(EarlyStartupRunnable.java:55)
+	 at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	 at org.eclipse.ui.internal.Workbench$39.run(Workbench.java:2733)
+	 at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
