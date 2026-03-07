@@ -167,8 +167,8 @@ SysTick ISR (1ms)          Main Loop
                            │
               ┌────────────┼────────────┐
               ▼            ▼            ▼
-        Angle Limit   Error Limit   (Future)
-        ±50° hard     60° max err   Comm Timeout
+        Angle Limit   Error Limit   Comm Timeout
+   ±4320° (motor)   4500° max err  RX timeout→ESTOP
               │            │            │
               └────────────┼────────────┘
                            │ fail
@@ -191,7 +191,7 @@ PID closed-loop 위치 제어의 핵심 모듈.
 
 | Parameter | Value | Description |
 |-----------|-------|-------------|
-| Kp | 500.0 | 비례 게인 |
+| Kp | 50.0 | 비례 게인 (현재 기본값) |
 | Ki | 5.0 | 적분 게인 |
 | Kd | 20.0 | 미분 게인 |
 | Integral Limit | 1000.0 | Anti-Windup 한계 |
@@ -199,8 +199,8 @@ PID closed-loop 위치 제어의 핵심 모듈.
 | Control Period | 1 ms | SysTick 기반 |
 | Position Tolerance | 0.5° | 안정화 판정 오차 범위 |
 | Stability Time | 100 ms | 안정화 판정 유지 시간 |
-| Safety: Angle Limit | ±50° | 하드 리밋 (±45° + 5° 마진) |
-| Safety: Error Limit | 60° | 오차 초과 시 비상정지 |
+| Safety: Angle Limit (Motor) | ±4320° | 모터 기준 하드 리밋 (12:1 기어비) |
+| Safety: Error Limit | 4500° | 다회전 운용 기준 추종 오차 한계 |
 
 **주요 기능:**
 - `PositionControl_Init()` — 초기화 (PID 상태 리셋)
@@ -292,9 +292,9 @@ LwIP UDP 기반 상위 제어기 통신 모듈 (현재 골격 구현 상태).
 
 | Parameter | Value |
 |-----------|-------|
-| Prescaler | 256 |
-| Reload | 4095 |
-| Timeout | ~32초 |
+| Prescaler | 64 |
+| Reload | 249 |
+| Timeout | ~0.5초 |
 | Refresh 위치 | main while(1) 루프 |
 
 ---
@@ -313,24 +313,27 @@ servo_control_baqu/
 │   │   ├── homing.h                      # Homing module API
 │   │   ├── adc_potentiometer.h           # ADC potentiometer reader
 │   │   ├── ethernet_communication.h      # Ethernet comm API & command types
+│   │   ├── latency_profiler.h            # DWT 기반 지연 시간 측정 모듈
+│   │   ├── system_state.h                # 상위 모드/상태 정의
 │   │   ├── constants.h                   # System constants & parameters
 │   │   ├── adc.h / tim.h / usart.h       # Peripheral config (CubeMX)
-│   │   ├── gpio.h / iwdg.h / lwip.h      # Peripheral config (CubeMX)
+│   │   ├── gpio.h / iwdg.h               # Peripheral config (CubeMX)
 │   │   ├── stm32f4xx_hal_conf.h          # HAL configuration
 │   │   └── stm32f4xx_it.h               # Interrupt handler declarations
 │   ├── Src/                              # Source files
-│   │   ├── main.c                        # System init + PID control loop
-│   │   ├── position_control.c            # PID controller (26 functions)
-│   │   ├── pulse_control.c              # PWM pulse generation (TIM1)
-│   │   ├── encoder_reader.c             # Encoder reading (TIM4, 16-bit center-offset)
-│   │   ├── relay_control.c              # Relay GPIO control (Active LOW)
-│   │   ├── homing.c                     # Zero-point calibration (ADC + Encoder)
-│   │   ├── adc_potentiometer.c          # ADC reading (PA4, 12-bit)
-│   │   ├── ethernet_communication.c     # Ethernet comm (stub, LwIP UDP 예정)
-│   │   ├── stm32f4xx_it.c              # ISR: SysTick flag, TIM1_CC, ETH_IRQ
-│   │   ├── adc.c / tim.c / usart.c      # Peripheral init (CubeMX)
-│   │   ├── gpio.c / iwdg.c             # Peripheral init (CubeMX)
-│   │   └── system_stm32f4xx.c          # System clock config
+│   │   ├── main.c                        # System init + PID control loop + Ethernet mode/state
+│   │   ├── position_control.c            # PID controller + multi-turn safety check
+│   │   ├── pulse_control.c               # PWM pulse generation (TIM1)
+│   │   ├── encoder_reader.c              # Encoder reading (TIM4, 16-bit center-offset)
+│   │   ├── relay_control.c               # Relay GPIO control (Active LOW)
+│   │   ├── homing.c                      # Zero-point calibration (ADC + Encoder)
+│   │   ├── adc_potentiometer.c           # ADC reading (PA4, 12-bit)
+│   │   ├── ethernet_communication.c      # Ethernet comm (ASMS 5B / PC 9B UDP)
+│   │   ├── latency_profiler.c            # DWT 기반 지연 시간 수집/통계
+│   │   ├── stm32f4xx_it.c                # ISR: SysTick flag, TIM1_CC, ETH_IRQ
+│   │   ├── adc.c / tim.c / usart.c       # Peripheral init (CubeMX)
+│   │   ├── gpio.c / iwdg.c               # Peripheral init (CubeMX)
+│   │   └── system_stm32f4xx.c            # System clock config
 │   └── Startup/
 │       └── startup_stm32f429zitx.s      # Startup assembly (vector table)
 ├── Drivers/
@@ -342,13 +345,18 @@ servo_control_baqu/
 ├── Middlewares/
 │   └── Third_Party/LwIP/               # LwIP core library
 ├── Doc/                                 # Documentation
-│   ├── problem.md                       # Bug reports & resolutions (BUG-001~014)
-│   ├── change_code.md                   # Code change history (변경 #1~#14)
-│   ├── team_request.md                  # Team task assignments
-│   ├── position_control_study.md        # PID control technical study
+│   ├── change_code.md                   # Code change history (변경 내역 요약)
+│   ├── ethernet_communication.md        # Ethernet/UDP 통신 설계 및 구현 메모
+│   ├── implementation_team_spec.md      # Ethernet 기반 조향 제어 분담/요구사항 명세
+│   ├── code_modules.md                  # 코드 모듈 구성 및 책임 정리
+│   ├── latency_measurement_spec.md      # DWT 기반 지연 시간 측정 스펙
+│   ├── latency_contract.md              # 제어/통신 지연 시간 계약(Contract)
+│   ├── latency_code_application.md      # 코드에 latency 측정 적용 방법
+│   ├── latency_data_evidence.md         # 측정 데이터 및 근거 관리 방법
+│   ├── hardware_pinmap.md               # 실제 보드 핀 매핑
 │   ├── 향후계획.md                       # Development roadmap
-│   ├── 최종 구조.md                      # Architecture design
-│   └── 수정내역_20260119.md              # Modification log
+│   ├── 최종 구조.md                      # Architecture design (최종 구조)
+│   └── Old/…                            # 이전 버전 문서 보관
 ├── servo_control_baqu.ioc               # CubeMX project file
 ├── STM32F429ZITX_FLASH.ld              # Flash linker script
 ├── STM32F429ZITX_RAM.ld               # RAM linker script
@@ -466,13 +474,13 @@ Servo Start!
 | 7 | SysTick 1ms flag + PID loop | stm32f4xx_it / main | **Done** |
 | 8 | Safety check + Emergency stop (SW+HW) | position_control | **Done** |
 
-### Phase 2: Ethernet Communication (예정)
+### Phase 2: Ethernet Communication (현재 구현 완료)
 
 | # | Task | Module | Status |
 |---|------|--------|--------|
-| 9 | LwIP UDP socket 구현 | ethernet_communication | **Pending** |
-| 10 | MX_LWIP_Process() 통합 | main | **Pending** |
-| 11 | 통신 워치독 (수신 타임아웃 → 비상정지) | ethernet_communication | **Pending** |
+| 9 | LwIP UDP socket 구현 | ethernet_communication | **Done** |
+| 10 | MX_LWIP_Process() 통합 | main | **Done** |
+| 11 | 통신 워치독 (수신 타임아웃 → 비상정지) | ethernet_communication / main | **Done** |
 | 12 | 바이너리 프로토콜 + CRC16 | ethernet_communication | **Pending** |
 
 ### Phase 3: System Integration (계획)
@@ -488,7 +496,7 @@ Servo Start!
 
 ## 9. Known Issues & Bug History
 
-자세한 내용은 [Doc/problem.md](Doc/problem.md) 참조.
+자세한 내용은 [Doc/Old/problem.md](Doc/Old/problem.md) 및 관련 변경 문서 참조.
 
 ### 해결 완료 (14건)
 
@@ -509,12 +517,10 @@ Servo Start!
 | BUG-013 | Major | USER CODE 블록 위치 → CubeMX 재생성 시 코드 손실 | 2026-02-21 |
 | BUG-014 | Major | MX_LWIP_Init() + IWDG 충돌 위험 | 2026-02-21 |
 
-### 미해결 (4건)
+### 미해결 (2건)
 
 | ID | Severity | Description | Target Phase |
 |----|----------|-------------|-------------|
-| NEW-001 | Major | LwIP UDP 통신 미구현 | Phase 2 |
-| NEW-002 | Major | 통신 워치독 미구현 | Phase 2 |
 | NEW-003 | Major | 시스템 상태 머신 미구현 | Phase 3 |
 | NEW-004 | Minor | constants.h / position_control.h 상수 중복 | Phase 3 |
 
@@ -524,17 +530,17 @@ Servo Start!
 
 | Feature | Implementation | Threshold | Status |
 |---------|---------------|-----------|--------|
-| Angle Hard Limit | `CheckSafety()` | ±50° (45° + 5° 마진) | **Active** |
-| Error Limit | `CheckSafety()` | 60° max error | **Active** |
+| Angle Hard Limit | `CheckSafety()` | ±4320° (모터 기준) | **Active** |
+| Error Limit | `CheckSafety()` | 4500° max error | **Active** |
 | Emergency Stop (SW+HW) | `EmergencyStop()` | PWM Stop + Relay EMG | **Active** |
-| IWDG Watchdog | `HAL_IWDG_Refresh()` | ~32초 timeout | **Active** |
+| IWDG Watchdog | `HAL_IWDG_Refresh()` | ~0.5초 timeout | **Active** |
 | PID Anti-Windup | `PID_Calculate()` | ±1000.0 integral clamp | **Active** |
 | PID Output Limit | `PID_Calculate()` | ±10,000 Hz | **Active** |
 | ARR Overflow Guard | `SetFrequency()` | 1 ~ 0xFFFF | **Active** |
 | Frequency Clamp | `SetFrequency()` | 10 Hz ~ 100 kHz | **Active** |
 | Critical Section | `SetTarget()` | `__disable_irq` / `__enable_irq` | **Active** |
 | Volatile Shared Vars | `control_enabled`, `interrupt_flag` | ISR ↔ main 동기화 | **Active** |
-| Comm Watchdog | — | 수신 타임아웃 → 비상정지 | **Planned** |
+| Comm Watchdog | `EthComm_GetLastRxTick()` + main loop | 수신 타임아웃 → ESTOP | **Active** |
 | Sensor Redundancy | — | 엔코더 + ADC 교차 검증 | **Planned** |
 
 ---
@@ -595,4 +601,4 @@ This software is licensed under terms that can be found in the LICENSE file in t
 
 ---
 
-*Last updated: 2026-02-21 | Code Quality: B+ (v3 evaluation)*
+*Last updated: 2026-03-07 | Code Quality: B+ (v3 evaluation)*
