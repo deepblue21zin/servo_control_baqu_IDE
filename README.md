@@ -35,7 +35,8 @@
 │   servo_control_baqu     │   Encoder Feedback → Error → PID → Pulse Output
 │                          │   IWDG Watchdog (~32s timeout)
 └──────────┬───────────────┘
-           │  Pulse + Direction (PE9/PE10 via SN75176 RS-485)
+           │  Pulse + Direction
+           │  (PE9/PE10 via separate pulse/direction line drivers)
            ▼
 ┌──────────────────────────┐
 │   L7 Servo Driver        │   서보 드라이버 → 서보 모터 → 조향 기구
@@ -74,8 +75,8 @@
 
 | Function | Pin | Peripheral | Description |
 |----------|-----|-----------|-------------|
-| Pulse Output | PE9 | TIM1_CH1 (PWM) | SN75176 → L7 PF+ (Pin 9) |
-| Direction Output | PE10 | GPIO_Output | SN75176 → L7 PR+ (Pin 11) |
+| Pulse Output | PE9 | TIM1_CH1 (PWM) | Pulse line driver input → L7 PF+/PF- |
+| Direction Output | PE10 | GPIO_Output | Direction line driver input → L7 PR+/PR- |
 | Encoder A | PD12 | TIM4_CH1 | Quadrature Encoder Input |
 | Encoder B | PD13 | TIM4_CH2 | Quadrature Encoder Input |
 | Servo ON Relay | PD14 | GPIO_Output | Active LOW (SVON) |
@@ -122,9 +123,10 @@
 │               STM32 HAL Driver Layer                 │
 │  (TIM, GPIO, UART, ADC, ETH, IWDG, RCC, NVIC)     │
 ├─────────────────────────────────────────────────────┤
-│           Hardware / BSP Layer                       │
-│    STM32F429ZI → SN75176 → L7 Driver → Servo Motor │
-│    LAN8742 PHY → RJ45 → Upper Controller           │
+│           Hardware / BSP Layer                         │
+│ STM32F429ZI → Pulse line driver + Direction line driver │
+│              → L7 Driver → Servo Motor                │
+│ LAN8742 PHY → RJ45 → Upper Controller                 │
 └─────────────────────────────────────────────────────┘
 ```
 
