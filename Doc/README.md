@@ -149,7 +149,7 @@ Note:
 | Debug UART RX | PD9 | USART3_RX | 115200 |
 | Ethernet | RMII pins | ETH + LAN8742 | UDP comm |
 
-상세 매핑: [hardware_pinmap.md](/Users/deepblue/baqu_servo_steering_control/docs/hardware_pinmap.md)
+상세 매핑: [hardware_pinmap.md](hardware_pinmap.md)
 
 ---
 
@@ -176,16 +176,16 @@ Note:
 
 ### 7.4 Evidence Storage Workflow (Windows)
 
-- logger script: `docs/measurements/start_latency_log.ps1`
+- logger script: `measurements/start_latency_log.ps1`
 - output files:
   - `latency_YYYY-MM-DD_HHMMSS.csv`
   - `latency_YYYY-MM-DD_HHMMSS_meta.md`
 
 관련 문서:
-- [latency_measurement_spec.md](/Users/deepblue/baqu_servo_steering_control/docs/latency_measurement_spec.md)
-- [latency_contract.md](/Users/deepblue/baqu_servo_steering_control/docs/latency_contract.md)
-- [latency_code_application.md](/Users/deepblue/baqu_servo_steering_control/docs/latency_code_application.md)
-- [latency_data_evidence.md](/Users/deepblue/baqu_servo_steering_control/docs/latency_data_evidence.md)
+- [latency_measurement_spec.md](latency_measurement_spec.md)
+- [latency_contract.md](latency_contract.md)
+- [latency_code_application.md](latency_code_application.md)
+- [latency_data_evidence.md](latency_data_evidence.md)
 
 ---
 
@@ -200,14 +200,21 @@ Note:
 
 ## 9. Engineering Process & Traceability
 
-- Daily fix logs: `docs/Fixes/YYYY-MM-DD.md`
-- Template: `docs/Fixes/_template.md`
-- Generator: `docs/Fixes/new_fix_log.ps1`
-- Cleanup candidates: `docs/docs_cleanup_candidates.md`
+- Change/fix logs: `change_code/YYYY-MM-DD.md` + `change_code/README.md`
+- Legacy integrated log: `change_code/change_code.md` (+ `Old/change_code.md`)
+- Historical problems: `Old/problem.md`
+- Cleanup candidates: `docs_cleanup_candidates.md`
 
 ---
 
-## 10. Remaining Engineering Work
+## 10. Planning Docs
+
+- [career_roadmap_2026.md](career_roadmap_2026.md): 취업 연계 관점의 2026-03-12 ~ 2026-06-15 로드맵
+- [part_requirements_2026.md](part_requirements_2026.md): 4개 파트별 REQ, 인수기준, 월별 목표
+
+---
+
+## 11. Remaining Engineering Work
 
 - UART logging path async (DMA + ring buffer)
 - Safety parameter tuning with real vehicle/mechanical tests
@@ -216,6 +223,6 @@ Note:
 
 ---
 
-## 11. Interview Short Pitch
+## 12. Interview Short Pitch
 
 "Built a 1ms STM32 steering sub-controller with UDP command handling, integrated fail-safe paths (timeout/ESTOP/watchdog), and a DWT-based latency evidence pipeline that automatically reports p99/worst-case and deadline misses in reproducible batches."

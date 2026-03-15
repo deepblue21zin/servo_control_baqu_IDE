@@ -66,8 +66,8 @@
                     │             │ output (Hz)
                     │             ↓
                     │    ┌─────────────────┐
-                    │    │ pulse_control.c  │ ──→ PE9 (PWM) ──→ RS422 ──→ 서보드라이브
-                    │    │  (PWM 주파수)   │ ──→ PE10 (DIR)──→ 방향신호 ──→ 서보드라이브
+                    │    │ pulse_control.c  │ ──→ PE9 (PWM) ──→ Pulse line driver ──→ PF+/PF- ──→ 서보드라이브
+                    │    │  (PWM 주파수)   │ ──→ PE10 (DIR)──→ Direction line driver ──→ PR+/PR- ──→ 서보드라이브
                     │    └─────────────────┘
                     │
                     └──→ PositionControl_Disable() ──→ relay_control.c
@@ -353,11 +353,11 @@ main.c에서 `EncoderReader_Reset()` 후 `PositionControl_SetTarget(0.0f)` 호�
 #### 서보드라이브 제어 방식 (Pulse+Direction)
 
 ```
-STM32 PE9 (PULS) ──→ RS422 모듈 ──→ 드라이브 PF+/PF-
+STM32 PE9 (PULS) ──→ Pulse line driver ──→ 드라이브 PF+/PF-
                        각 펄스의 상승 에지 = 1스텝 이동
                        주파수 = 속도 (Hz가 높을수록 빠름)
 
-STM32 PE10 (SIGN) ──→ 드라이브 PR+
+STM32 PE10 (SIGN) ──→ Direction line driver ──→ 드라이브 PR+/PR-
                        HIGH (3.3V) = CW (시계 방향)
                        LOW  (0V)   = CCW (반시계 방향)
 ```
