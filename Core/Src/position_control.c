@@ -2,6 +2,8 @@
 #include "encoder_reader.h"      // 엔코더 읽기
 #include "pulse_control.h"       // 펄스 출력
 #include "relay_control.h"       // 릴레이 제어 (EmergencyStop에서 사용)
+#include "constants.h"
+#include "debug_vars.h"
 #include <stdio.h>
 #include <stdint.h>              // uint32_t, int32_t
 #include <math.h>                // fabsf
@@ -41,6 +43,76 @@ static volatile bool control_enabled = false;
 static volatile ControlMode_t control_mode = CTRL_MODE_IDLE;
 static PosCtrl_Stats_t stats = {0};
 
+#ifdef DBG_LOOP_Pin
+#define DBG_LOOP_SET() HAL_GPIO_WritePin(DBG_LOOP_GPIO_Port, DBG_LOOP_Pin, GPIO_PIN_SET)
+#define DBG_LOOP_RESET() HAL_GPIO_WritePin(DBG_LOOP_GPIO_Port, DBG_LOOP_Pin, GPIO_PIN_RESET)
+#else
+#define DBG_LOOP_SET() ((void)0)
+#define DBG_LOOP_RESET() ((void)0)
+#endif
+
+static int32_t PositionControl_DegToMilliDeg(float deg)
+{
+    float scaled = deg * 1000.0f;
+
+    if (scaled > (float)INT32_MAX) {
+        return INT32_MAX;
+    }
+    if (scaled < (float)INT32_MIN) {
+        return INT32_MIN;
+    }
+
+    if (scaled >= 0.0f) {
+        return (int32_t)(scaled + 0.5f);
+    }
+    return (int32_t)(scaled - 0.5f);
+}
+
+static int16_t PositionControl_OutputToDebugCmd(float output)
+{
+    if (output > (float)INT16_MAX) {
+        return INT16_MAX;
+    }
+    if (output < (float)INT16_MIN) {
+        return INT16_MIN;
+    }
+
+    if (output >= 0.0f) {
+        return (int16_t)(output + 0.5f);
+    }
+    return (int16_t)(output - 0.5f);
+}
+
+static uint32_t PositionControl_BuildDebugFaultFlags(void)
+{
+    uint32_t flags = 0U;
+
+    if (fault_flag == 1U) {
+        flags |= DBG_FAULT_POS_LIMIT;
+    }
+    if (fault_flag == 2U) {
+        flags |= DBG_FAULT_TRACKING;
+    }
+    if (!control_enabled) {
+        flags |= DBG_FAULT_DISABLED;
+    }
+    if (control_mode == CTRL_MODE_EMERGENCY) {
+        flags |= DBG_FAULT_EMERGENCY;
+    }
+
+    return flags;
+}
+
+static void PositionControl_UpdateDebugVars(void)
+{
+    dbg_enc_raw = (int32_t)EncoderReader_GetRawCounter();
+    dbg_pos_mdeg = PositionControl_DegToMilliDeg(MotorDegToSteeringDeg(state.current_angle));
+    dbg_target_mdeg = PositionControl_DegToMilliDeg(MotorDegToSteeringDeg(state.target_angle));
+    dbg_err_mdeg = PositionControl_DegToMilliDeg(MotorDegToSteeringDeg(state.error));
+    dbg_pwm_cmd = PositionControl_OutputToDebugCmd(state.output);
+    dbg_fault_flags = PositionControl_BuildDebugFaultFlags();
+}
+
 // ========== 초기화 ==========
 // Init()함수를 호출 안하는 프로그램의 경우 선언시 초기화만 해도 된다.
 //런타임에 재초기화가 필요한 경우
@@ -55,6 +127,14 @@ int PositionControl_Init(void) {
     control_enabled = false; //제어 비활성화 상태로 시작, 안전장치, Enable() 함수를 명시적으로 호출해야 제어 시작
     control_mode = CTRL_MODE_IDLE;
     state.mode = CTRL_MODE_IDLE;
+    state.last_error = POS_CTRL_OK;
+
+    dbg_enc_raw = 0;
+    dbg_pos_mdeg = 0;
+    dbg_target_mdeg = 0;
+    dbg_err_mdeg = 0;
+    dbg_pwm_cmd = 0;
+    dbg_fault_flags = DBG_FAULT_DISABLED;
 
 #if LATENCY_LOG_ENABLE
     printf("[PosCtrl] Initialized\n");
@@ -100,8 +180,15 @@ static float PID_Calculate(float error, float dt) {
 
 // ========== 메인 제어 루프 (1ms마다 호출!) ==========
 void PositionControl_Update(void) {
+    DBG_LOOP_SET();
+
     if (!control_enabled) {
+        state.current_angle = EncoderReader_GetAngleDeg();
+        state.error = state.target_angle - state.current_angle;
+        state.output = 0.0f;
         PulseControl_Stop();
+        PositionControl_UpdateDebugVars();
+        DBG_LOOP_RESET();
         return;
     }
 
@@ -119,8 +206,11 @@ void PositionControl_Update(void) {
     // 3. 안전 체크 (현재 오차 기준으로 판단)
     LAT_BEGIN(LAT_STAGE_CONTROL);
     if (!PositionControl_CheckSafety()) {
+        state.output = 0.0f;
+        PositionControl_UpdateDebugVars();
         LAT_END(LAT_STAGE_CONTROL);
         PositionControl_EmergencyStop();
+        DBG_LOOP_RESET();
         return;
     }
     
@@ -156,6 +246,9 @@ void PositionControl_Update(void) {
         state.stable_time_ms = 0;
         state.is_stable = false;
     }
+
+    PositionControl_UpdateDebugVars();
+    DBG_LOOP_RESET();
 }
 
 // ========== 목표 설정 ==========
@@ -170,6 +263,8 @@ int PositionControl_SetTarget(float target_deg) {
     state.is_stable = false;
     state.stable_time_ms = 0;
     __enable_irq();
+
+    PositionControl_UpdateDebugVars();
 
     return POS_CTRL_OK;
 }
@@ -227,6 +322,7 @@ int PositionControl_Enable(void) {
     fault_flag = 0;              // EmergencyStop 후 재활성화 시 fault 초기화
     control_mode = CTRL_MODE_POSITION;
     state.mode = CTRL_MODE_POSITION;
+    state.last_error = POS_CTRL_OK;
     Relay_EmergencyRelease();
 
     // [BUG FIX] D항 킥 방지 (Derivative Kick Prevention)
@@ -239,6 +335,7 @@ int PositionControl_Enable(void) {
 #if LATENCY_LOG_ENABLE
     printf("[PosCtrl] Enabled (FLT cleared, angle=%.2f)\r\n", state.current_angle);
 #endif
+    PositionControl_UpdateDebugVars();
     return POS_CTRL_OK;
 }
 
@@ -249,19 +346,23 @@ void PositionControl_Disable(void) {
     control_enabled = false;
     control_mode = CTRL_MODE_IDLE;
     state.mode = CTRL_MODE_IDLE;
+    state.output = 0.0f;
     PulseControl_Stop();
 #if LATENCY_LOG_ENABLE
     printf("[PosCtrl] Disabled\n");
 #endif
+    PositionControl_UpdateDebugVars();
 }
 
 void PositionControl_Reset(void) {
     pid_state.integral = 0.0f;
     pid_state.prev_error = 0.0f;
     state.target_angle = 0.0f;
+    state.output = 0.0f;
 #if LATENCY_LOG_ENABLE
     printf("[PosCtrl] Reset\n");
 #endif
+    PositionControl_UpdateDebugVars();
 }
 
 // ========== 안전 기능 ==========
@@ -276,6 +377,7 @@ bool PositionControl_CheckSafety(void) {
     if (state.current_angle > MAX_ANGLE_DEG + 5.0f ||
         state.current_angle < MIN_ANGLE_DEG - 5.0f) {
         fault_flag = 1;
+        state.last_error = POS_CTRL_ERR_OVER_LIMIT;
         return false;
     }
 
@@ -283,9 +385,11 @@ bool PositionControl_CheckSafety(void) {
     // 참고: 이 체크는 state.error 계산 후에 호출해야 의미 있음
     if (fabsf(state.error) > MAX_TRACKING_ERROR_DEG) {
         fault_flag = 2;
+        state.last_error = POS_CTRL_ERR_SAFETY;
         return false;
     }
 
+    state.last_error = POS_CTRL_OK;
     return true;
 }
 bool PositionControl_IsSafe(void) {
@@ -296,6 +400,7 @@ void PositionControl_EmergencyStop(void) {
     control_enabled = false;
     control_mode = CTRL_MODE_EMERGENCY;
     state.mode = CTRL_MODE_EMERGENCY;
+    state.output = 0.0f;
     PulseControl_Stop();
     pid_state.integral = 0.0f;
     Relay_Emergency();
@@ -304,6 +409,7 @@ void PositionControl_EmergencyStop(void) {
     printf("[PosCtrl] EMERGENCY STOP! FLT=%d Ang:%.1f Err:%.1f\r\n",
            (int)fault_flag, state.current_angle, state.error);
 #endif
+    PositionControl_UpdateDebugVars();
     // 현재는 소프트 정지 + EMG 릴레이 정지를 함께 수행.
     // 재활성화 시에는 상위 모드 전이에서 Relay_EmergencyRelease() 이후
     // PositionControl_Enable()이 호출되어 제어를 재개한다.
