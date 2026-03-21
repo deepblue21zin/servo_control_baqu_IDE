@@ -1,0 +1,883 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2026.03.15 21:29:28 =~=~=~=~=~=~=~=~=~=~=~=
+LATENCY_BATCH_BEGIN,seq=566,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=566,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=566,name=Control,count=2000,avg_cycles=446,p99_cycles=446,max_cycles=446,avg_us=2.478,p99_us=2.478,max_us=2.478
+LATENCY_STAGE,seq=566,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
+LATENCY_STAGE,seq=566,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
+LATENCY_BATCH_END,seq=566
+LATENCY_BATCH_BEGIN,seq=567,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=567,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=567,name=Control,count=2000,avg_cycles=446,p99_cycles=446,max_cycles=446,avg_us=2.478,p99_us=2.478,max_us=2.478
+LATENCY_STAGE,seq=567,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
+LATENCY_STAGE,seq=567,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=567
+LATENCY_BATCH_BEGIN,seq=568,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=568,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=568,name=Control,count=2000,avg_cycles=446,p99_cycles=446,max_cycles=446,avg_us=2.478,p99_us=2.478,max_us=2.478
+LATENCY_STAGE,seq=568,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
+LATENCY_STAGE,seq=568,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,maxLATENCY_BATCH_BEGIN,seq=617,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=617,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=617,name=Control,count=2000,avg_cycles=446,p99_cycles=446,max_cycles=446,avg_us=2.478,p99_us=2.478,max_us=2.478
+LATENCY_STAGE,seq=617,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
+LATENCY_STAGE,seq=617,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=487,avg_us=1.900,p99_us=1.917,max_us=2.706
+LATENCY_BATCH_END,seq=617
+LATENCY_BATCH_BEGIN,seq=618,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=618,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=618,name=Control,count=2000,avg_cycles=446,p99_cycles=446,max_cycles=446,avg_us=2.478,p99_us=2.478,max_us=2.478
+LATENCY_STAGE,seq=618,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
+LATENCY_STAGE,seq=618,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=497,avg_us=1.900,p99_us=1.911,max_us=2.761
+LATENCY_BATCH_END,seq=618
+[KB] unknown key 'r' (0x72)
+[KB] control enabled
+LATENCY_BATCH_BEGIN,seq=619,samples=2000,core_hz=180000000,deadline_miss=2
+LATENCY_STAGE,seq=619,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=619,name=Control,count=2000,avg_cycles=447,p99_cycles=449,max_cycles=455,avg_us=2.483,p99_us=2.494,max_us=2.528
+LATENCY_STAGE,seq=619,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
+LATENCY_STAGE,seq=619,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
+LATENCY_BATCH_END,seq=619
+LATENCY_BATCH_BEGIN,seq=620,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=620,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=620,name=Control,count=2000,avg_cycles=447,p99_cycles=449,max_cycles=449,avg_us=2.483,p99_us=2.494,max_us=2.494
+LATENCY_STAGE,seq=620,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
+LATENCY_STAGE,seq=620,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=497,avg_us=1.900,p99_us=1.917,max_us=2.761
+LATENCY_BATCH_END,seq=620
+LATENCY_BATCH_BEGIN,seq=621,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=621,name=Sense,count=2000,avg_cycles=168,p99_cycles=173,max_cycles=174,avg_us=0.933,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=621,name=Control,count=2000,avg_cycles=446,p99_cycles=446,max_cycles=446,avg_us=2.478,p99_us=2.478,max_us=2.478
+LATENCY_STAGE,seq=621,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
+LATENCY_STAGE,seq=621,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=621
+LATENCY_BATCH_BEGIN,seq=622,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=622,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=622,name=Control,count=2000,avg_cycles=446,p99_cycles=446,max_cycles=446,avg_us=2.478,p99_us=2.478,max_us=2.478
+LATENCY_STAGE,seq=622,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
+LATENCY_STAGE,seq=622,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=622
+[KB] target steer=-30.0 deg motor=-360.0 deg ret=0
+[KB][target] T=-30.00deg C=0.00deg E=45.00deg O=10000 DIR=1 ENC=32769
+LATENCY_BATCH_BEGIN,seq=623,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=623,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=623,name=Control,count=2000,avg_cycles=452,p99_cycles=460,max_cycles=466,avg_us=2.511,p99_us=2.556,max_us=2.589
+LATENCY_STAGE,seq=623,name=Actuate,count=2000,avg_cycles=408,p99_cycles=412,max_cycles=456,avg_us=2.267,p99_us=2.289,max_us=2.533
+LATENCY_STAGE,seq=623,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=623
+LATENCY_BATCH_BEGIN,seq=624,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=624,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=624,name=Control,count=2000,avg_cycles=460,p99_cycles=460,max_cycles=460,avg_us=2.556,p99_us=2.556,max_us=2.556
+LATENCY_STAGE,seq=624,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=624,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=624
+[KB][snapshot] T=-30.00deg C=0.00deg E=-30.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=625,samples=2000,core_hz=180000000,deadline_miss=6
+LATENCY_STAGE,seq=625,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=625,name=Control,count=2000,avg_cycles=460,p99_cycles=460,max_cycles=466,avg_us=2.556,p99_us=2.556,max_us=2.589
+LATENCY_STAGE,seq=625,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=625,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=625
+LATENCY_BATCH_BEGIN,seq=626,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=626,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=626,name=Control,count=2000,avg_cycles=463,p99_cycles=465,max_cycles=465,avg_us=2.572,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=626,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=626,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=626
+[KB] target steer=-45.0 deg motor=-540.0 deg ret=0
+[KB][target] T=-45.00deg C=0.00deg E=-30.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=627,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=627,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=627,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=471,avg_us=2.583,p99_us=2.583,max_us=2.617
+LATENCY_STAGE,seq=627,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=627,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=487,avg_us=1.900,p99_us=1.911,max_us=2.706
+LATENCY_BATCH_END,seq=627
+LATENCY_BATCH_BEGIN,seq=628,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=628,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=628,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=628,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=628,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=628
+[KB] target steer=0.0 deg motor=0.0 deg ret=0
+[KB][target] T=0.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=629,samples=2000,core_hz=180000000,deadline_miss=10
+LATENCY_STAGE,seq=629,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=629,name=Control,count=2000,avg_cycles=458,p99_cycles=465,max_cycles=465,avg_us=2.544,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=629,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
+LATENCY_STAGE,seq=629,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=489,avg_us=1.900,p99_us=1.917,max_us=2.717
+LATENCY_BATCH_END,seq=629
+LATENCY_BATCH_BEGIN,seq=630,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=630,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=630,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=458,avg_us=2.517,p99_us=2.517,max_us=2.544
+LATENCY_STAGE,seq=630,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=630,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
+LATENCY_BATCH_END,seq=630
+[KB] target steer=45.0 deg motor=540.0 deg ret=0
+[KB][target] T=45.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=631,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=631,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=631,name=Control,count=2000,avg_cycles=449,p99_cycles=453,max_cycles=458,avg_us=2.494,p99_us=2.517,max_us=2.544
+LATENCY_STAGE,seq=631,name=Actuate,count=2000,avg_cycles=407,p99_cycles=412,max_cycles=455,avg_us=2.261,p99_us=2.289,max_us=2.528
+LATENCY_STAGE,seq=631,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=631
+[KB] target steer=0.0 deg motor=0.0 deg ret=0
+[KB][target] T=0.00deg C=0.00deg E=45.00deg O=10000 DIR=1 ENC=32769
+LATENCY_BATCH_BEGIN,seq=632,samples=2000,core_hz=180000000,deadline_miss=10
+LATENCY_STAGE,seq=632,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=632,name=Control,count=2000,avg_cycles=451,p99_cycles=453,max_cycles=466,avg_us=2.506,p99_us=2.517,max_us=2.589
+LATENCY_STAGE,seq=632,name=Actuate,count=2000,avg_cycles=406,p99_cycles=408,max_cycles=457,avg_us=2.256,p99_us=2.267,max_us=2.539
+LATENCY_STAGE,seq=632,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
+LATENCY_BATCH_END,seq=632
+[KB] target steer=-10.0 deg motor=-120.0 deg ret=0
+[KB][target] T=-10.00deg C=0.00deg E=-0.00deg O=1542 DIR=1 ENC=32769
+LATENCY_BATCH_BEGIN,seq=633,samples=2000,core_hz=180000000,deadline_miss=10
+LATENCY_STAGE,seq=633,name=Sense,count=2000,avg_cycles=167,p99_cycles=172,max_cycles=174,avg_us=0.928,p99_us=0.956,max_us=0.967
+LATENCY_STAGE,seq=633,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=466,avg_us=2.517,p99_us=2.517,max_us=2.589
+LATENCY_STAGE,seq=633,name=Actuate,count=2000,avg_cycles=407,p99_cycles=413,max_cycles=456,avg_us=2.261,p99_us=2.294,max_us=2.533
+LATENCY_STAGE,seq=633,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=484,avg_us=1.900,p99_us=1.911,max_us=2.689
+LATENCY_BATCH_END,seq=633
+LATENCY_BATCH_BEGIN,seq=634,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=634,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=634,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=453,avg_us=2.517,p99_us=2.517,max_us=2.517
+LATENCY_STAGE,seq=634,name=Actuate,count=2000,avg_cycles=412,p99_cycles=413,max_cycles=413,avg_us=2.289,p99_us=2.294,max_us=2.294
+LATENCY_STAGE,seq=634,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=490,avg_us=1.900,p99_us=1.917,max_us=2.722
+LATENCY_BATCH_END,seq=634
+[KB] target steer=-45.0 deg motor=-540.0 deg ret=0
+[KB][target] T=-45.00deg C=0.00deg E=-10.00deg O=-5975 DIR=0 ENC=32769
+[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=635,samples=2000,core_hz=180000000,deadline_miss=17
+LATENCY_STAGE,seq=635,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=635,name=Control,count=2000,avg_cycles=459,p99_cycles=465,max_cycles=466,avg_us=2.550,p99_us=2.583,max_us=2.589
+LATENCY_STAGE,seq=635,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=635,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=635
+[KB] target steer=40.0 deg motor=480.0 deg ret=0
+[KB][target] T=40.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=636,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=636,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=636,name=Control,count=2000,avg_cycles=463,p99_cycles=465,max_cycles=613,avg_us=2.572,p99_us=2.583,max_us=3.406
+LATENCY_STAGE,seq=636,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=455,avg_us=2.283,p99_us=2.289,max_us=2.528
+LATENCY_STAGE,seq=636,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=636
+LATENCY_BATCH_BEGIN,seq=637,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=637,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=637,name=Control,count=2000,avg_cycles=449,p99_cycles=449,max_cycles=449,avg_us=2.494,p99_us=2.494,max_us=2.494
+LATENCY_STAGE,seq=637,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
+LATENCY_STAGE,seq=637,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=637
+[KB] target steer=-40.0 deg motor=-480.0 deg ret=0
+[KB][target] T=-40.00deg C=0.00deg E=40.00deg O=10000 DIR=1 ENC=32769
+[KB][snapshot] T=-40.00deg C=0.00deg E=-40.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=638,samples=2000,core_hz=180000000,deadline_miss=18
+LATENCY_STAGE,seq=638,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=638,name=Control,count=2000,avg_cycles=459,p99_cycles=460,max_cycles=466,avg_us=2.550,p99_us=2.556,max_us=2.589
+LATENCY_STAGE,seq=638,name=Actuate,count=2000,avg_cycles=410,p99_cycles=412,max_cycles=456,avg_us=2.278,p99_us=2.289,max_us=2.533
+LATENCY_STAGE,seq=638,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=638
+[KB] target steer=-45.0 deg motor=-540.0 deg ret=0
+[KB][target] T=-45.00deg C=0.00deg E=-40.00deg O=-10000 DIR=0 ENC=32769
+[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=639,samples=2000,core_hz=180000000,deadline_miss=23
+LATENCY_STAGE,seq=639,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=180,avg_us=0.928,p99_us=0.961,max_us=1.000
+LATENCY_STAGE,seq=639,name=Control,count=2000,avg_cycles=463,p99_cycles=465,max_cycles=471,avg_us=2.572,p99_us=2.583,max_us=2.617
+LATENCY_STAGE,seq=639,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=639,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=639
+[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=640,samples=2000,core_hz=180000000,deadline_miss=57
+LATENCY_STAGE,seq=640,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=640,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=471,avg_us=2.583,p99_us=2.583,max_us=2.617
+LATENCY_STAGE,seq=640,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=640,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=497,avg_us=1.900,p99_us=1.911,max_us=2.761
+LATENCY_BATCH_END,seq=640
+[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=641,samples=2000,core_hz=180000000,deadline_miss=12
+LATENCY_STAGE,seq=641,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=641,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=471,avg_us=2.583,p99_us=2.583,max_us=2.617
+LATENCY_STAGE,seq=641,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=641,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=641
+[KB] target steer=0.0 deg motor=0.0 deg ret=0
+[KB][target] T=0.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=642,samples=2000,core_hz=180000000,deadline_miss=52
+LATENCY_STAGE,seq=642,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=642,name=Control,count=2000,avg_cycles=453,p99_cycles=465,max_cycles=465,avg_us=2.517,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=642,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
+LATENCY_STAGE,seq=642,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=486,avg_us=1.900,p99_us=1.917,max_us=2.700
+LATENCY_BATCH_END,seq=642
+[KB] target steer=-45.0 deg motor=-540.0 deg ret=0
+[KB][target] T=-45.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=643,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=643,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=643,name=Control,count=2000,avg_cycles=461,p99_cycles=465,max_cycles=471,avg_us=2.561,p99_us=2.583,max_us=2.617
+LATENCY_STAGE,seq=643,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=643,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
+LATENCY_BATCH_END,seq=643
+LATENCY_BATCH_BEGIN,seq=644,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=644,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=644,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=644,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=644,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
+LATENCY_BATCH_END,seq=644
+[KB] target steer=0.0 deg motor=0.0 deg ret=0
+[KB][target] T=0.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=645,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=645,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=645,name=Control,count=2000,avg_cycles=463,p99_cycles=465,max_cycles=465,avg_us=2.572,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=645,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
+LATENCY_STAGE,seq=645,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=645
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=646,samples=2000,core_hz=180000000,deadline_miss=65
+LATENCY_STAGE,seq=646,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=646,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=464,avg_us=2.517,p99_us=2.517,max_us=2.578
+LATENCY_STAGE,seq=646,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=646,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=499,avg_us=1.900,p99_us=1.917,max_us=2.772
+LATENCY_BATCH_END,seq=646
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=647,samples=2000,core_hz=180000000,deadline_miss=17
+LATENCY_STAGE,seq=647,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=647,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=464,avg_us=2.517,p99_us=2.517,max_us=2.578
+LATENCY_STAGE,seq=647,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=647,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=486,avg_us=1.900,p99_us=1.911,max_us=2.700
+LATENCY_BATCH_END,seq=647
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=648,samples=2000,core_hz=180000000,deadline_miss=35
+LATENCY_STAGE,seq=648,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=180,avg_us=0.928,p99_us=0.961,max_us=1.000
+LATENCY_STAGE,seq=648,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=464,avg_us=2.517,p99_us=2.517,max_us=2.578
+LATENCY_STAGE,seq=648,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=648,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=648
+[KB] target steer=-45.0 deg motor=-540.0 deg ret=0
+[KB][target] T=-45.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=649,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=649,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=649,name=Control,count=2000,avg_cycles=461,p99_cycles=465,max_cycles=471,avg_us=2.561,p99_us=2.583,max_us=2.617
+LATENCY_STAGE,seq=649,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=649,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=538,avg_us=1.900,p99_us=1.917,max_us=2.989
+LATENCY_BATCH_END,seq=649
+LATENCY_BATCH_BEGIN,seq=650,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=650,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=650,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=650,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=650,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=650
+LATENCY_BATCH_BEGIN,seq=651,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=651,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=651,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=651,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=651,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=489,avg_us=1.900,p99_us=1.917,max_us=2.717
+LATENCY_BATCH_END,seq=651
+[KB] invalid target "--100"
+LATENCY_BATCH_BEGIN,seq=652,samples=2000,core_hz=180000000,deadline_miss=2
+LATENCY_STAGE,seq=652,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=652,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=471,avg_us=2.583,p99_us=2.583,max_us=2.617
+LATENCY_STAGE,seq=652,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=652,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=487,avg_us=1.900,p99_us=1.917,max_us=2.706
+LATENCY_BATCH_END,seq=652
+LATENCY_BATCH_BEGIN,seq=653,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=653,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=653,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=653,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=653,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=653
+[KB] target steer=-40.0 deg motor=-480.0 deg ret=0
+[KB][target] T=-40.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=654,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=654,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=177,avg_us=0.928,p99_us=0.961,max_us=0.983
+LATENCY_STAGE,seq=654,name=Control,count=2000,avg_cycles=464,p99_cycles=465,max_cycles=465,avg_us=2.578,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=654,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
+LATENCY_STAGE,seq=654,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=499,avg_us=1.900,p99_us=1.917,max_us=2.772
+LATENCY_BATCH_END,seq=654
+[KB] target steer=0.0 deg motor=0.0 deg ret=0
+[KB][target] T=0.00deg C=0.00deg E=-40.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=655,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=655,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=177,avg_us=0.928,p99_us=0.961,max_us=0.983
+LATENCY_STAGE,seq=655,name=Control,count=2000,avg_cycles=464,p99_cycles=465,max_cycles=465,avg_us=2.578,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=655,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
+LATENCY_STAGE,seq=655,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=655
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=656,samples=2000,core_hz=180000000,deadline_miss=39
+LATENCY_STAGE,seq=656,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=656,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=464,avg_us=2.517,p99_us=2.517,max_us=2.578
+LATENCY_STAGE,seq=656,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=656,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=656
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB] target steer=-45.0 deg motor=-540.0 deg ret=0
+[KB][target] T=-45.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=657,samples=2000,core_hz=180000000,deadline_miss=23
+LATENCY_STAGE,seq=657,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=657,name=Control,count=2000,avg_cycles=457,p99_cycles=465,max_cycles=471,avg_us=2.539,p99_us=2.583,max_us=2.617
+LATENCY_STAGE,seq=657,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=657,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=495,avg_us=1.900,p99_us=1.911,max_us=2.750
+LATENCY_BATCH_END,seq=657
+LATENCY_BATCH_BEGIN,seq=658,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=658,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=658,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=658,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=658,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
+LATENCY_BATCH_END,seq=658
+LATENCY_BATCH_BEGIN,seq=659,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=659,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=659,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=659,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=659,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=493,avg_us=1.900,p99_us=1.917,max_us=2.739
+LATENCY_BATCH_END,seq=659
+LATENCY_BATCH_BEGIN,seq=660,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=660,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=660,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=660,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=660,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=497,avg_us=1.900,p99_us=1.917,max_us=2.761
+LATENCY_BATCH_END,seq=660
+LATENCY_BATCH_BEGIN,seq=661,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=661,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=661,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=661,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=661,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=483,avg_us=1.900,p99_us=1.917,max_us=2.683
+LATENCY_BATCH_END,seq=661
+LATENCY_BATCH_BEGIN,seq=662,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=662,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=662,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=662,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=662,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=483,avg_us=1.900,p99_us=1.917,max_us=2.683
+LATENCY_BATCH_END,seq=662
+[KB] target steer=-45.0 deg motor=-540.0 deg ret=0
+[KB][target] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=663,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=663,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=663,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=471,avg_us=2.583,p99_us=2.583,max_us=2.617
+LATENCY_STAGE,seq=663,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=663,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=490,avg_us=1.900,p99_us=1.917,max_us=2.722
+LATENCY_BATCH_END,seq=663
+LATENCY_BATCH_BEGIN,seq=664,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=664,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=664,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=664,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=664,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=664
+[KB] target steer=-30.0 deg motor=-360.0 deg ret=0
+[KB][target] T=-30.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=665,samples=2000,core_hz=180000000,deadline_miss=12
+LATENCY_STAGE,seq=665,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=173,avg_us=0.928,p99_us=0.961,max_us=0.961
+LATENCY_STAGE,seq=665,name=Control,count=2000,avg_cycles=464,p99_cycles=465,max_cycles=465,avg_us=2.578,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=665,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=461,avg_us=2.283,p99_us=2.289,max_us=2.561
+LATENCY_STAGE,seq=665,name=Comms,count=2048,avg_cycles=1412,p99_cycles=345,max_cycles=2190852,avg_us=7.844,p99_us=1.917,max_us=12171.399
+LATENCY_BATCH_END,seq=665
+LATENCY_BATCH_BEGIN,seq=666,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=666,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=666,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=666,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=666,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=666
+[KB] target steer=0.0 deg motor=0.0 deg ret=0
+[KB][target] T=0.00deg C=0.00deg E=-30.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=667,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=667,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=177,avg_us=0.928,p99_us=0.961,max_us=0.983
+LATENCY_STAGE,seq=667,name=Control,count=2000,avg_cycles=463,p99_cycles=465,max_cycles=612,avg_us=2.572,p99_us=2.583,max_us=3.400
+LATENCY_STAGE,seq=667,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
+LATENCY_STAGE,seq=667,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=667
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=668,samples=2000,core_hz=180000000,deadline_miss=36
+LATENCY_STAGE,seq=668,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=668,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=464,avg_us=2.517,p99_us=2.517,max_us=2.578
+LATENCY_STAGE,seq=668,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=668,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=668
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB] target steer=-45.0 deg motor=-540.0 deg ret=0
+[KB][target] T=-45.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=669,samples=2000,core_hz=180000000,deadline_miss=17
+LATENCY_STAGE,seq=669,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=669,name=Control,count=2000,avg_cycles=455,p99_cycles=465,max_cycles=471,avg_us=2.528,p99_us=2.583,max_us=2.617
+LATENCY_STAGE,seq=669,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=669,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=499,avg_us=1.900,p99_us=1.917,max_us=2.772
+LATENCY_BATCH_END,seq=669
+LATENCY_BATCH_BEGIN,seq=670,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=670,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=670,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=670,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=670,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
+LATENCY_BATCH_END,seq=670
+LATENCY_BATCH_BEGIN,seq=671,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=671,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=671,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=671,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=671,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=671
+LATENCY_BATCH_BEGIN,seq=672,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=672,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=672,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=672,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=672,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=493,avg_us=1.900,p99_us=1.917,max_us=2.739
+LATENCY_BATCH_END,seq=672
+LATENCY_BATCH_BEGIN,seq=673,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=673,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=673,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=673,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=673,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=499,avg_us=1.900,p99_us=1.917,max_us=2.772
+LATENCY_BATCH_END,seq=673
+LATENCY_BATCH_BEGIN,seq=674,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=674,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=674,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=674,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=674,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=487,avg_us=1.900,p99_us=1.917,max_us=2.706
+LATENCY_BATCH_END,seq=674
+[KB] target steer=-40.0 deg motor=-480.0 deg ret=0
+[KB][target] T=-40.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=675,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=675,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=675,name=Control,count=2000,avg_cycles=464,p99_cycles=465,max_cycles=465,avg_us=2.578,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=675,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
+LATENCY_STAGE,seq=675,name=Comms,count=2048,avg_cycles=343,p99_cycles=345,max_cycles=495,avg_us=1.906,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=675
+LATENCY_BATCH_BEGIN,seq=676,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=676,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=676,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=676,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=676,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=676
+[KB] target steer=-1.0 deg motor=-12.0 deg ret=0
+[KB][target] T=-1.00deg C=0.00deg E=-40.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=677,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=677,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=677,name=Control,count=2000,avg_cycles=460,p99_cycles=465,max_cycles=465,avg_us=2.556,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=677,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
+LATENCY_STAGE,seq=677,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=677
+[KB][snapshot] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
+[KB][snapshot] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
+[KB][snapshot] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
+[KB][snapshot] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
+[KB][snapshot] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=678,samples=2000,core_hz=180000000,deadline_miss=30
+LATENCY_STAGE,seq=678,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=678,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=464,avg_us=2.544,p99_us=2.544,max_us=2.578
+LATENCY_STAGE,seq=678,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=678,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=678
+[KB] target steer=-1.0 deg motor=-12.0 deg ret=0
+[KB][target] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
+[KB][snapshot] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
+[KB][snapshot] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
+[KB][snapshot] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=679,samples=2000,core_hz=180000000,deadline_miss=29
+LATENCY_STAGE,seq=679,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=679,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=464,avg_us=2.544,p99_us=2.544,max_us=2.578
+LATENCY_STAGE,seq=679,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=555,avg_us=2.283,p99_us=2.289,max_us=3.083
+LATENCY_STAGE,seq=679,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=679
+[KB] target steer=-2.0 deg motor=-24.0 deg ret=0
+[KB][target] T=-2.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
+[KB][snapshot] T=-2.00deg C=0.00deg E=-2.00deg O=-6200 DIR=0 ENC=32769
+[KB][snapshot] T=-2.00deg C=0.00deg E=-2.00deg O=-6200 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=680,samples=2000,core_hz=180000000,deadline_miss=23
+LATENCY_STAGE,seq=680,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=680,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=471,avg_us=2.544,p99_us=2.544,max_us=2.617
+LATENCY_STAGE,seq=680,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=680,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=485,avg_us=1.900,p99_us=1.911,max_us=2.694
+LATENCY_BATCH_END,seq=680
+LATENCY_BATCH_BEGIN,seq=681,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=681,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=681,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=681,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=681,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=681
+[KB] target steer=-3.0 deg motor=-36.0 deg ret=0
+[KB][target] T=-3.00deg C=0.00deg E=-2.00deg O=-6200 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=682,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=682,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=682,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=471,avg_us=2.544,p99_us=2.544,max_us=2.617
+LATENCY_STAGE,seq=682,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=682,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=682
+LATENCY_BATCH_BEGIN,seq=683,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=683,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=683,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=683,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=683,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=683
+[KB] target steer=-2.0 deg motor=-24.0 deg ret=0
+[KB][target] T=-2.00deg C=0.00deg E=-3.00deg O=-6800 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=684,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=684,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=179,avg_us=0.928,p99_us=0.961,max_us=0.994
+LATENCY_STAGE,seq=684,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=460,avg_us=2.544,p99_us=2.544,max_us=2.556
+LATENCY_STAGE,seq=684,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
+LATENCY_STAGE,seq=684,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=499,avg_us=1.900,p99_us=1.917,max_us=2.772
+LATENCY_BATCH_END,seq=684
+LATENCY_BATCH_BEGIN,seq=685,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=685,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=685,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=685,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=685,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=484,avg_us=1.900,p99_us=1.911,max_us=2.689
+LATENCY_BATCH_END,seq=685
+[KB] target steer=-10.0 deg motor=-120.0 deg ret=0
+[KB][target] T=-10.00deg C=0.00deg E=-2.00deg O=-6200 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=686,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=686,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=173,avg_us=0.928,p99_us=0.961,max_us=0.961
+LATENCY_STAGE,seq=686,name=Control,count=2000,avg_cycles=462,p99_cycles=465,max_cycles=471,avg_us=2.567,p99_us=2.583,max_us=2.617
+LATENCY_STAGE,seq=686,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=686,name=Comms,count=2048,avg_cycles=343,p99_cycles=345,max_cycles=537,avg_us=1.906,p99_us=1.917,max_us=2.983
+LATENCY_BATCH_END,seq=686
+[KB] target steer=0.0 deg motor=0.0 deg ret=0
+[KB][target] T=0.00deg C=0.00deg E=-10.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=687,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=687,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=687,name=Control,count=2000,avg_cycles=463,p99_cycles=465,max_cycles=465,avg_us=2.572,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=687,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
+LATENCY_STAGE,seq=687,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=499,avg_us=1.900,p99_us=1.911,max_us=2.772
+LATENCY_BATCH_END,seq=687
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=688,samples=2000,core_hz=180000000,deadline_miss=23
+LATENCY_STAGE,seq=688,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=688,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=464,avg_us=2.517,p99_us=2.517,max_us=2.578
+LATENCY_STAGE,seq=688,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=688,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=688
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB] target steer=-1.0 deg motor=-12.0 deg ret=0
+[KB][target] T=-1.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=689,samples=2000,core_hz=180000000,deadline_miss=23
+LATENCY_STAGE,seq=689,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=689,name=Control,count=2000,avg_cycles=456,p99_cycles=458,max_cycles=471,avg_us=2.533,p99_us=2.544,max_us=2.617
+LATENCY_STAGE,seq=689,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=689,name=Comms,count=2048,avg_cycles=950,p99_cycles=345,max_cycles=1244580,avg_us=5.278,p99_us=1.917,max_us=6914.333
+LATENCY_BATCH_END,seq=689
+LATENCY_BATCH_BEGIN,seq=690,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=690,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=690,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=690,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=690,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=489,avg_us=1.900,p99_us=1.917,max_us=2.717
+LATENCY_BATCH_END,seq=690
+LATENCY_BATCH_BEGIN,seq=691,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=691,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=691,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=691,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=691,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=691
+LATENCY_BATCH_BEGIN,seq=692,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=692,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=692,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=692,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=692,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=692
+LATENCY_BATCH_BEGIN,seq=693,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=693,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=693,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=693,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=693,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=693
+LATENCY_BATCH_BEGIN,seq=694,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=694,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=180,avg_us=0.928,p99_us=0.961,max_us=1.000
+LATENCY_STAGE,seq=694,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=694,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=694,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=694
+LATENCY_BATCH_BEGIN,seq=695,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=695,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=695,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=695,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=695,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=695
+LATENCY_BATCH_BEGIN,seq=696,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=696,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=696,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=696,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=696,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=696
+LATENCY_BATCH_BEGIN,seq=697,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=697,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=697,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=697,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=697,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=697
+[KB] target steer=-10.0 deg motor=-120.0 deg ret=0
+[KB][target] T=-10.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=698,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=698,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=698,name=Control,count=2000,avg_cycles=458,p99_cycles=465,max_cycles=471,avg_us=2.544,p99_us=2.583,max_us=2.617
+LATENCY_STAGE,seq=698,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=698,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=698
+LATENCY_BATCH_BEGIN,seq=699,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=699,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=699,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=699,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=699,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=699
+LATENCY_BATCH_BEGIN,seq=700,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=700,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=700,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=700,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=700,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=700
+[KB] target steer=0.0 deg motor=0.0 deg ret=0
+[KB][target] T=0.00deg C=0.00deg E=-10.00deg O=-10000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=701,samples=2000,core_hz=180000000,deadline_miss=10
+LATENCY_STAGE,seq=701,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=701,name=Control,count=2000,avg_cycles=463,p99_cycles=465,max_cycles=465,avg_us=2.572,p99_us=2.583,max_us=2.583
+LATENCY_STAGE,seq=701,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
+LATENCY_STAGE,seq=701,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=701
+[KB] target steer=0.0 deg motor=0.0 deg ret=0
+[KB][target] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB] target steer=0.0 deg motor=0.0 deg ret=0
+[KB][target] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=702,samples=2000,core_hz=180000000,deadline_miss=20
+LATENCY_STAGE,seq=702,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=702,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=464,avg_us=2.517,p99_us=2.517,max_us=2.578
+LATENCY_STAGE,seq=702,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=702,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=495,avg_us=1.900,p99_us=1.911,max_us=2.750
+LATENCY_BATCH_END,seq=702
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=703,samples=2000,core_hz=180000000,deadline_miss=30
+LATENCY_STAGE,seq=703,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=703,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=464,avg_us=2.517,p99_us=2.517,max_us=2.578
+LATENCY_STAGE,seq=703,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=703,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=703
+[KB] target steer=-1.0 deg motor=-12.0 deg ret=0
+[KB][target] T=-1.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=704,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=704,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=704,name=Control,count=2000,avg_cycles=456,p99_cycles=458,max_cycles=471,avg_us=2.533,p99_us=2.544,max_us=2.617
+LATENCY_STAGE,seq=704,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=704,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=704
+LATENCY_BATCH_BEGIN,seq=705,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=705,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=705,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=705,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=705,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=486,avg_us=1.900,p99_us=1.911,max_us=2.700
+LATENCY_BATCH_END,seq=705
+[KB] target steer=-2.0 deg motor=-24.0 deg ret=0
+[KB][target] T=-2.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
+[KB] target steer=-3.0 deg motor=-36.0 deg ret=0
+[KB][target] T=-3.00deg C=0.00deg E=-2.00deg O=-6200 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=706,samples=2000,core_hz=180000000,deadline_miss=21
+LATENCY_STAGE,seq=706,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=706,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=471,avg_us=2.544,p99_us=2.544,max_us=2.617
+LATENCY_STAGE,seq=706,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=706,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=567,avg_us=1.900,p99_us=1.911,max_us=3.150
+LATENCY_BATCH_END,seq=706
+[KB] target steer=-2.0 deg motor=-24.0 deg ret=0
+[KB][target] T=-2.00deg C=0.00deg E=-3.00deg O=-6800 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=707,samples=2000,core_hz=180000000,deadline_miss=10
+LATENCY_STAGE,seq=707,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=707,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=460,avg_us=2.544,p99_us=2.544,max_us=2.556
+LATENCY_STAGE,seq=707,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
+LATENCY_STAGE,seq=707,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=707
+LATENCY_BATCH_BEGIN,seq=708,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=708,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=708,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=708,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=708,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=708
+[KB] target steer=-1.0 deg motor=-12.0 deg ret=0
+[KB][target] T=-1.00deg C=0.00deg E=-2.00deg O=-6200 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=709,samples=2000,core_hz=180000000,deadline_miss=11
+LATENCY_STAGE,seq=709,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=709,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=460,avg_us=2.544,p99_us=2.544,max_us=2.556
+LATENCY_STAGE,seq=709,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
+LATENCY_STAGE,seq=709,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=709
+LATENCY_BATCH_BEGIN,seq=710,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=710,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=177,avg_us=0.928,p99_us=0.961,max_us=0.983
+LATENCY_STAGE,seq=710,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=710,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=710,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=497,avg_us=1.900,p99_us=1.917,max_us=2.761
+LATENCY_BATCH_END,seq=710
+LATENCY_BATCH_BEGIN,seq=711,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=711,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=711,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=711,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=711,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=711
+LATENCY_BATCH_BEGIN,seq=712,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=712,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=712,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=712,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=712,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=712
+LATENCY_BATCH_BEGIN,seq=713,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=713,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=713,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=713,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=713,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=713
+LATENCY_BATCH_BEGIN,seq=714,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=714,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=714,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=714,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=714,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=487,avg_us=1.900,p99_us=1.917,max_us=2.706
+LATENCY_BATCH_END,seq=714
+LATENCY_BATCH_BEGIN,seq=715,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=715,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=715,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=715,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=715,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=487,avg_us=1.900,p99_us=1.917,max_us=2.706
+LATENCY_BATCH_END,seq=715
+LATENCY_BATCH_BEGIN,seq=716,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=716,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=716,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=716,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=716,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=497,avg_us=1.900,p99_us=1.917,max_us=2.761
+LATENCY_BATCH_END,seq=716
+LATENCY_BATCH_BEGIN,seq=717,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=717,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=717,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=717,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=717,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=717
+LATENCY_BATCH_BEGIN,seq=718,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=718,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=718,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=718,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=718,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=718
+LATENCY_BATCH_BEGIN,seq=719,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=719,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=719,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=719,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=719,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
+LATENCY_BATCH_END,seq=719
+LATENCY_BATCH_BEGIN,seq=720,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=720,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=720,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=720,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=720,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=720
+LATENCY_BATCH_BEGIN,seq=721,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=721,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=721,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=721,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=721,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=721
+LATENCY_BATCH_BEGIN,seq=722,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=722,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=722,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=722,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=722,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=722
+LATENCY_BATCH_BEGIN,seq=723,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=723,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=723,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=723,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=723,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=487,avg_us=1.900,p99_us=1.917,max_us=2.706
+LATENCY_BATCH_END,seq=723
+LATENCY_BATCH_BEGIN,seq=724,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=724,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=724,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=724,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=724,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=724
+LATENCY_BATCH_BEGIN,seq=725,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=725,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=725,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=600,avg_us=2.544,p99_us=2.544,max_us=3.333
+LATENCY_STAGE,seq=725,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=725,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=725
+LATENCY_BATCH_BEGIN,seq=726,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=726,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=726,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=726,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=726,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
+LATENCY_BATCH_END,seq=726
+LATENCY_BATCH_BEGIN,seq=727,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=727,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=727,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
+LATENCY_STAGE,seq=727,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=727,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=727
+[KB] target steer=0.0 deg motor=0.0 deg ret=0
+[KB][target] T=0.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
+LATENCY_BATCH_BEGIN,seq=728,samples=2000,core_hz=180000000,deadline_miss=10
+LATENCY_STAGE,seq=728,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=728,name=Control,count=2000,avg_cycles=456,p99_cycles=458,max_cycles=460,avg_us=2.533,p99_us=2.544,max_us=2.556
+LATENCY_STAGE,seq=728,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
+LATENCY_STAGE,seq=728,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=728
+LATENCY_BATCH_BEGIN,seq=729,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=729,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=729,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=458,avg_us=2.517,p99_us=2.517,max_us=2.544
+LATENCY_STAGE,seq=729,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=729,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=495,avg_us=1.900,p99_us=1.911,max_us=2.750
+LATENCY_BATCH_END,seq=729
+LATENCY_BATCH_BEGIN,seq=730,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=730,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=730,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=458,avg_us=2.517,p99_us=2.517,max_us=2.544
+LATENCY_STAGE,seq=730,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=730,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=499,avg_us=1.900,p99_us=1.917,max_us=2.772
+LATENCY_BATCH_END,seq=730
+LATENCY_BATCH_BEGIN,seq=731,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=731,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=731,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=458,avg_us=2.517,p99_us=2.517,max_us=2.544
+LATENCY_STAGE,seq=731,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=731,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=731
+LATENCY_BATCH_BEGIN,seq=732,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=732,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=732,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=458,avg_us=2.517,p99_us=2.517,max_us=2.544
+LATENCY_STAGE,seq=732,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=732,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
+LATENCY_BATCH_END,seq=732
+LATENCY_BATCH_BEGIN,seq=733,samples=2000,core_hz=180000000,deadline_miss=0
+LATENCY_STAGE,seq=733,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
+LATENCY_STAGE,seq=733,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=458,avg_us=2.517,p99_us=2.517,max_us=2.544
+LATENCY_STAGE,seq=733,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
+LATENCY_STAGE,seq=733,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=499,avg_us=1.900,p99_us=1.911,max_us=2.772
+LATENCY_BATCH_END,seq=733
+L

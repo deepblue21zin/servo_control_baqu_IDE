@@ -1,0 +1,66 @@
+PROJECT_NAME           = "servo_control_baqu"
+PROJECT_BRIEF          = "STM32F429 steering servo control firmware"
+OUTPUT_DIRECTORY       = Doc/doxygen
+CREATE_SUBDIRS         = NO
+ALLOW_UNICODE_NAMES    = YES
+OUTPUT_LANGUAGE        = English
+
+MARKDOWN_SUPPORT       = YES
+TOC_INCLUDE_HEADINGS   = 2
+USE_MDFILE_AS_MAINPAGE = README.md
+
+OPTIMIZE_OUTPUT_FOR_C  = YES
+EXTRACT_ALL            = YES
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_CLASSES  = NO
+SORT_MEMBER_DOCS       = NO
+
+FULL_PATH_NAMES        = NO
+STRIP_FROM_PATH        = .
+
+INPUT                  = README.md \
+                         Core/Inc \
+                         Core/Src
+FILE_PATTERNS          = *.md \
+                         *.h \
+                         *.c
+RECURSIVE              = YES
+EXCLUDE                = Core/Startup
+EXCLUDE_PATTERNS       = */syscalls.c \
+                         */sysmem.c \
+                         */system_stm32f4xx.c
+
+WARN_IF_UNDOCUMENTED   = NO
+WARN_IF_DOC_ERROR      = YES
+QUIET                  = NO
+
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+HTML_OUTPUT            = html
+GENERATE_TREEVIEW      = YES
+SEARCHENGINE           = YES
+
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = YES
+VERBATIM_HEADERS       = YES
+REFERENCES_RELATION    = YES
+REFERENCED_BY_RELATION = YES
+
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = YES
+SKIP_FUNCTION_MACROS   = YES
+EXPAND_ONLY_PREDEF     = NO
+
+HAVE_DOT               = YES
+DOT_PATH               = "C:/Program Files/Graphviz/bin"
+DOT_IMAGE_FORMAT       = svg
+INTERACTIVE_SVG        = YES
+DOT_MULTI_TARGETS      = YES
+DOT_GRAPH_MAX_NODES    = 80
+MAX_DOT_GRAPH_DEPTH    = 3
+
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+DIRECTORY_GRAPH        = YES
+INCLUDE_GRAPH          = YES
+INCLUDED_BY_GRAPH      = YES
