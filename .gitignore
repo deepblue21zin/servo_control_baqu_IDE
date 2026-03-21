@@ -58,3 +58,6 @@ Debug/
 FETCH_HEAD
 .settings/
 Debug.launch.metadata/
+
+# Doxygen generated documentation
+Doc/doxygen/
