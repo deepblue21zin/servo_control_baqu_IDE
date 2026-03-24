@@ -24,7 +24,7 @@ int EncoderReader_Init(void);
 float EncoderReader_GetAngleDeg(void);
 
 /**
- * @brief Get raw encoder count
+ * @brief Get unwrapped encoder count with offset applied
  * @return Encoder count
  */
 int32_t EncoderReader_GetCount(void);

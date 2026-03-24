@@ -144,7 +144,7 @@ static const char* Main_CommandResultName(CommandResult_t result)
 #if PERIODIC_CSV_LOG_ENABLE
 static void PeriodicCsv_PrintHeader(void)
 {
-    printf("CSV_HEADER,ms,mode,target_deg,current_deg,error_deg,output,dir,enc,cmd_id,cmd_state,cmd_result\r\n");
+    printf("CSV_HEADER,ms,mode,target_deg,current_deg,error_deg,output,dir,enc_cnt,enc_raw,req_hz,applied_hz,out_active,rev_guard,cmd_id,cmd_state,cmd_result\r\n");
 }
 
 static void PeriodicCsv_Task(void)
@@ -153,7 +153,9 @@ static void PeriodicCsv_Task(void)
     uint32_t now_ms = HAL_GetTick();
     PositionControl_State_t s = PositionControl_GetState();
     CommandLifecycle_t cmd = PositionControl_GetCommandLifecycle();
+    PulseControl_Status_t pulse_status = PulseControl_GetStatus();
     GPIO_PinState dir_state = HAL_GPIO_ReadPin(DIR_PIN_GPIO_Port, DIR_PIN_Pin);
+    int32_t enc_count = EncoderReader_GetCount();
     uint16_t enc_raw = EncoderReader_GetRawCounter();
 
     if (g_periodic_csv_enabled == 0U) {
@@ -165,7 +167,7 @@ static void PeriodicCsv_Task(void)
     }
     last_ms = now_ms;
 
-    printf("CSV,%lu,%d,%.3f,%.3f,%.3f,%.0f,%d,%u,%lu,%d,%d\r\n",
+    printf("CSV,%lu,%d,%.3f,%.3f,%.3f,%.0f,%d,%ld,%u,%ld,%lu,%u,%u,%lu,%d,%d\r\n",
            (unsigned long)now_ms,
            (int)PositionControl_GetMode(),
            TargetMotorDegToSteeringDeg(s.target_angle),
@@ -173,7 +175,12 @@ static void PeriodicCsv_Task(void)
            TargetMotorDegToSteeringDeg(s.error),
            s.output,
            (int)dir_state,
+           (long)enc_count,
            (unsigned int)enc_raw,
+           (long)pulse_status.requested_frequency_hz,
+           (unsigned long)pulse_status.applied_frequency_hz,
+           (unsigned int)pulse_status.output_active,
+           (unsigned int)pulse_status.reverse_guard_active,
            (unsigned long)cmd.command_id,
            (int)cmd.state,
            (int)cmd.result);
@@ -318,17 +325,24 @@ static void KeyboardTest_PrintControlSnapshot(const char *reason)
 {
     PositionControl_State_t s = PositionControl_GetState();
     CommandLifecycle_t cmd = PositionControl_GetCommandLifecycle();
+    PulseControl_Status_t pulse_status = PulseControl_GetStatus();
     GPIO_PinState dir_state = HAL_GPIO_ReadPin(DIR_PIN_GPIO_Port, DIR_PIN_Pin);
+    int32_t enc_count = EncoderReader_GetCount();
     uint16_t enc_raw = EncoderReader_GetRawCounter();
 
-    printf("[KB][%s] T=%.2fdeg C=%.2fdeg E=%.2fdeg O=%.0f DIR=%d ENC=%u CMD=%lu/%s/%s\r\n",
+    printf("[KB][%s] T=%.2fdeg C=%.2fdeg E=%.2fdeg O=%.0f DIR=%d ENC=%ld RAW=%u REQ=%ld AP=%lu RUN=%u REV=%u CMD=%lu/%s/%s\r\n",
            reason,
            TargetMotorDegToSteeringDeg(s.target_angle),
            TargetMotorDegToSteeringDeg(s.current_angle),
            TargetMotorDegToSteeringDeg(s.error),
            s.output,
            (int)dir_state,
+           (long)enc_count,
            (unsigned int)enc_raw,
+           (long)pulse_status.requested_frequency_hz,
+           (unsigned long)pulse_status.applied_frequency_hz,
+           (unsigned int)pulse_status.output_active,
+           (unsigned int)pulse_status.reverse_guard_active,
            (unsigned long)cmd.command_id,
            Main_CommandStateName(cmd.state),
            Main_CommandResultName(cmd.result));
@@ -525,7 +539,7 @@ int main(void)
   MX_LWIP_Init();
   /* USER CODE BEGIN 2 */
 
-  // PE10을 direction line driver 입력용 GPIO Output으로 명시 재설정
+  // PE10??direction line driver ?�력??GPIO Output?�로 명시 ?�설??
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   GPIO_InitStruct.Pin = GPIO_PIN_10;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -535,34 +549,34 @@ int main(void)
 
   HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
 
-  Relay_Init();        // EMG 핀 HIGH 설정 (릴레이 24V 없어도 GPIO 상태만 설정됨)
-  PulseControl_Init(); // DIR 핀 초기화 (PWM은 여기서 시작하지 않음)
+  Relay_Init();        // EMG ?� HIGH ?�정 (릴레??24V ?�어??GPIO ?�태�??�정??
+  PulseControl_Init(); // DIR ?� 초기??(PWM?� ?�기???�작?��? ?�음)
   EncoderReader_Init();
   PositionControl_Init();
 
-  // [BUG FIX] HAL_TIM_PWM_Start 제거:
-  // 이전에 이 줄이 ARR=9(83kHz), DIR=CCW 상태로 PWM을 조기 시작하여
-  // ServoOn 직후 모터가 무제어 역방향 고속 회전하는 문제가 있었음.
-  // PWM은 PulseControl_SetFrequency() 내부에서 방향/속도 설정 후 시작됨.
+  // [BUG FIX] HAL_TIM_PWM_Start ?�거:
+  // ?�전????줄이 ARR=9(83kHz), DIR=CCW ?�태�?PWM??조기 ?�작?�여
+  // ServoOn 직후 모터가 무제????��??고속 ?�전?�는 문제가 ?�었??
+  // PWM?� PulseControl_SetFrequency() ?��??�서 방향/?�도 ?�정 ???�작??
 
-  // 초기 구동 시 서보를 ON 상태로 올린다.
-  // EMG 동작은 런타임 fail-safe / EmergencyStop 경로에서 처리된다.
+  // 초기 구동 ???�보�?ON ?�태�??�린??
+  // EMG ?�작?� ?��???fail-safe / EmergencyStop 경로?�서 처리?�다.
   Relay_ServoOn();
-  HAL_Delay(500); // 서보 ON 안정화 대기
+  HAL_Delay(500); // ?�보 ON ?�정???��?
 
   char msg[] = "Servo Start!\r\n";
   HAL_UART_Transmit(&huart3, (uint8_t*)msg, strlen(msg), 100);
 
-  //Homing_Init(); // 초기 위치로 이동 (예: 0도)
-  //ADC_Pot_Init(NULL); // ADC 포텐셔미터 초기화 (필요 시)
+  //Homing_Init(); // 초기 ?�치�??�동 (?? 0??
+  //ADC_Pot_Init(NULL); // ADC ?�텐?��???초기??(?�요 ??
   //Homing_FindZero();  
   //if (!Homing_IsComplete()) {
   //    printf("[Main] Homing failed!\n");
   //    while (1);
   //}
   //HAL_Delay(500);
-  EncoderReader_Reset(); // 엔코더 카운터 리셋 (0점 기준)
-  PositionControl_SetTargetWithSource(TargetSteeringDegToMotorDeg(0.0f), CMD_SRC_LOCALTEST); // 외부 조향각 0° -> 내부 motor_deg
+  EncoderReader_Reset(); // ?�코??카운??리셋 (0??기�?)
+  PositionControl_SetTargetWithSource(TargetSteeringDegToMotorDeg(0.0f), CMD_SRC_LOCALTEST); // ?��? 조향�?0° -> ?��? motor_deg
   g_keyboard_target_steer_deg = 0.0f;
   PositionControl_Enable();
 
@@ -570,7 +584,7 @@ int main(void)
   KeyboardTest_PrintHelp();
   PeriodicCsv_PrintHeader();
 #else
-  EthComm_UDP_Init(); // UDP 수신 소켓 열기 (MX_LWIP_Init 이후 호출 필수)
+  EthComm_UDP_Init(); // UDP ?�신 ?�켓 ?�기 (MX_LWIP_Init ?�후 ?�출 ?�수)
 #endif
   /* USER CODE END 2 */
 
@@ -590,7 +604,7 @@ int main(void)
     KeyboardTest_ProcessInput();
     LAT_END(LAT_STAGE_COMMS);
 #else
-    /* ── LwIP 폴링: 이더넷 패킷 수신 처리 ── */
+    /* ?�?� LwIP ?�링: ?�더???�킷 ?�신 처리 ?�?� */
     LAT_BEGIN(LAT_STAGE_COMMS);
     MX_LWIP_Process();
 
@@ -598,14 +612,14 @@ int main(void)
     uint32_t now_ms = HAL_GetTick();
     uint32_t last_rx_ms = EthComm_GetLastRxTick();
 
-    /* ── 통신 타임아웃 fail-safe: AUTO/MANUAL에서 RX 끊기면 ESTOP ── */
+    /* ?�?� ?�신 ?�?�아??fail-safe: AUTO/MANUAL?�서 RX ?�기�?ESTOP ?�?� */
     if ((mode == STEER_MODE_AUTO || mode == STEER_MODE_MANUAL) &&
         ((now_ms - last_rx_ms) > ETHCOMM_RX_TIMEOUT_MS)) {
         EthComm_ForceMode(STEER_MODE_ESTOP);
         mode = STEER_MODE_ESTOP;
     }
 
-    /* ── 모드 전이 처리 ── */
+    /* ?�?� 모드 ?�이 처리 ?�?� */
     if (mode == STEER_MODE_ESTOP) {
         if (prev_mode != STEER_MODE_ESTOP) {
             PositionControl_EmergencyStop();
@@ -620,13 +634,13 @@ int main(void)
         PositionControl_Enable();
     }
 
-    /* ── PC misc brake 등 one-shot ESTOP 요청 처리 ── */
+    /* ?�?� PC misc brake ??one-shot ESTOP ?�청 처리 ?�?� */
     if (EthComm_ConsumeEmergencyRequest()) {
         PositionControl_EmergencyStop();
         mode = STEER_MODE_ESTOP;
     }
 
-    /* ── UDP 수신 데이터 → 모드별 목표 갱신 ── */
+    /* ?�?� UDP ?�신 ?�이????모드�?목표 갱신 ?�?� */
     if (EthComm_HasNewData()) {
         AutoDrive_Packet_t pkt = EthComm_GetLatestData();
         if (mode == STEER_MODE_AUTO || mode == STEER_MODE_MANUAL) {
@@ -637,7 +651,7 @@ int main(void)
     prev_mode = mode;
 #endif
 
-    /* ── 1ms 제어 루프 ── */
+    /* ?�?� 1ms ?�어 루프 ?�?� */
     if (interrupt_flag) {
         interrupt_flag = 0;
 #if AUTO_FIXED_PULSE_TEST
@@ -652,18 +666,18 @@ int main(void)
         EncoderRuntimeDiag_Task();
 
         if (++debug_cnt >= 100) {
-            uint32_t arr = __HAL_TIM_GET_AUTORELOAD(&htim1);
-            uint32_t ccr = __HAL_TIM_GET_COMPARE(&htim1, TIM_CHANNEL_1);
-            uint32_t enc_raw = __HAL_TIM_GET_COUNTER(&htim4);
-            GPIO_PinState dir_state = HAL_GPIO_ReadPin(DIR_PIN_GPIO_Port, DIR_PIN_Pin);
             PositionControl_State_t s = PositionControl_GetState();
             CommandLifecycle_t cmd = PositionControl_GetCommandLifecycle();
+            PulseControl_Status_t pulse_status = PulseControl_GetStatus();
+            GPIO_PinState dir_state = HAL_GPIO_ReadPin(DIR_PIN_GPIO_Port, DIR_PIN_Pin);
+            int32_t enc_count = EncoderReader_GetCount();
+            uint16_t enc_raw = EncoderReader_GetRawCounter();
             float target_steer_deg = TargetMotorDegToSteeringDeg(s.target_angle);
             float current_steer_deg = TargetMotorDegToSteeringDeg(s.current_angle);
             float error_steer_deg = TargetMotorDegToSteeringDeg(s.error);
             debug_cnt = 0;
 #if LATENCY_LOG_ENABLE
-            printf("[DIAG] MODE:%d CMD:%lu/%s/%s Tst:%.2f Cst:%.2f Est:%.2f O:%.0f ARR:%lu CCR:%lu DIR:%d ENC:%lu\r\n",
+            printf("[DIAG] MODE:%d CMD:%lu/%s/%s Tst:%.2f Cst:%.2f Est:%.2f O:%.0f REQ:%ld AP:%lu ARR:%lu CCR:%lu DIR:%d RUN:%u REV:%u ENC:%ld RAW:%u\r\n",
                    (int)PositionControl_GetMode(),
                    (unsigned long)cmd.command_id,
                    Main_CommandStateName(cmd.state),
@@ -672,13 +686,18 @@ int main(void)
                    current_steer_deg,
                    error_steer_deg,
                    s.output,
-                   (unsigned long)arr,
-                   (unsigned long)ccr,
+                   (long)pulse_status.requested_frequency_hz,
+                   (unsigned long)pulse_status.applied_frequency_hz,
+                   (unsigned long)pulse_status.autoreload,
+                   (unsigned long)pulse_status.compare,
                    (int)dir_state,
-                   (unsigned long)enc_raw);
+                   (unsigned int)pulse_status.output_active,
+                   (unsigned int)pulse_status.reverse_guard_active,
+                   (long)enc_count,
+                   (unsigned int)enc_raw);
 #else
-            (void)arr;
-            (void)ccr;
+            (void)pulse_status;
+            (void)enc_count;
             (void)enc_raw;
             (void)dir_state;
             (void)s;
@@ -752,7 +771,7 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
-// printf UART 리다이렉션
+// printf UART 리다?�렉??
 int __io_putchar(int ch)
 {
     HAL_UART_Transmit(&huart3, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
