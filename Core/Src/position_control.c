@@ -1,11 +1,10 @@
 #include "position_control.h"
+#include "position_control_diag.h"
 #include "encoder_reader.h"      // 엔코더 읽기
 #include "pulse_control.h"       // 펄스 출력
 #include "relay_control.h"       // 릴레이 제어 (EmergencyStop에서 사용)
 #include "constants.h"
-#include "debug_vars.h"
 #include <stdio.h>
-#include <stdint.h>              // uint32_t, int32_t
 #include <math.h>                // fabsf
 #include "main.h"
 #include "latency_profiler.h"
@@ -13,7 +12,6 @@
 //의존성
 
 // 내부 변수 지정
-static volatile uint8_t debug_enabled = 0; // 디버그 메시지 출력 여부
 static volatile uint8_t fault_flag = 0; // 안전 관련 플래그
 static uint32_t command_next_id = 1U;
 static CommandSource_t pending_command_source = CMD_SRC_NONE;
@@ -46,7 +44,6 @@ static PositionControl_State_t state = {
 
 static volatile bool control_enabled = false;
 static volatile ControlMode_t control_mode = CTRL_MODE_IDLE;
-static PosCtrl_Stats_t stats = {0};
 static CommandLifecycle_t command_lifecycle = {
     .command_id = 0U,
     .state = CMD_IDLE,
@@ -65,97 +62,13 @@ int PositionControl_SetTargetWithSource(float target_deg, CommandSource_t source
 #define DBG_LOOP_RESET() ((void)0)
 #endif
 
-static int32_t PositionControl_DegToMilliDeg(float deg)
+/* Mirror the latest controller snapshot into the shared debug variables. */
+static void PositionControl_SyncDiagState(void)
 {
-    float scaled = deg * 1000.0f;
-
-    if (scaled > (float)INT32_MAX) {
-        return INT32_MAX;
-    }
-    if (scaled < (float)INT32_MIN) {
-        return INT32_MIN;
-    }
-
-    if (scaled >= 0.0f) {
-        return (int32_t)(scaled + 0.5f);
-    }
-    return (int32_t)(scaled - 0.5f);
+    PositionControlDiag_UpdateDebugVars(&state, control_enabled, control_mode, fault_flag);
 }
 
-static int16_t PositionControl_OutputToDebugCmd(float output)
-{
-    if (output > (float)INT16_MAX) {
-        return INT16_MAX;
-    }
-    if (output < (float)INT16_MIN) {
-        return INT16_MIN;
-    }
-
-    if (output >= 0.0f) {
-        return (int16_t)(output + 0.5f);
-    }
-    return (int16_t)(output - 0.5f);
-}
-
-static const char* PositionControl_CommandSourceString(CommandSource_t source)
-{
-    switch (source) {
-    case CMD_SRC_UDP:
-        return "UDP";
-    case CMD_SRC_KEYBOARD:
-        return "KEYBOARD";
-    case CMD_SRC_SERVICE:
-        return "SERVICE";
-    case CMD_SRC_LOCALTEST:
-        return "LOCALTEST";
-    case CMD_SRC_NONE:
-    default:
-        return "NONE";
-    }
-}
-
-static const char* PositionControl_CommandResultString(CommandResult_t result)
-{
-    switch (result) {
-    case CMD_RESULT_REACHED:
-        return "REACHED";
-    case CMD_RESULT_TIMEOUT:
-        return "TIMEOUT";
-    case CMD_RESULT_ESTOP:
-        return "ESTOP";
-    case CMD_RESULT_DISABLED:
-        return "DISABLED";
-    case CMD_RESULT_REPLACED:
-        return "REPLACED";
-    case CMD_RESULT_FAULT_LIMIT:
-        return "FAULT_LIMIT";
-    case CMD_RESULT_FAULT_TRACKING:
-        return "FAULT_TRACKING";
-    case CMD_RESULT_NONE:
-    default:
-        return "NONE";
-    }
-}
-
-static const char* PositionControl_CommandStateString(CommandState_t state_value)
-{
-    switch (state_value) {
-    case CMD_ACTIVE:
-        return "ACTIVE";
-    case CMD_REACHED:
-        return "REACHED";
-    case CMD_TIMEOUT:
-        return "TIMEOUT";
-    case CMD_ABORTED:
-        return "ABORTED";
-    case CMD_FAULTED:
-        return "FAULTED";
-    case CMD_IDLE:
-    default:
-        return "IDLE";
-    }
-}
-
+/* Check whether the controller is allowed to start a new command lifecycle. */
 static bool PositionControl_CommandReadyForStart(void)
 {
     if (!control_enabled) {
@@ -170,6 +83,7 @@ static bool PositionControl_CommandReadyForStart(void)
     return true;
 }
 
+/* Start a fresh command lifecycle entry using the current target and position. */
 static void PositionControl_CommandStart(CommandSource_t source)
 {
     uint32_t now_ms = HAL_GetTick();
@@ -190,7 +104,7 @@ static void PositionControl_CommandStart(CommandSource_t source)
 
     printf("CMD_START,id=%lu,src=%s,target_deg=%.3f,target_motor_deg=%.3f,start_ms=%lu,start_deg=%.3f,start_error_deg=%.3f\r\n",
            (unsigned long)command_lifecycle.command_id,
-           PositionControl_CommandSourceString(command_lifecycle.source),
+           PositionControlDiag_CommandSourceString(command_lifecycle.source),
            command_lifecycle.target_steering_deg,
            command_lifecycle.target_motor_deg,
            (unsigned long)command_lifecycle.start_ms,
@@ -198,6 +112,7 @@ static void PositionControl_CommandStart(CommandSource_t source)
            command_lifecycle.final_error_deg);
 }
 
+/* Close the active command lifecycle entry with the final motion snapshot. */
 static void PositionControl_CommandFinish(CommandState_t end_state, CommandResult_t result, uint32_t now_ms)
 {
     if (command_lifecycle.state != CMD_ACTIVE) {
@@ -232,7 +147,7 @@ static void PositionControl_CommandFinish(CommandState_t end_state, CommandResul
     case CMD_ABORTED:
         printf("CMD_ABORT,id=%lu,reason=%s,end_ms=%lu,error_deg=%.3f\r\n",
                (unsigned long)command_lifecycle.command_id,
-               PositionControl_CommandResultString(result),
+               PositionControlDiag_CommandResultString(result),
                (unsigned long)command_lifecycle.end_ms,
                command_lifecycle.final_error_deg);
         break;
@@ -240,7 +155,7 @@ static void PositionControl_CommandFinish(CommandState_t end_state, CommandResul
     case CMD_FAULTED:
         printf("CMD_FAULT,id=%lu,reason=%s,end_ms=%lu,error_deg=%.3f\r\n",
                (unsigned long)command_lifecycle.command_id,
-               PositionControl_CommandResultString(result),
+               PositionControlDiag_CommandResultString(result),
                (unsigned long)command_lifecycle.end_ms,
                command_lifecycle.final_error_deg);
         break;
@@ -252,43 +167,11 @@ static void PositionControl_CommandFinish(CommandState_t end_state, CommandResul
     }
 }
 
-static uint32_t PositionControl_BuildDebugFaultFlags(void)
-{
-    uint32_t flags = 0U;
-
-    if (fault_flag == 1U) {
-        flags |= DBG_FAULT_POS_LIMIT;
-    }
-    if (fault_flag == 2U) {
-        flags |= DBG_FAULT_TRACKING;
-    }
-    if (fault_flag == 3U) {
-        flags |= DBG_FAULT_TIMEOUT;
-    }
-    if (!control_enabled) {
-        flags |= DBG_FAULT_DISABLED;
-    }
-    if (control_mode == CTRL_MODE_EMERGENCY) {
-        flags |= DBG_FAULT_EMERGENCY;
-    }
-
-    return flags;
-}
-
-static void PositionControl_UpdateDebugVars(void)
-{
-    dbg_enc_raw = (int32_t)EncoderReader_GetRawCounter();
-    dbg_pos_mdeg = PositionControl_DegToMilliDeg(MotorDegToSteeringDeg(state.current_angle));
-    dbg_target_mdeg = PositionControl_DegToMilliDeg(MotorDegToSteeringDeg(state.target_angle));
-    dbg_err_mdeg = PositionControl_DegToMilliDeg(MotorDegToSteeringDeg(state.error));
-    dbg_pwm_cmd = PositionControl_OutputToDebugCmd(state.output);
-    dbg_fault_flags = PositionControl_BuildDebugFaultFlags();
-}
-
 // ========== 초기화 ==========
 // Init()함수를 호출 안하는 프로그램의 경우 선언시 초기화만 해도 된다.
 //런타임에 재초기화가 필요한 경우
 
+/* Reset controller state, lifecycle state, and diagnostic mirrors. */
 int PositionControl_Init(void) {
     pid_state.prev_error = 0.0f;  //D항 계산: (현재오차 - 이전오차)/dt, 초기화 안하면 폭주 가능
     pid_state.integral = 0.0f;   //적분 누적값 초기화
@@ -296,6 +179,10 @@ int PositionControl_Init(void) {
     
     state.target_angle = 0.0f;
     state.current_angle = 0.0f;
+    state.error = 0.0f;
+    state.output = 0.0f;
+    state.is_stable = false;
+    state.stable_time_ms = 0U;
     control_enabled = false; //제어 비활성화 상태로 시작, 안전장치, Enable() 함수를 명시적으로 호출해야 제어 시작
     control_mode = CTRL_MODE_IDLE;
     state.mode = CTRL_MODE_IDLE;
@@ -316,12 +203,7 @@ int PositionControl_Init(void) {
     command_lifecycle.end_ms = 0U;
     command_lifecycle.timeout_ms = POSITION_COMMAND_TIMEOUT_MS;
 
-    dbg_enc_raw = 0;
-    dbg_pos_mdeg = 0;
-    dbg_target_mdeg = 0;
-    dbg_err_mdeg = 0;
-    dbg_pwm_cmd = 0;
-    dbg_fault_flags = DBG_FAULT_DISABLED;
+    PositionControl_SyncDiagState();
 
 #if LATENCY_LOG_ENABLE
     printf("[PosCtrl] Initialized\n");
@@ -330,6 +212,7 @@ int PositionControl_Init(void) {
 }
 
 // ========== PID 계산 ==========
+/* Convert the current tracking error into a signed pulse frequency command. */
 static float PID_Calculate(float error, float dt) {
     // P항
     float p_term = pid_params.Kp * error;
@@ -366,6 +249,7 @@ static float PID_Calculate(float error, float dt) {
 }
 
 // ========== 메인 제어 루프 (1ms마다 호출!) ==========
+/* Run one closed-loop control iteration using the latest encoder feedback. */
 void PositionControl_Update(void) {
     DBG_LOOP_SET();
 
@@ -374,7 +258,7 @@ void PositionControl_Update(void) {
         state.error = state.target_angle - state.current_angle;
         state.output = 0.0f;
         PulseControl_Stop();
-        PositionControl_UpdateDebugVars();
+        PositionControl_SyncDiagState();
         DBG_LOOP_RESET();
         return;
     }
@@ -388,32 +272,33 @@ void PositionControl_Update(void) {
     // CheckSafety()가 이전 루프의 state.error를 참조하는 1-step 지연 버그 존재.
     // 수정: 오차를 먼저 계산하고 안전 체크 수행.
     state.error = state.target_angle - state.current_angle;
-    LAT_END(LAT_STAGE_SENSE);
+    LAT_END(LAT_STAGE_SENSE); // 센서 읽기 시간 측정 종료
 
     // 3. 안전 체크 (현재 오차 기준으로 판단)
     LAT_BEGIN(LAT_STAGE_CONTROL);
     if (!PositionControl_CheckSafety()) {
         CommandResult_t fault_result = CMD_RESULT_NONE;
-
+        // 어떤 에러(장애)가 발생했는지 확인합니다.
         if (fault_flag == 1U) {
-            fault_result = CMD_RESULT_FAULT_LIMIT;
+            fault_result = CMD_RESULT_FAULT_LIMIT; // 예: 각도 범위 초과
         } else if (fault_flag == 2U) {
-            fault_result = CMD_RESULT_FAULT_TRACKING;
+            fault_result = CMD_RESULT_FAULT_TRACKING; // 예: 추적 실패 (오차 지속)
         }
 
-        state.output = 0.0f;
+        state.output = 0.0f; // 즉시 모터 출력을 0으로 만듭니다.
         if (command_lifecycle.state == CMD_ACTIVE) {
+            // 현재 명령을 에러 상태(CMD_FAULTED)로 강제 종료시킵니다.
             PositionControl_CommandFinish(CMD_FAULTED, fault_result, HAL_GetTick());
         }
-        PositionControl_UpdateDebugVars();
-        LAT_END(LAT_STAGE_CONTROL);
-        PositionControl_EmergencyStop();
-        DBG_LOOP_RESET();
-        return;
+        PositionControl_SyncDiagState();
+        LAT_END(LAT_STAGE_CONTROL); // 안전 체크 시간 측정 종료
+        PositionControl_EmergencyStop(); // 안전 정지 수행 (릴레이 OFF 등)
+        DBG_LOOP_RESET(); // 제어 루프 종료 (안전 위반 시 더 이상의 동작 방지)
+        return; // 제어 루프 종료 (안전 위반 시 더 이상의 동작 방지)
     }
     
     // 4. 시간 계산
-    uint32_t current_time = HAL_GetTick();
+    uint32_t current_time = HAL_GetTick(); // 현재 시간(ms)
     float dt = (current_time - pid_state.last_time_ms) / 1000.0f;  // ms → s
     //dt가 0 이되면 0으로 나누는게 되버림(D항 계산에서 폭주 가능), dt가 너무 크면 제어 성능 저하, 0.001s(1ms)보다 너무 크면 제어 성능 저하, 0.001s보다 너무 작으면 D항 계산에서 노이즈 영향 커짐
     if (dt <= 0.0f) {
@@ -424,11 +309,13 @@ void PositionControl_Update(void) {
     }
 
     pid_state.last_time_ms = current_time;
-
+    // [BUG FIX] 기존 코드: PositionControl_CommandFinish()가 안전 체크보다 뒤에 있어서
+    // 명령 타임아웃이 발생해도 안전 체크가 이전 오차로 수행되는 1-step 지연 버그 존재.
+    // 수정: 타임아웃 체크를 안전 체크보다 먼저 수행하도록 순서 변경.
     if (POSITION_COMMAND_TIMEOUT_FAILSAFE_ENABLE != 0U &&
-        command_lifecycle.state == CMD_ACTIVE) {
-        uint32_t elapsed_ms = current_time - command_lifecycle.start_ms;
-        if (elapsed_ms > command_lifecycle.timeout_ms) {
+        command_lifecycle.state == CMD_ACTIVE) {// 명령이 활성 상태인 경우에만 타임아웃 체크 수행
+        uint32_t elapsed_ms = current_time - command_lifecycle.start_ms; // 명령 시작 후 경과 시간 계산
+        if (elapsed_ms > command_lifecycle.timeout_ms) { // 타임아웃 발생
             fault_flag = 3U;
             state.last_error = POS_CTRL_ERR_TIMEOUT;
             state.output = 0.0f;
@@ -439,17 +326,17 @@ void PositionControl_Update(void) {
             pid_state.integral = 0.0f;
             Relay_Emergency();
             PositionControl_CommandFinish(CMD_TIMEOUT, CMD_RESULT_TIMEOUT, current_time);
-            PositionControl_UpdateDebugVars();
+            PositionControl_SyncDiagState();
             LAT_END(LAT_STAGE_CONTROL);
             DBG_LOOP_RESET();
             return;
         }
     }
 
-    if (command_lifecycle.state == CMD_REACHED) {
+    if (command_lifecycle.state == CMD_REACHED) {// 명령이 이미 완료된 경우, 추가 제어 없이 안정 유지
         state.output = 0.0f;
         PulseControl_Stop();
-        PositionControl_UpdateDebugVars();
+        PositionControl_SyncDiagState();
         LAT_END(LAT_STAGE_CONTROL);
         DBG_LOOP_RESET();
         return;
@@ -480,31 +367,33 @@ void PositionControl_Update(void) {
         state.is_stable = false;
     }
 
-    PositionControl_UpdateDebugVars();
+    PositionControl_SyncDiagState();
     DBG_LOOP_RESET();
 }
 
 // ========== 목표 설정 ==========
+/* Preserve the legacy API by treating a plain target set as an anonymous source. */
 int PositionControl_SetTarget(float target_deg) {
     return PositionControl_SetTargetWithSource(target_deg, CMD_SRC_NONE);
 }
 
+// CommandSource_t을 명시적으로 받아서 명령 출처를 기록하는 새로운 API. UDP, 키보드, 서비스 등 다양한 출처 구분 가능. 내부적으로는 기존 SetTarget과 동일한 동작을 하며, 명령 라이프사이클 관리와 진단에 활용됨.
 int PositionControl_SetTargetWithSource(float target_deg, CommandSource_t source) {
     // 범위 체크
     if (target_deg > MAX_ANGLE_DEG || target_deg < MIN_ANGLE_DEG) {
-        return POS_CTRL_ERR_OVER_LIMIT;
+        return POS_CTRL_ERR_OVER_LIMIT; // 범위 초과 에러 반환
     }
 
     if (command_lifecycle.state == CMD_ACTIVE) {
-        PositionControl_CommandFinish(CMD_ABORTED, CMD_RESULT_REPLACED, HAL_GetTick());
+        PositionControl_CommandFinish(CMD_ABORTED, CMD_RESULT_REPLACED, HAL_GetTick()); // 기존 명령이 활성 상태면 교체로 종료 처리
     }
-
-    __disable_irq();
+    // 명령 라이프사이클 시작 준비: 인터럽트 보호 구역에서 상태 업데이트
+    __disable_irq(); // 인터럽트 보호 시작 (명령 라이프사이클과 상태 업데이트의 원자성 보장)
     state.target_angle = target_deg;
     state.is_stable = false;
     state.stable_time_ms = 0;
     pending_command_source = source;
-    __enable_irq();
+    __enable_irq(); // 인터럽트 보호 종료
 
     state.current_angle = EncoderReader_GetAngleDeg();
     state.error = state.target_angle - state.current_angle;
@@ -513,40 +402,48 @@ int PositionControl_SetTargetWithSource(float target_deg, CommandSource_t source
         PositionControl_CommandStart(source);
     }
 
-    PositionControl_UpdateDebugVars();
+    PositionControl_SyncDiagState();
 
     return POS_CTRL_OK;
 }
 
 // ========== 상태 읽기 ==========
+/* Return the latest target angle snapshot. */
 float PositionControl_GetTarget(void) {
     return state.target_angle;
 }
+/* Return the latest closed-loop tracking error. */
 float PositionControl_GetError(void) {
     return state.error;
 }
+/* Copy the active PID gains for tuning or diagnostics. */
 void PositionControl_GetPID(PID_Params_t* params) {
     if (params != NULL) {
         *params = pid_params;
     }
 }
+/* Return the current controller state snapshot. */
 PositionControl_State_t PositionControl_GetState(void) {
     return state;
 }
 
+/* Return the latest command lifecycle snapshot. */
 CommandLifecycle_t PositionControl_GetCommandLifecycle(void) {
     return command_lifecycle;
 }
 
+/* Return the current motor angle estimate in motor degrees. */
 float PositionControl_GetCurrentAngle(void) {
     return state.current_angle;
 }
 
+/* Report whether the current tracking error has stayed within tolerance. */
 bool PositionControl_IsStable(void) {
     return state.is_stable;
 }
 
 // ========== PID 게인 설정 ==========
+/* Update the runtime PID gains and clear the stored integral term. */
 void PositionControl_SetPID(float Kp, float Ki, float Kd) {
     pid_params.Kp = Kp;
     pid_params.Ki = Ki;
@@ -562,14 +459,17 @@ void PositionControl_SetPID(float Kp, float Ki, float Kd) {
 }
 
 // ========== 제어 모드 ==========
+/* Override the externally visible control mode. */
 void PositionControl_SetMode(ControlMode_t mode) {
     control_mode = mode;
     state.mode = mode;
 }
+/* Return the currently latched control mode. */
 ControlMode_t PositionControl_GetMode(void) {
     return control_mode;
 }
 
+/* Arm closed-loop position control and resume relay output if safe. */
 int PositionControl_Enable(void) {
     control_enabled = true;
     fault_flag = 0;              // EmergencyStop 후 재활성화 시 fault 초기화
@@ -595,10 +495,11 @@ int PositionControl_Enable(void) {
 #if LATENCY_LOG_ENABLE
     printf("[PosCtrl] Enabled (FLT cleared, angle=%.2f)\r\n", state.current_angle);
 #endif
-    PositionControl_UpdateDebugVars();
+    PositionControl_SyncDiagState();
     return POS_CTRL_OK;
 }
 
+/* Stop pulse output and leave the controller in idle mode. */
 void PositionControl_Disable(void) {
     if (!control_enabled) {
         return;
@@ -614,9 +515,10 @@ void PositionControl_Disable(void) {
 #if LATENCY_LOG_ENABLE
     printf("[PosCtrl] Disabled\n");
 #endif
-    PositionControl_UpdateDebugVars();
+    PositionControl_SyncDiagState();
 }
 
+/* Clear the target and PID accumulator without reinitializing the whole module. */
 void PositionControl_Reset(void) {
     if (command_lifecycle.state == CMD_ACTIVE) {
         PositionControl_CommandFinish(CMD_ABORTED, CMD_RESULT_DISABLED, HAL_GetTick());
@@ -628,16 +530,18 @@ void PositionControl_Reset(void) {
 #if LATENCY_LOG_ENABLE
     printf("[PosCtrl] Reset\n");
 #endif
-    PositionControl_UpdateDebugVars();
+    PositionControl_SyncDiagState();
 }
 
 // ========== 안전 기능 ==========
 
+/* Keep the safety-limit API stubbed until external limit tuning is introduced. */
 void PositionControl_SetSafetyLimits(SafetyLimits_t* limits) {
     // 현재는 미구현
     (void)limits;
 }
 
+/* Reject motion when the measured position or tracking error exceeds safe bounds. */
 bool PositionControl_CheckSafety(void) {
     // 각도 범위 체크 (하드웨어 물리 한계)
     if (state.current_angle > MAX_ANGLE_DEG + 5.0f ||
@@ -658,10 +562,12 @@ bool PositionControl_CheckSafety(void) {
     state.last_error = POS_CTRL_OK;
     return true;
 }
+/* Reuse the same safety gate for quick status polling. */
 bool PositionControl_IsSafe(void) {
     return PositionControl_CheckSafety();
 }
 
+/* Force the controller into emergency mode and drop pulse output immediately. */
 void PositionControl_EmergencyStop(void) {
     if (command_lifecycle.state == CMD_ACTIVE) {
         PositionControl_CommandFinish(CMD_ABORTED, CMD_RESULT_ESTOP, HAL_GetTick());
@@ -678,73 +584,23 @@ void PositionControl_EmergencyStop(void) {
     printf("[PosCtrl] EMERGENCY STOP! FLT=%d Ang:%.1f Err:%.1f\r\n",
            (int)fault_flag, state.current_angle, state.error);
 #endif
-    PositionControl_UpdateDebugVars();
+    PositionControl_SyncDiagState();
     // 현재는 소프트 정지 + EMG 릴레이 정지를 함께 수행.
     // 재활성화 시에는 상위 모드 전이에서 Relay_EmergencyRelease() 이후
     // PositionControl_Enable()이 호출되어 제어를 재개한다.
 }
 
+/* Abort the active command lifecycle without changing the current control mode. */
 void PositionControl_AbortCommand(CommandResult_t reason)
 {
     if (command_lifecycle.state == CMD_ACTIVE) {
         PositionControl_CommandFinish(CMD_ABORTED, reason, HAL_GetTick());
     }
 }
-// ========== 성능 모니터링 ==========
-PosCtrl_Stats_t PositionControl_GetStats(void) {
-    return stats;
-}
-void PositionControl_ResetStats(void) {
-    // 현재 미구현
-}
-// ========== 콜백 함수 등록 ==========
-void PositionControl_RegisterErrorCallback(PosCtrl_ErrorCallback_t callback) {
-    // 현재 미구현
-    (void)callback;
-}
-void PositionControl_RegisterStableCallback(PosCtrl_StableCallback_t callback) {
-    // 현재 미구현
-    (void)callback;
-}
-
-
-// ========== 디버깅 ==========
-void PositionControl_SetDebugLevel(DebugLevel_t level) {
-    // 현재 미구현
-    (void)level;
-}
-const char* PositionControl_GetErrorString(PosCtrl_Error_t error) {
-    switch (error) {
-        case POS_CTRL_OK:
-            return "No Error";
-        case POS_CTRL_ERR_NOT_INIT:
-            return "Not Initialized";
-        case POS_CTRL_ERR_DISABLED:
-            return "Control Disabled";
-        case POS_CTRL_ERR_OVER_LIMIT:
-            return "Target Out of Range";
-        case POS_CTRL_ERR_ENCODER:
-            return "Encoder Error";
-        case POS_CTRL_ERR_TIMEOUT:
-            return "Timeout Error";
-        case POS_CTRL_ERR_SAFETY:
-            return "Safety Violation";
-        default:
-            return "Unknown Error";
-    }
-}
-       
-
+/* Print a compact bench-friendly controller snapshot. */
 void PositionControl_PrintStatus(void) {
-    printf("[PosCtrl] EN:%d FLT:%d CMD:%lu/%s/%s Target:%.2f Current:%.2f Error:%.2f Out:%.0f %s\r\n",
-           (int)control_enabled,
-           (int)fault_flag,
-           (unsigned long)command_lifecycle.command_id,
-           PositionControl_CommandStateString(command_lifecycle.state),
-           PositionControl_CommandResultString(command_lifecycle.result),
-           state.target_angle,
-           state.current_angle,
-           state.error,
-           state.output,
-           state.is_stable ? "STABLE" : "");
+    PositionControlDiag_PrintStateSummary(&state,
+                                          control_enabled,
+                                          fault_flag,
+                                          &command_lifecycle);
 }
