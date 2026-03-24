@@ -4,12 +4,12 @@
 // 시스템 상수
 #define CONTROL_PERIOD_MS       1       // 제어 주기 1ms
 #define ENCODER_PPR             12000   // 엔코더 해상도 (XML-FBL04AMK1)
-#define ENCODER_QUADRATURE      4       // 4체배 (TIM2 Encoder Mode TI1 and TI2)
+#define ENCODER_QUADRATURE      4       // 4체배 (TIM4 Encoder Mode TI1 and TI2)
 #define ENCODER_COUNT_PER_REV   (ENCODER_PPR * ENCODER_QUADRATURE)  // 48000
 #define FULL_ROTATION_DEG       360.0f
 
 // 기구/단위 변환 상수
-#define STEERING_GEAR_RATIO             12.0f
+#define STEERING_GEAR_RATIO             12.5f
 #define MOTOR_DEG_PER_STEERING_DEG      STEERING_GEAR_RATIO
 #define STEERING_DEG_PER_MOTOR_DEG      (1.0f / MOTOR_DEG_PER_STEERING_DEG)
 
