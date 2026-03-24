@@ -252,7 +252,7 @@ static int EthComm_DispatchCommand(const EthComm_Command_t *cmd)
 
     case ETH_CMD_SET_TARGET:
         target_motor_deg = SteeringDegToMotorDeg(cmd->f32_value);
-        if (PositionControl_SetTarget(target_motor_deg) != 0) {
+        if (PositionControl_SetTargetWithSource(target_motor_deg, CMD_SRC_SERVICE) != 0) {
             return EthComm_SendString("ERR TARGET\r\n");
         }
         return EthComm_SendString("OK TARGET\r\n");

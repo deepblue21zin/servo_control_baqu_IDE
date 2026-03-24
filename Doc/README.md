@@ -16,6 +16,7 @@ STM32F429ZI 기반 조향 서브 컨트롤러 프로젝트.
 - MCU: STM32F429ZI (180MHz)
 - Control Period: 1ms (1kHz)
 - Control: Encoder feedback + PID + Pulse/Direction
+- Command lifecycle: `CMD_START / REACHED / TIMEOUT / ABORT / FAULT`
 - Network: Ethernet UDP (LwIP)
 - Safety: ESTOP, RX timeout fail-safe, safety limit check, IWDG watchdog
 - Latency Metrics: avg/p99/max + deadline miss
@@ -102,6 +103,30 @@ STM32 Steering Sub-Controller
 Note:
 - 최종 안전값은 실차/기구 통합 시험으로 재튜닝해야 함.
 
+### 4.4 Command Lifecycle (No Homing Baseline)
+
+- accepted command unit: `steering_deg` input -> `motor_deg` internal target
+- source tracking: `UDP`, `KEYBOARD`, `SERVICE`, `LOCALTEST`
+- state tracking: `CMD_IDLE`, `CMD_ACTIVE`, `CMD_REACHED`, `CMD_TIMEOUT`, `CMD_ABORTED`, `CMD_FAULTED`
+- event logs:
+  - `CMD_START`
+  - `CMD_REACHED`
+  - `CMD_TIMEOUT`
+  - `CMD_ABORT`
+  - `CMD_FAULT`
+
+현재 정책:
+- target 수락 시 `command_id` 발급
+- `abs(error) <= 0.5 deg`가 `100 ms` 유지되면 `CMD_REACHED`
+- `CMD_REACHED` 직후 `PulseControl_Stop()`으로 출력을 정지
+- timeout / ESTOP / disable / replace / safety fault는 result code와 함께 종료 로그로 남김
+
+아직 남은 gap:
+- boot-time auto-enable 제거
+- latched fault / clear policy
+- encoder unwrap / accum_count
+- encoder-ADC cross-check
+
 ---
 
 ## 5. Safety Architecture
@@ -186,6 +211,7 @@ Note:
 - [latency_contract.md](latency_contract.md)
 - [latency_code_application.md](latency_code_application.md)
 - [latency_data_evidence.md](latency_data_evidence.md)
+- [command_lifecycle_no_homing_spec.md](command_lifecycle_no_homing_spec.md)
 
 ---
 
@@ -211,18 +237,26 @@ Note:
 
 - [career_roadmap_2026.md](career_roadmap_2026.md): 취업 연계 관점의 2026-03-12 ~ 2026-06-15 로드맵
 - [part_requirements_2026.md](part_requirements_2026.md): 4개 파트별 REQ, 인수기준, 월별 목표
+- [command_lifecycle_no_homing_spec.md](command_lifecycle_no_homing_spec.md): homing 제외 현재 단계의 명령 시작/완료/중단/timeout 명세
 
 ---
 
-## 11. Remaining Engineering Work
+## 11. Steering Portal
+
+- [steering_portal/index.html](steering_portal/index.html): 프로젝트 목표, 아키텍처, 인터페이스 규격, command lifecycle, 로그 증거, 현재 문제, 향후 REQ, 팀 분배, 코드 탐색을 한 번에 보여주는 로컬 설명 포털
+- [doxygen/html/index.html](doxygen/html/index.html): 함수/파일/그래프 중심 Doxygen 문서
+
+---
+
+## 12. Remaining Engineering Work
 
 - UART logging path async (DMA + ring buffer)
 - Safety parameter tuning with real vehicle/mechanical tests
 - Batch CSV post-processing automation
-- Fault code standardization and diagnostics framing
+- Fault latch / clear policy standardization and diagnostics framing
 
 ---
 
-## 12. Interview Short Pitch
+## 13. Interview Short Pitch
 
 "Built a 1ms STM32 steering sub-controller with UDP command handling, integrated fail-safe paths (timeout/ESTOP/watchdog), and a DWT-based latency evidence pipeline that automatically reports p99/worst-case and deadline misses in reproducible batches."
