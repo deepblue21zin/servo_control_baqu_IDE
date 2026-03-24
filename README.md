@@ -14,7 +14,7 @@
 | **보드** | NUCLEO-F429ZI |
 | **서보 드라이버** | XDL-L7SA004BAA |
 | **서보 모터** | XML-FBL04AMK1 (12,000 PPR Encoder) |
-| **제어 방식** | PID Closed-Loop Position Control (1ms 주기) |
+| **제어 방식** | PID Closed-Loop Position Control (1ms 주기) + Command Lifecycle Trace |
 | **통신** | Ethernet UDP (LwIP, 192.168.1.100) / UART (디버그: USART3) |
 | **IDE** | STM32CubeIDE 1.19.0 |
 | **안전 기준** | ISO 26262 / MISRA-C 참조 설계 |
@@ -183,6 +183,23 @@ SysTick ISR (1ms)          Main Loop
                   └──────────────────┘
 ```
 
+### 3.4 Command Lifecycle (No Homing Baseline)
+
+현재 runtime은 homing 없이도 조향 명령 하나의 시작과 종료를 추적할 수 있도록
+`command_id` 기반 lifecycle을 가진다.
+
+| 항목 | 현재 구현 |
+|------|-----------|
+| Command Source | `UDP`, `KEYBOARD`, `SERVICE`, `LOCALTEST` |
+| Command State | `CMD_IDLE`, `CMD_ACTIVE`, `CMD_REACHED`, `CMD_TIMEOUT`, `CMD_ABORTED`, `CMD_FAULTED` |
+| Command Result | `REACHED`, `TIMEOUT`, `ESTOP`, `DISABLED`, `REPLACED`, `FAULT_LIMIT`, `FAULT_TRACKING` |
+| Event Log | `CMD_START`, `CMD_REACHED`, `CMD_TIMEOUT`, `CMD_ABORT`, `CMD_FAULT` |
+| Current Policy | `abs(error) <= 0.5 deg`가 `100 ms` 유지되면 `CMD_REACHED` 후 `PulseControl_Stop()` |
+
+참고:
+- 이 lifecycle은 현재 `no-homing baseline` 기준이다.
+- 아직 `fault latch`, `startup gating`, `unwrap`, `encoder-ADC cross-check`까지는 닫히지 않았다.
+
 ---
 
 ## 4. Module Description
@@ -208,9 +225,18 @@ PID closed-loop 위치 제어의 핵심 모듈.
 - `PositionControl_Init()` — 초기화 (PID 상태 리셋)
 - `PositionControl_Update()` — 1ms 주기 메인 제어 루프
 - `PositionControl_SetTarget(float deg)` — 목표 각도 설정 (±45°, 임계영역 보호)
+- `PositionControl_SetTargetWithSource(float deg, CommandSource_t src)` — 명령 출처 포함 목표 설정
 - `PositionControl_Enable()` / `Disable()` — 제어 활성화/비활성화
 - `PositionControl_EmergencyStop()` — 비상정지 (SW + HW 릴레이)
 - `PositionControl_CheckSafety()` — 각도 범위 + 오차 안전 검사
+- `PositionControl_GetCommandLifecycle()` — 현재 명령 상태/결과 조회
+
+**명령 수명주기 (현재 baseline):**
+- target 수락 시 `command_id` 발급 후 `CMD_START`
+- 목표 도달 및 100ms 유지 시 `CMD_REACHED`
+- 3초 초과 시 `CMD_TIMEOUT`
+- disable / ESTOP / 교체 / safety fault 시 `CMD_ABORT` 또는 `CMD_FAULT`
+- `CMD_REACHED` 전이 직후 pulse 출력을 정지하고 새 명령 전까지 완료 상태를 유지
 
 ### 4.2 pulse_control (PWM Pulse Generator)
 
@@ -348,6 +374,7 @@ servo_control_baqu/
 │   └── Third_Party/LwIP/               # LwIP core library
 ├── Doc/                                 # Documentation
 │   ├── change_code.md                   # Code change history (변경 내역 요약)
+│   ├── command_lifecycle_no_homing_spec.md # Homing 제외 command lifecycle 명세
 │   ├── ethernet_communication.md        # Ethernet/UDP 통신 설계 및 구현 메모
 │   ├── implementation_team_spec.md      # Ethernet 기반 조향 제어 분담/요구사항 명세
 │   ├── code_modules.md                  # 코드 모듈 구성 및 책임 정리
@@ -356,6 +383,7 @@ servo_control_baqu/
 │   ├── latency_code_application.md      # 코드에 latency 측정 적용 방법
 │   ├── latency_data_evidence.md         # 측정 데이터 및 근거 관리 방법
 │   ├── hardware_pinmap.md               # 실제 보드 핀 매핑
+│   ├── steering_portal/                 # 설명/시뮬레이션/코드 탐색 포털
 │   ├── 향후계획.md                       # Development roadmap
 │   ├── 최종 구조.md                      # Architecture design (최종 구조)
 │   └── Old/…                            # 이전 버전 문서 보관
@@ -414,17 +442,17 @@ main()
   ├── MX_TIM1_Init()                    // PWM pulse output
   ├── MX_IWDG_Init()                    // Watchdog (~32s)
   ├── MX_TIM4_Init()                    // Encoder input (PD12/PD13)
-  ├── // MX_LWIP_Init()                 // [주석] 이더넷 테스트 시 활성화
+  ├── MX_LWIP_Init()                    // LwIP stack init
   ├── HAL_TIM_Encoder_Start(TIM4)       // 엔코더 시작
   ├── Relay_Init()                      // SVON=OFF, EMG=해제
   ├── PulseControl_Init()               // DIR 핀 초기화
-  ├── HAL_TIM_PWM_Start(TIM1_CH1/CH2)  // PWM 출력 시작
   ├── EncoderReader_Init()              // 카운터=32768 (중심)
   ├── PositionControl_Init()            // PID 상태 리셋
   ├── Relay_ServoOn()                   // 서보 전원 ON
-  ├── HAL_Delay(1000)                   // 서보 드라이버 안정화
+  ├── HAL_Delay(500)                    // 서보 드라이버 안정화
   ├── EncoderReader_Reset()             // 현재 위치 = 0도
-  ├── PositionControl_SetTarget(10.0f)  // 목표 10도
+  ├── PositionControl_SetTargetWithSource(
+  │      SteeringDegToMotorDeg(0.0f), CMD_SRC_LOCALTEST)
   └── PositionControl_Enable()          // PID 제어 시작
 ```
 
