@@ -7,9 +7,6 @@
 #include <stdio.h>
 #include <stdint.h>
 
-static volatile uint8_t diag_level = DEBUG_NONE;
-static PosCtrl_Stats_t stats = {0};
-
 /* Convert a floating-point degree value into milli-degree debug units. */
 static int32_t PositionControlDiag_DegToMilliDeg(float deg)
 {
@@ -60,6 +57,9 @@ static uint32_t PositionControlDiag_BuildDebugFaultFlags(bool control_enabled,
     if (fault_flag == 3U) {
         flags |= DBG_FAULT_TIMEOUT;
     }
+    if (fault_flag == 4U) {
+        flags |= DBG_FAULT_VELOCITY;
+    }
     if (!control_enabled) {
         flags |= DBG_FAULT_DISABLED;
     }
@@ -106,6 +106,8 @@ const char* PositionControlDiag_CommandResultString(CommandResult_t result)
         return "FAULT_LIMIT";
     case CMD_RESULT_FAULT_TRACKING:
         return "FAULT_TRACKING";
+    case CMD_RESULT_FAULT_VELOCITY:
+        return "FAULT_VELOCITY";
     case CMD_RESULT_NONE:
     default:
         return "NONE";
@@ -175,36 +177,6 @@ void PositionControlDiag_PrintStateSummary(const PositionControl_State_t* state,
            state->is_stable ? "STABLE" : "");
 }
 
-/* Return the cached controller statistics snapshot. */
-PosCtrl_Stats_t PositionControl_GetStats(void)
-{
-    return stats;
-}
-
-/* Clear the cached controller statistics snapshot. */
-void PositionControl_ResetStats(void)
-{
-    stats = (PosCtrl_Stats_t){0};
-}
-
-/* Keep the error callback API as a placeholder for later supervisor hooks. */
-void PositionControl_RegisterErrorCallback(PosCtrl_ErrorCallback_t callback)
-{
-    (void)callback;
-}
-
-/* Keep the stable callback API as a placeholder for later supervisor hooks. */
-void PositionControl_RegisterStableCallback(PosCtrl_StableCallback_t callback)
-{
-    (void)callback;
-}
-
-/* Latch the requested diagnostic verbosity for future use. */
-void PositionControl_SetDebugLevel(DebugLevel_t level)
-{
-    diag_level = (uint8_t)level;
-}
-
 /* Map a position-control error code to a readable string. */
 const char* PositionControlDiag_ErrorString(PosCtrl_Error_t error)
 {
@@ -223,6 +195,8 @@ const char* PositionControlDiag_ErrorString(PosCtrl_Error_t error)
         return "Timeout Error";
     case POS_CTRL_ERR_SAFETY:
         return "Safety Violation";
+    case POS_CTRL_ERR_VELOCITY:
+        return "Velocity Limit Exceeded";
     default:
         return "Unknown Error";
     }
@@ -231,6 +205,5 @@ const char* PositionControlDiag_ErrorString(PosCtrl_Error_t error)
 /* Preserve the legacy public API while routing string lookup through diag helpers. */
 const char* PositionControl_GetErrorString(PosCtrl_Error_t error)
 {
-    (void)diag_level;
     return PositionControlDiag_ErrorString(error);
 }
