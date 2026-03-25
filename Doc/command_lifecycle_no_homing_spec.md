@@ -4,6 +4,22 @@
 적용 대상: `servo_control_baqu`  
 적용 범위: `homing` 기구/시퀀스가 아직 없는 상태에서, 현재 steering runtime에 바로 적용 가능한 명령 lifecycle 규격
 
+## 0. 현재 구현 반영 메모 (2026-03-24)
+
+현재 코드 기준으로 이미 반영된 항목:
+
+- `position_control.c`에 `command_id`, `CommandState_t`, `CommandResult_t`, `CommandSource_t` 반영
+- `CMD_START`, `CMD_REACHED`, `CMD_TIMEOUT`, `CMD_ABORT`, `CMD_FAULT` 이벤트 로그 반영
+- `main.c` CSV / keyboard snapshot / DIAG 경로에 lifecycle 정보 반영
+- `encoder_reader.c`는 16비트 raw 중심값 직접 해석이 아니라 누적 `unwrap` count 방식으로 변경 완료
+
+현재 남아 있는 핵심 gap:
+
+- boot-time auto-enable 제거와 startup gating
+- latched fault / clear policy
+- sensor stale / implausible motion / cross-check fault taxonomy
+- 드라이브 input pulse 인식 bench closure
+
 ## 1. 목적
 
 이 문서는 현재 시스템에서 "목표 조향 명령 하나가 시작돼서 완료됐다"를 코드와 로그 기준으로 정의하기 위한 명세서다.
@@ -79,6 +95,8 @@
 
 즉 현재 단계에서는 "절대 원점 기준 준비 완료"가 아니라 "상대 위치 기반 bench command 수행 가능"만 readiness로 본다.
 
+단, 현재 구현은 startup 직후 `PositionControl_Enable()`까지 자동 진행하므로 실제 제품 관점의 readiness gate는 아직 미완성이다.
+
 ## 4. 명령 상태 정의
 
 ### 4.1 상태 enum
@@ -134,6 +152,7 @@
 - `fault_flag == 0`
 - `CTRL_MODE_EMERGENCY`가 아님
 - `CMD_REACHED` 전이 직후 `PulseControl_Stop()`으로 pulse 출력을 정지하고, 새 명령이 수락되기 전까지 완료 상태를 유지
+- 주기 CSV와 keyboard snapshot에서는 command lifecycle과 함께 `enc_cnt`, `enc_raw`, `req_hz`, `applied_hz`, `out_active`, `rev_guard`를 같이 남긴다
 
 ### 6.2 권장 추가 조건
 
@@ -173,7 +192,7 @@
 - angle over-limit
 - tracking error over-limit
 - encoder invalid or not initialized
-- 추후: encoder stuck, sensor mismatch, implausible motion
+- 추후: encoder stuck, sensor mismatch, implausible motion, stale sensor
 
 ## 8. 로그 형식
 
@@ -187,6 +206,13 @@ CMD_REACHED,id=17,end_ms=12780,settling_ms=435,final_error_deg=0.12
 CMD_TIMEOUT,id=18,end_ms=15900,elapsed_ms=3000,error_deg=3.40
 CMD_ABORT,id=19,reason=ESTOP,end_ms=16200
 CMD_FAULT,id=20,reason=TRACKING_ERROR,end_ms=17120,error_deg=4510.0
+```
+
+현재 주기 CSV 예시:
+
+```text
+CSV_HEADER,ms,mode,target_deg,current_deg,error_deg,output,dir,enc_cnt,enc_raw,req_hz,applied_hz,out_active,rev_guard,cmd_id,cmd_state,cmd_result
+CSV,196670,1,45.000,-0.604,45.604,10000,1,-966,31802,10000,10000,1,0,202,1,0
 ```
 
 ### 8.2 주기 로그와의 관계
@@ -302,6 +328,7 @@ typedef struct {
 3. 3초 초과 시 `CMD_TIMEOUT`이 남는다.
 4. ESTOP / disable / comm timeout 시 `CMD_ABORT` 또는 `CMD_FAULT`가 남는다.
 5. 각 이벤트가 같은 `command_id`로 추적 가능하다.
+6. 주기 CSV나 keyboard snapshot에서 command 상태와 pulse/encoder 상태를 같은 시점에 함께 볼 수 있다.
 
 ## 14. 한 줄 요약
 
