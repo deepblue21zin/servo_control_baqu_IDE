@@ -1,6 +1,6 @@
 # Autonomous Steering Servo Control System
 
-STM32F429ZI 기반 조향 서브컨트롤러 프로젝트다. 상위 명령을 `steering_deg` 기준으로 받아 내부에서 `motor_deg`로 변환하고, 1ms 폐루프 제어로 pulse/direction 출력과 엔코더 피드백을 묶는다.
+STM32F429ZI 기반 조향 서브컨트롤러 프로젝트다. 상위 제어기에서 받은 `steering_deg` 명령을 내부 `motor_deg`, `enc_count`, `pulse_hz`로 변환하고, 1 ms 폐루프 제어로 pulse/direction 출력과 엔코더 피드백을 묶는다.
 
 ## 1. Current Snapshot
 
@@ -14,16 +14,18 @@ STM32F429ZI 기반 조향 서브컨트롤러 프로젝트다. 상위 명령을 `
 | Internal Unit | `motor_deg`, `enc_count`, `pulse_hz` |
 | Pulse Output | `PE9 = TIM1_CH1`, `PE10 = direction GPIO` |
 | Encoder Input | `PD12 = TIM4_CH1`, `PD13 = TIM4_CH2` |
-| Network | LwIP UDP 구현 존재, 현재 bench 기본값은 `KEYBOARD_TEST_MODE = 1` |
+| Network | LwIP UDP 구현 존재, 현재 bench 기본값은 keyboard bench 모드 |
 | Watchdog | IWDG 사용, 현재 설정 기준 약 0.5 s |
 | Runtime Trace | CSV, command lifecycle event, latency batch, keyboard snapshot |
 
 ## 2. What Is Implemented Now
 
-### 2.1 Control Runtime
+### 2.1 Runtime Layout
 
-- `main.c`에서 peripheral init, 1 ms scheduler, keyboard bench, CSV logging, watchdog refresh를 수행한다.
+- `main.c`는 CubeMX peripheral init 이후 `AppRuntime_Init()`, `AppRuntime_RunIteration()`만 호출하는 얇은 부트 진입점이다.
+- `app_runtime.c`는 app startup, keyboard bench, periodic CSV/DIAG, UDP mode handling, watchdog refresh, fast tick service를 담당한다.
 - `position_control.c`는 PID, safety check, emergency path, command lifecycle을 담당한다.
+- `position_control_diag.c`는 command state/result/source 문자열, debug var 미러링, 상태 출력 같은 진단 책임을 맡는다.
 - `pulse_control.c`는 signed `pulse_hz`를 받아 `PE9` 펄스와 `PE10` 방향으로 변환한다.
 - `encoder_reader.c`는 TIM4 raw counter를 읽고 누적 `unwrap` count로 각도를 계산한다.
 
@@ -72,7 +74,7 @@ STM32F429ZI 기반 조향 서브컨트롤러 프로젝트다. 상위 명령을 `
 
 ## 3. Current Bench State
 
-2026-03-24 기준 최근 bring-up에서 확인한 상태는 아래와 같다.
+2026-03-25 기준 최근 bring-up에서 확인한 상태는 아래와 같다.
 
 | 항목 | 현재 관찰 |
 |---|---|
@@ -93,11 +95,11 @@ STM32F429ZI 기반 조향 서브컨트롤러 프로젝트다. 상위 명령을 `
 
 ### 4.1 Default Bring-up Path
 
-현재 `main.c` 기본 경로는 bench 편의 중심이다.
+현재 bring-up 기본 경로는 `app_runtime.c`의 `AppRuntime_Init()`에 모여 있다.
 
-- `KEYBOARD_TEST_MODE = 1`
-- `PERIODIC_CSV_LOG_ENABLE = 1`
-- `ENCODER_RUNTIME_DIAG_ENABLE = 0`
+- `APP_RUNTIME_KEYBOARD_TEST_MODE = 1`
+- `APP_RUNTIME_PERIODIC_CSV_LOG_ENABLE = 1`
+- `APP_RUNTIME_ENCODER_DIAG_ENABLE = 0`
 - startup 시 `Relay_ServoOn()` 이후 `EncoderReader_Reset()`
 - 이어서 `PositionControl_SetTargetWithSource(..., CMD_SRC_LOCALTEST)`와 `PositionControl_Enable()` 수행
 
@@ -149,8 +151,10 @@ keyboard snapshot과 periodic DIAG에도 같은 축의 정보를 반영한다.
 
 | 파일 | 역할 |
 |---|---|
-| `Core/Src/main.c` | init, 1 ms scheduler, keyboard bench, CSV, watchdog |
+| `Core/Src/main.c` | CubeMX init과 app runtime 호출만 담당하는 부트 진입점 |
+| `Core/Src/app_runtime.c` | startup, keyboard bench, UDP mode, CSV/DIAG, watchdog, 1 ms service |
 | `Core/Src/position_control.c` | PID, safety, lifecycle, ESTOP |
+| `Core/Src/position_control_diag.c` | command 문자열, debug vars, 상태 출력 |
 | `Core/Src/pulse_control.c` | pulse/direction output, reverse guard, applied Hz status |
 | `Core/Src/encoder_reader.c` | TIM4 raw -> unwrap count -> angle |
 | `Core/Src/ethernet_communication.c` | UDP packet / mode handling |
@@ -164,12 +168,13 @@ keyboard snapshot과 periodic DIAG에도 같은 축의 정보를 반영한다.
 | `Doc/README.md` | 문서 인덱스와 현재 runtime 요약 |
 | `Doc/command_lifecycle_no_homing_spec.md` | no-homing lifecycle 명세와 현재 구현 상태 |
 | `Doc/steering_portal/index.html` | 현재 구현, REQ, evidence를 시각화한 로컬 포털 |
-| `Doc/change_code/2026-03-24.md` | 오늘 코드/문서 변경 이력 |
+| `Doc/doxygen/html/index.html` | 역할, 입출력, 함수, 변수 요약이 포함된 코드 브라우저 랜딩 |
+| `Doc/change_code/2026-03-25.md` | 오늘 코드/문서 변경 이력 |
 | `Doc/hardware_pinmap.md` | 실제 핀 매핑 참고 |
 | `Doc/latency_*.md` 문서군 | latency 측정 계약과 evidence 관리 |
 
 ## 8. One-Line Summary
 
-현재 프로젝트는 "1 ms steering sub-controller의 구조, command lifecycle, pulse status, encoder unwrap, traceability"까지는 잘 정리된 상태이고, 다음 핵심 과제는 "드라이브가 command pulse를 실제 motion으로 받아들이는 bench closure"다.
+현재 프로젝트는 "1 ms steering sub-controller의 구조, command lifecycle, pulse status, encoder unwrap, traceability"에 더해 "runtime 분리와 diagnostic 분리"까지 진행된 상태이고, 다음 핵심 과제는 "드라이브가 command pulse를 실제 motion으로 받아들이는 bench closure"다.
 
-Last updated: 2026-03-24
+Last updated: 2026-03-25

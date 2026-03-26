@@ -7,8 +7,8 @@
 #include "tim.h"
 #include <stdio.h>
 
-#define ENCODER_TIMER htim4
-#define ENCODER_COUNTER_CENTER 32768U
+#define ENCODER_TIMER htim2
+#define ENCODER_COUNTER_CENTER 32768UL
 
 /* Encoder configuration (XML-FBL04AMK1) */
 #define PULSE_PER_REV 12000
@@ -19,15 +19,15 @@
 static int32_t encoder_count = 0;
 static int32_t encoder_offset = 0;
 static int32_t encoder_delta = 0;
-static uint16_t encoder_last_raw = ENCODER_COUNTER_CENTER;
+static uint32_t encoder_last_raw = ENCODER_COUNTER_CENTER;
 static uint8_t initialized = 0;
 
 static int32_t EncoderReader_UpdateCount(void)
 {
-    uint16_t raw = (uint16_t)__HAL_TIM_GET_COUNTER(&ENCODER_TIMER);
-    int16_t delta = (int16_t)(raw - encoder_last_raw);
+    uint32_t raw = __HAL_TIM_GET_COUNTER(&ENCODER_TIMER);
+    int32_t delta = (int32_t)(raw - encoder_last_raw);
 
-    encoder_delta = (int32_t)delta;
+    encoder_delta = delta;
     encoder_count += encoder_delta;
     encoder_last_raw = raw;
 
@@ -57,9 +57,9 @@ int32_t EncoderReader_GetCount(void)
     return EncoderReader_UpdateCount() - encoder_offset;
 }
 
-uint16_t EncoderReader_GetRawCounter(void)
+uint32_t EncoderReader_GetRawCounter(void)
 {
-    return (uint16_t)__HAL_TIM_GET_COUNTER(&ENCODER_TIMER);
+    return __HAL_TIM_GET_COUNTER(&ENCODER_TIMER);
 }
 
 void EncoderReader_Reset(void)

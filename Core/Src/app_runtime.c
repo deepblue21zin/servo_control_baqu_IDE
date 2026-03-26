@@ -75,7 +75,7 @@ static void AppRuntime_ServicePeriodicCsv(void)
     PulseControl_Status_t pulse_status = PulseControl_GetStatus();
     GPIO_PinState dir_state = HAL_GPIO_ReadPin(DIR_PIN_GPIO_Port, DIR_PIN_Pin);
     int32_t enc_count = EncoderReader_GetCount();
-    uint16_t enc_raw = EncoderReader_GetRawCounter();
+    uint32_t enc_raw = EncoderReader_GetRawCounter();
 
     if (g_periodic_csv_enabled == 0U) {
         return;
@@ -86,7 +86,7 @@ static void AppRuntime_ServicePeriodicCsv(void)
     }
     last_ms = now_ms;
 
-    printf("CSV,%lu,%d,%.3f,%.3f,%.3f,%.0f,%d,%ld,%u,%ld,%lu,%u,%u,%lu,%d,%d\r\n",
+    printf("CSV,%lu,%d,%.3f,%.3f,%.3f,%.0f,%d,%ld,%lu,%ld,%lu,%u,%u,%lu,%d,%d\r\n",
            (unsigned long)now_ms,
            (int)PositionControl_GetMode(),
            AppRuntime_TargetMotorDegToSteeringDeg(s.target_angle),
@@ -95,7 +95,7 @@ static void AppRuntime_ServicePeriodicCsv(void)
            s.output,
            (int)dir_state,
            (long)enc_count,
-           (unsigned int)enc_raw,
+           (unsigned long)enc_raw,
            (long)pulse_status.requested_frequency_hz,
            (unsigned long)pulse_status.applied_frequency_hz,
            (unsigned int)pulse_status.output_active,
@@ -158,15 +158,15 @@ static void AppRuntime_TryLatencyAutoReport(void)
 #endif
 }
 
-/* Print live TIM4 encoder register details when bench diagnostics are enabled. */
+/* Print live TIM2 encoder register details when bench diagnostics are enabled. */
 static void AppRuntime_ServiceEncoderRuntimeDiag(void)
 {
 #if APP_RUNTIME_ENCODER_DIAG_ENABLE
     static uint32_t last_ms = 0U;
-    static uint16_t prev_cnt = 32768U;
+    static uint32_t prev_cnt = 32768UL;
     uint32_t now_ms = HAL_GetTick();
-    uint16_t cnt = 0U;
-    uint16_t delta_u16 = 0U;
+    uint32_t cnt = 0U;
+    uint32_t delta_u32 = 0U;
     int32_t delta = 0;
     uint32_t cr1 = 0U;
     uint32_t smcr = 0U;
@@ -186,26 +186,26 @@ static void AppRuntime_ServiceEncoderRuntimeDiag(void)
     }
     last_ms = now_ms;
 
-    cnt = (uint16_t)__HAL_TIM_GET_COUNTER(&htim4);
-    delta_u16 = (uint16_t)(cnt - prev_cnt);
-    delta = (int32_t)((int16_t)delta_u16);
-    cr1 = htim4.Instance->CR1;
-    smcr = htim4.Instance->SMCR;
-    ccmr1 = htim4.Instance->CCMR1;
-    ccer = htim4.Instance->CCER;
+    cnt = __HAL_TIM_GET_COUNTER(&htim2);
+    delta_u32 = (uint32_t)(cnt - prev_cnt);
+    delta = (int32_t)delta_u32;
+    cr1 = htim2.Instance->CR1;
+    smcr = htim2.Instance->SMCR;
+    ccmr1 = htim2.Instance->CCMR1;
+    ccer = htim2.Instance->CCER;
     cen = ((cr1 & TIM_CR1_CEN) != 0U) ? 1U : 0U;
     sms = (smcr & TIM_SMCR_SMS) >> TIM_SMCR_SMS_Pos;
     cc1s = (ccmr1 & TIM_CCMR1_CC1S) >> TIM_CCMR1_CC1S_Pos;
     cc2s = (ccmr1 & TIM_CCMR1_CC2S) >> TIM_CCMR1_CC2S_Pos;
     cc1e = ((ccer & TIM_CCER_CC1E) != 0U) ? 1U : 0U;
     cc2e = ((ccer & TIM_CCER_CC2E) != 0U) ? 1U : 0U;
-    enc_a_state = HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_12);
-    enc_b_state = HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_13);
+    enc_a_state = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0);
+    enc_b_state = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_3);
 
-    printf("[ENCDBG] ms=%lu cnt=%u prev=%u delta=%ld A=%d B=%d CEN=%lu SMS=%lu CC1S=%lu CC2S=%lu CC1E=%lu CC2E=%lu CR1=0x%04lX SMCR=0x%04lX CCMR1=0x%04lX CCER=0x%04lX\r\n",
+    printf("[ENCDBG] ms=%lu cnt=%lu prev=%lu delta=%ld A=%d B=%d CEN=%lu SMS=%lu CC1S=%lu CC2S=%lu CC1E=%lu CC2E=%lu CR1=0x%04lX SMCR=0x%04lX CCMR1=0x%04lX CCER=0x%04lX\r\n",
            (unsigned long)now_ms,
-           (unsigned int)cnt,
-           (unsigned int)prev_cnt,
+           (unsigned long)cnt,
+           (unsigned long)prev_cnt,
            (long)delta,
            (int)enc_a_state,
            (int)enc_b_state,
@@ -252,9 +252,9 @@ static void AppRuntime_KeyboardPrintControlSnapshot(const char *reason)
     PulseControl_Status_t pulse_status = PulseControl_GetStatus();
     GPIO_PinState dir_state = HAL_GPIO_ReadPin(DIR_PIN_GPIO_Port, DIR_PIN_Pin);
     int32_t enc_count = EncoderReader_GetCount();
-    uint16_t enc_raw = EncoderReader_GetRawCounter();
+    uint32_t enc_raw = EncoderReader_GetRawCounter();
 
-    printf("[KB][%s] T=%.2fdeg C=%.2fdeg E=%.2fdeg O=%.0f DIR=%d ENC=%ld RAW=%u REQ=%ld AP=%lu RUN=%u REV=%u CMD=%lu/%s/%s\r\n",
+    printf("[KB][%s] T=%.2fdeg C=%.2fdeg E=%.2fdeg O=%.0f DIR=%d ENC=%ld RAW=%lu REQ=%ld AP=%lu RUN=%u REV=%u CMD=%lu/%s/%s\r\n",
            reason,
            AppRuntime_TargetMotorDegToSteeringDeg(s.target_angle),
            AppRuntime_TargetMotorDegToSteeringDeg(s.current_angle),
@@ -262,7 +262,7 @@ static void AppRuntime_KeyboardPrintControlSnapshot(const char *reason)
            s.output,
            (int)dir_state,
            (long)enc_count,
-           (unsigned int)enc_raw,
+           (unsigned long)enc_raw,
            (long)pulse_status.requested_frequency_hz,
            (unsigned long)pulse_status.applied_frequency_hz,
            (unsigned int)pulse_status.output_active,
@@ -501,13 +501,13 @@ static void AppRuntime_PrintPeriodicDiag(void)
     PulseControl_Status_t pulse_status = PulseControl_GetStatus();
     GPIO_PinState dir_state = HAL_GPIO_ReadPin(DIR_PIN_GPIO_Port, DIR_PIN_Pin);
     int32_t enc_count = EncoderReader_GetCount();
-    uint16_t enc_raw = EncoderReader_GetRawCounter();
+    uint32_t enc_raw = EncoderReader_GetRawCounter();
     float target_steer_deg = AppRuntime_TargetMotorDegToSteeringDeg(s.target_angle);
     float current_steer_deg = AppRuntime_TargetMotorDegToSteeringDeg(s.current_angle);
     float error_steer_deg = AppRuntime_TargetMotorDegToSteeringDeg(s.error);
 
 #if LATENCY_LOG_ENABLE
-    printf("[DIAG] MODE:%d CMD:%lu/%s/%s Tst:%.2f Cst:%.2f Est:%.2f O:%.0f REQ:%ld AP:%lu ARR:%lu CCR:%lu DIR:%d RUN:%u REV:%u ENC:%ld RAW:%u\r\n",
+    printf("[DIAG] MODE:%d CMD:%lu/%s/%s Tst:%.2f Cst:%.2f Est:%.2f O:%.0f REQ:%ld AP:%lu ARR:%lu CCR:%lu DIR:%d RUN:%u REV:%u ENC:%ld RAW:%lu\r\n",
            (int)PositionControl_GetMode(),
            (unsigned long)cmd.command_id,
            PositionControlDiag_CommandStateString(cmd.state),
@@ -524,7 +524,7 @@ static void AppRuntime_PrintPeriodicDiag(void)
            (unsigned int)pulse_status.output_active,
            (unsigned int)pulse_status.reverse_guard_active,
            (long)enc_count,
-           (unsigned int)enc_raw);
+           (unsigned long)enc_raw);
 #else
     (void)pulse_status;
     (void)enc_count;
@@ -571,7 +571,7 @@ void AppRuntime_Init(void)
     LatencyProfiler_Init(SystemCoreClock);
     AppRuntime_ConfigureDirectionPin();
 
-    HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
+    HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
 
     Relay_Init();
     PulseControl_Init();

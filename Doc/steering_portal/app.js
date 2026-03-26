@@ -5,9 +5,9 @@ const PORTAL_PULSE_PER_STEERING_DEG = PORTAL_STEERING_GEAR_RATIO / 0.003;
 const portalData = {
   kpis: [
     { label: "Loop period", value: "1 ms", note: "SysTick based control loop" },
-    { label: "Pulse clamp", value: "10-100k", note: "current firmware contract in pulse_control.c" },
+    { label: "Runtime split", value: "main -> app", note: "boot entry and app supervisor are now separated" },
     { label: "Encoder mode", value: "unwrap", note: "TIM4 raw delta accumulated into count" },
-    { label: "Drive monitor", value: "St-06 = 0", note: "current bench bottleneck on 2026-03-24" }
+    { label: "Drive monitor", value: "St-06 = 0", note: "current bench bottleneck on 2026-03-25" }
   ],
   latency: [
     { name: "Sense", avg: 0.928, p99: 0.961 },
@@ -21,22 +21,22 @@ const portalData = {
     current: [-0.604, -0.604, -0.604, -0.604, -0.604, -0.604]
   },
   evaluation: {
-    score: 72,
-    verdict: "command lifecycle, encoder unwrap, pulse status 관찰성은 좋아졌지만, 현재 bench에서는 드라이브가 command pulse를 카운트하지 않아 motion closure가 남아 있다.",
+    score: 76,
+    verdict: "runtime 분리와 diagnostic 분리로 구조는 더 좋아졌지만, 현재 bench에서는 드라이브가 command pulse를 카운트하지 않아 motion closure가 남아 있다.",
     summary:
-      "현업 관점에서 이 프로젝트는 단순한 모터 데모가 아니라 센서, 제어, 액추에이터, 로그, 문서를 한 프레임으로 묶은 steering controller baseline으로 설명할 수 있다. 최근에는 encoder unwrap, reverse guard, requested/applied Hz 추적이 들어가면서 설명력과 분석력이 좋아졌다. 다만 production-complete steering subsystem 기준으로는 drive-side input closure와 startup safety가 아직 남아 있어 현재 평점은 약 72%가 적절하다.",
+      "현업 관점에서 이 프로젝트는 단순한 모터 데모가 아니라 센서, 제어, 액추에이터, 로그, 문서를 한 프레임으로 묶은 steering controller baseline으로 설명할 수 있다. 최근에는 `main.c -> app_runtime.c` 분리와 `position_control_diag.c` 분리까지 들어가면서 구조 설명력과 유지보수성이 좋아졌다. 다만 production-complete steering subsystem 기준으로는 drive-side input closure와 startup safety가 아직 남아 있어 현재 평점은 약 76%가 적절하다.",
     interviewer:
-      "면접에서는 '이미 완성된 조향 제어기'보다 '구조와 증거 체계를 갖춘 bring-up baseline'으로 설명하는 편이 더 강하다. 특히 command lifecycle과 pulse status, encoder unwrap을 함께 보여줄 수 있는 점은 좋다. 대신 최근 bench에서 `St-06 = 0`이라는 드라이브 모니터 근거를 함께 제시하면서, 마지막 병목이 어디인지 명확히 말하는 것이 신뢰를 높인다.",
+      "면접에서는 '이미 완성된 조향 제어기'보다 '구조와 증거 체계를 갖춘 bring-up baseline'으로 설명하는 편이 더 강하다. 특히 command lifecycle, pulse status, encoder unwrap에 더해 runtime과 diagnostic 레이어를 분리한 점은 설계 감각을 보여준다. 대신 최근 bench에서 `St-06 = 0`이라는 드라이브 모니터 근거를 함께 제시하면서, 마지막 병목이 어디인지 명확히 말하는 것이 신뢰를 높인다.",
     categories: [
       {
         name: "Architecture / Readability",
-        score: 84,
-        detail: "모듈 경계와 문서 구조는 꽤 분명하다. 다만 main.c가 startup, keyboard bench, logging, integration을 많이 안고 있어 최종 구조로는 더 분리할 여지가 있다."
+        score: 91,
+        detail: "main.c를 얇은 부트 엔트리로 남기고 app_runtime.c와 position_control_diag.c로 책임을 분리하면서 구조가 한 단계 정리됐다. 다음 단계는 app_runtime 안의 bench console과 telemetry를 다시 쪼개는 것이다."
       },
       {
         name: "Observability / Evidence",
-        score: 88,
-        detail: "CSV, keyboard snapshot, command lifecycle log, latency batch, portal, change log까지 이어져 있어 분석 가능한 증거 체계가 강하다."
+        score: 90,
+        detail: "CSV, keyboard snapshot, command lifecycle log, latency batch, portal, change log까지 이어져 있어 분석 가능한 증거 체계가 강하다. 특히 diagnostic 계층 분리로 상태 문자열과 debug var 경로가 더 읽기 쉬워졌다."
       },
       {
         name: "Actuator Interface",
@@ -62,7 +62,7 @@ const portalData = {
     reasons: [
       {
         title: "구조와 증거 체계는 분명히 좋아졌다",
-        detail: "command lifecycle, encoder unwrap, pulse status, latency evidence, portal 동기화가 함께 움직여 현재 코드 상태를 설명하기 쉬워졌다."
+        detail: "command lifecycle, encoder unwrap, pulse status, latency evidence, portal 동기화에 더해 `main.c -> app_runtime.c` 분리와 `position_control_diag.c` 분리가 들어가면서 현재 코드 상태를 설명하기 쉬워졌다."
       },
       {
         title: "현재 병목이 더 구체적으로 드러났다",
@@ -70,7 +70,7 @@ const portalData = {
       },
       {
         title: "startup safety와 fault policy는 아직 설명형 수준이다",
-        detail: "boot-time auto-enable이 남아 있고, fault latch / clear policy / stale sensor taxonomy가 아직 정식 계약으로 닫히지 않았다."
+        detail: "구조 분리는 좋아졌지만 boot-time auto-enable이 남아 있고, fault latch / clear policy / stale sensor taxonomy가 아직 정식 계약으로 닫히지 않았다."
       },
       {
         title: "production steering claim에는 마지막 motion closure가 필요하다",
@@ -105,14 +105,14 @@ const portalData = {
       {
         step: "Step 1",
         title: "Upper command와 단위를 먼저 맞춘다",
-        summary: "상위 입력은 `steering_deg`이고, main runtime에서 `motor_deg`로 변환되어 controller로 들어간다. 먼저 gear ratio와 pulse conversion contract가 같은 기준을 쓰는지 본다.",
+        summary: "상위 입력은 `steering_deg`이고, app runtime에서 `motor_deg`로 변환되어 controller로 들어간다. 먼저 gear ratio와 pulse conversion contract가 같은 기준을 쓰는지 본다.",
         vars: [
           "AutoDrive_Packet_t.steering_angle",
           "STEERING_GEAR_RATIO = 12.5",
           "SteeringDegToMotorDeg()",
           "DEG_PER_PULSE = 0.003 motor_deg"
         ],
-        files: ["ethernet_communication.c", "constants.h", "main.c"],
+        files: ["ethernet_communication.c", "constants.h", "app_runtime.c"],
         status: "적용됨. 외부 steering_deg -> 내부 motor_deg 경로는 정리됐지만 naming consistency는 더 다듬을 수 있다."
       },
       {
@@ -151,8 +151,8 @@ const portalData = {
           "LATENCY_BATCH_BEGIN / LATENCY_STAGE / LATENCY_BATCH_END",
           "PositionControl_EmergencyStop()"
         ],
-        files: ["main.c", "position_control.c", "latency_profiler.c"],
-        status: "적용됨. evidence skeleton은 충분히 좋아졌고 남은 과제는 startup/fault closure다."
+        files: ["app_runtime.c", "position_control.c", "position_control_diag.c", "latency_profiler.c"],
+        status: "적용됨. evidence skeleton은 충분히 좋아졌고, 최근에는 runtime/diagnostic 분리로 trace path도 더 읽기 쉬워졌다."
       }
     ],
     phases: [
@@ -183,8 +183,8 @@ const portalData = {
       },
       {
         name: "Evidence",
-        description: "CSV, lifecycle event, latency batch, keyboard snapshot으로 현재 상태를 바깥에 남긴다.",
-        vars: ["CSV rows", "CMD_*", "LATENCY_STAGE", "[KB][snapshot]"]
+        description: "CSV, lifecycle event, latency batch, keyboard snapshot, debug vars로 현재 상태를 바깥에 남긴다.",
+        vars: ["CSV rows", "CMD_*", "LATENCY_STAGE", "[KB][snapshot]", "dbg_*"]
       }
     ],
     logs: [
@@ -312,14 +312,14 @@ const portalData = {
     {
       owner: "Team E",
       title: "Communication & System Integration",
-      scope: "ethernet_communication.c, main.c mode transitions, timeout behavior",
+      scope: "ethernet_communication.c, app_runtime.c mode transitions, timeout behavior",
       deliverable: "keyboard/UDP/system mode contract and recovery gating",
       evidence: "mode transition log, timeout fail-safe proof, packet-to-target trace"
     },
     {
       owner: "Team F",
       title: "Verification & Tooling",
-      scope: "latency_profiler.c, debug_vars, plotting scripts, documentation portal",
+      scope: "latency_profiler.c, position_control_diag.c, debug_vars, plotting scripts, documentation portal",
       deliverable: "evidence automation, async logging support, portal maintenance",
       evidence: "latency report, PNG plots, portal snapshot, submission-ready artifact set"
     }
@@ -328,15 +328,28 @@ const portalData = {
     {
       id: "main",
       title: "main.c",
-      subtitle: "System init, scheduler, keyboard bench, CSV and DIAG logging",
+      subtitle: "CubeMX boot wrapper and top-level entrypoint",
       owner: "Integration / Runtime",
-      inputs: ["UDP packets", "keyboard UART", "interrupt_flag", "watchdog tick"],
-      outputs: ["PositionControl_SetTargetWithSource()", "Relay_ServoOn()", "Periodic CSV", "LATENCY_STAGE"],
-      risks: ["boot-time auto-enable", "blocking UART logging", "multiple responsibilities in one file"],
+      inputs: ["HAL reset", "SystemClock_Config()", "MX_* peripheral initialization completion"],
+      outputs: ["AppRuntime_Init()", "AppRuntime_RunIteration()", "__io_putchar() UART bridge"],
+      risks: ["blocking __io_putchar()", "CubeMX merge points still need discipline"],
       files: ["../../Core/Src/main.c", "../../Core/Inc/main.h"],
       doxygen: "../doxygen/html/main_8c_source.html",
-      snippet: "HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);\\nRelay_Init();\\nPulseControl_Init();\\nEncoderReader_Init();\\nPositionControl_Init();\\n...\\nEncoderReader_Reset();\\nPositionControl_SetTargetWithSource(TargetSteeringDegToMotorDeg(0.0f), CMD_SRC_LOCALTEST);\\nPositionControl_Enable();",
-      notes: "main.c는 keyboard bench와 integration 중심 파일이다. 현재는 startup gating보다 bring-up 편의 쪽에 더 무게가 실려 있다."
+      snippet: "MX_GPIO_Init();\\nMX_USART3_UART_Init();\\nMX_TIM1_Init();\\nMX_TIM4_Init();\\nMX_LWIP_Init();\\nAppRuntime_Init();\\nwhile (1) {\\n    AppRuntime_RunIteration();\\n}",
+      notes: "최근 리팩터링 이후 main.c는 CubeMX 재생성 경계와 앱 진입점 역할만 남겼다. 실제 startup, super-loop, bench telemetry는 app_runtime.c가 맡는다."
+    },
+    {
+      id: "runtime",
+      title: "app_runtime.c",
+      subtitle: "Application startup, super-loop services, bench console, CSV and DIAG",
+      owner: "Integration / Runtime",
+      inputs: ["interrupt_flag", "keyboard UART bytes", "EthComm mode/data", "PositionControl/Pulse/Encoder state"],
+      outputs: ["PositionControl_Enable()/Update()", "PositionControl_SetTargetWithSource()", "CSV/DIAG logs", "IWDG refresh"],
+      risks: ["startup auto-enable still present", "bench console and telemetry are still combined", "blocking UART logging"],
+      files: ["../../Core/Src/app_runtime.c", "../../Core/Inc/app_runtime.h"],
+      doxygen: null,
+      snippet: "void AppRuntime_RunIteration(void) {\\n    MX_LWIP_Process();\\n    AppRuntime_KeyboardProcessInput();\\n    AppRuntime_ServiceUdpComms();\\n    if (interrupt_flag != 0U) {\\n        interrupt_flag = 0U;\\n        AppRuntime_ServiceFastTick();\\n    }\\n    AppRuntime_ServicePeriodicCsv();\\n    HAL_IWDG_Refresh(&hiwdg);\\n}",
+      notes: "현재 앱 운영의 중심 파일이다. startup 시퀀스, keyboard bench, UDP mode transition, fast tick, telemetry가 한데 모여 있어 이후 `bench_console`과 `telemetry`로 더 쪼갤 후보이기도 하다."
     },
     {
       id: "position",
@@ -350,6 +363,19 @@ const portalData = {
       doxygen: "../doxygen/html/position__control_8c_source.html",
       snippet: "state.current_angle = EncoderReader_GetAngleDeg();\\nstate.error = state.target_angle - state.current_angle;\\nif (!PositionControl_CheckSafety()) {\\n    PositionControl_CommandFinish(CMD_FAULTED, fault_result, HAL_GetTick());\\n    PositionControl_EmergencyStop();\\n    return;\\n}\\nstate.output = PID_Calculate(state.error, dt);\\nPulseControl_SetFrequency((int32_t)state.output);",
       notes: "현재 lifecycle trace는 충분히 좋아졌다. 다음 핵심은 stale sensor와 startup gating을 같은 fault policy로 묶는 것이다."
+    },
+    {
+      id: "positiondiag",
+      title: "position_control_diag.c",
+      subtitle: "Command string helpers, debug var mirroring, state summary",
+      owner: "Validation / F",
+      inputs: ["PositionControl_State_t", "CommandLifecycle_t", "control_enabled/mode/fault_flag"],
+      outputs: ["dbg_* globals", "bench summary printf", "readable lifecycle/error strings"],
+      risks: ["stats/callback APIs are still placeholder stubs", "printf path is still blocking"],
+      files: ["../../Core/Src/position_control_diag.c", "../../Core/Inc/position_control_diag.h"],
+      doxygen: null,
+      snippet: "void PositionControlDiag_UpdateDebugVars(const PositionControl_State_t* state, ...) {\\n    dbg_enc_raw = (int32_t)EncoderReader_GetRawCounter();\\n    dbg_pos_mdeg = PositionControlDiag_DegToMilliDeg(MotorDegToSteeringDeg(state->current_angle));\\n    dbg_target_mdeg = PositionControlDiag_DegToMilliDeg(MotorDegToSteeringDeg(state->target_angle));\\n    dbg_fault_flags = PositionControlDiag_BuildDebugFaultFlags(...);\\n}",
+      notes: "진단 책임을 따로 뺀 덕분에 position_control.c 핫패스가 더 얇아졌다. 현재는 문자열/출력 계층이고, 앞으로는 async telemetry adapter 후보가 될 수 있다."
     },
     {
       id: "encoder",
@@ -387,13 +413,13 @@ const portalData = {
       risks: ["binary CRC contract 미완료", "keyboard default와 UDP mode 통합 필요"],
       files: ["../../Core/Src/ethernet_communication.c", "../../Core/Inc/ethernet_communication.h"],
       doxygen: "../doxygen/html/ethernet__communication_8c_source.html",
-      snippet: "if (mode == STEER_MODE_AUTO || mode == STEER_MODE_MANUAL) {\\n    PositionControl_SetTargetWithSource(TargetSteeringDegToMotorDeg(pkt.steering_angle), CMD_SRC_UDP);\\n}",
-      notes: "외부 명령 계약은 steering_deg 기준으로 꽤 정리됐다. 다음 단계는 keyboard bench와 UDP 운용을 하나의 상태 모델로 묶는 것이다."
+      snippet: "if (g_current_mode == STEER_MODE_MANUAL) {\\n    g_latest_pkt.steering_angle = joy_to_deg(joy_y);\\n    g_new_data = true;\\n} else if (g_current_mode == STEER_MODE_ESTOP) {\\n    g_emergency_request = true;\\n}\\n...\\nif (pc_speed == SPEED_ESTOP_SENTINEL) {\\n    g_emergency_request = true;\\n}",
+      notes: "외부 명령 계약은 steering_deg 기준으로 꽤 정리됐다. 현재 app_runtime.c가 이 파일의 mode/data를 소비해 runtime 상태전이를 수행한다."
     },
     {
       id: "homing",
-      title: "homing.c + relay_control.c",
-      subtitle: "Startup safety skeleton",
+      title: "relay_control.c + homing.c",
+      subtitle: "Power/safety outputs and startup zero-reference skeleton",
       owner: "Safety / B",
       inputs: ["ADC angle", "startup event", "operator reset"],
       outputs: ["encoder offset", "SVON/EMG relay action"],
@@ -415,6 +441,80 @@ const portalData = {
       doxygen: "../doxygen/html/latency__profiler_8c_source.html",
       snippet: "dt = DWT->CYCCNT - buf->start_cycle;\\nbuf->samples[buf->sample_count] = dt;\\n...\\nout_stats->avg_us = cycles_to_us(avg_cycles);\\nout_stats->p99_us = cycles_to_us(p99_cycles);\\nout_stats->max_us = cycles_to_us(buf->max_cycles);",
       notes: "이 프로젝트의 강점은 코드뿐 아니라 evidence pipeline이다. 현재는 motion bring-up과 timing measurement 조건을 분리해 설명하는 것이 중요하다."
+    }
+  ],
+  runtimeAtlas: [
+    {
+      title: "main.c",
+      file: "Core/Src/main.c",
+      role: "CubeMX가 관리하는 초기화 코드와 앱 런타임 호출 경계를 유지한다.",
+      receives: ["HAL reset + clock init", "MX_GPIO/MX_TIM/MX_LWIP 초기화 완료"],
+      sends: ["AppRuntime_Init()", "AppRuntime_RunIteration()", "USART3 기반 __io_putchar()"],
+      functions: ["main()", "SystemClock_Config()", "__io_putchar()"],
+      variables: ["사용자 static state 거의 없음", "UART 리다이렉션은 huart3에 의존"]
+    },
+    {
+      title: "app_runtime.c",
+      file: "Core/Src/app_runtime.c",
+      role: "실제 애플리케이션 startup과 super-loop를 운영하는 통합 supervisor다.",
+      receives: ["interrupt_flag", "keyboard UART bytes", "EthComm latest packet / mode", "PositionControl/Pulse/Encoder 상태"],
+      sends: ["PositionControl_Update()", "PositionControl_SetTargetWithSource()", "CSV/DIAG/UART 로그", "IWDG refresh"],
+      functions: ["AppRuntime_Init()", "AppRuntime_RunIteration()", "AppRuntime_ServiceFastTick()", "AppRuntime_ServiceUdpComms()"],
+      variables: ["g_debug_print_divider", "g_latency_report_seq", "g_keyboard_target_steer_deg", "g_periodic_csv_enabled"]
+    },
+    {
+      title: "ethernet_communication.c",
+      file: "Core/Src/ethernet_communication.c",
+      role: "UDP 패킷을 runtime이 소비할 수 있는 mode/data 상태로 변환한다.",
+      receives: ["LwIP UDP payload", "manual joy_y / PC steer packet", "service text command"],
+      sends: ["AutoDrive_Packet_t", "SteerMode_t", "emergency request flag", "last_rx_tick"],
+      functions: ["EthComm_Init()", "EthComm_UDP_Init()", "EthComm_HasNewData()", "EthComm_GetLatestData()"],
+      variables: ["g_latest_pkt", "g_current_mode", "g_emergency_request", "g_last_rx_tick"]
+    },
+    {
+      title: "position_control.c",
+      file: "Core/Src/position_control.c",
+      role: "PID 계산, lifecycle 상태전이, safety check, ESTOP를 수행하는 제어 코어다.",
+      receives: ["target_angle[motor_deg]", "EncoderReader current angle", "HAL_GetTick() based dt"],
+      sends: ["PulseControl_SetFrequency()", "Relay_Emergency()", "CommandLifecycle_t update"],
+      functions: ["PositionControl_Update()", "PositionControl_SetTargetWithSource()", "PositionControl_Enable()", "PositionControl_EmergencyStop()"],
+      variables: ["state", "command_lifecycle", "pending_command_source", "fault_flag"]
+    },
+    {
+      title: "position_control_diag.c",
+      file: "Core/Src/position_control_diag.c",
+      role: "제어 코어에서 분리된 diagnostic helper 레이어다.",
+      receives: ["PositionControl_State_t snapshot", "command lifecycle", "control mode / fault info"],
+      sends: ["dbg_* globals", "상태 요약 printf", "readable enum labels"],
+      functions: ["PositionControlDiag_UpdateDebugVars()", "PositionControlDiag_PrintStateSummary()", "PositionControlDiag_CommandStateString()"],
+      variables: ["diag_level", "stats", "dbg_enc_raw", "dbg_fault_flags"]
+    },
+    {
+      title: "encoder_reader.c",
+      file: "Core/Src/encoder_reader.c",
+      role: "TIM4 raw counter를 unwrap count와 motor angle로 바꿔 센서 truth를 제공한다.",
+      receives: ["TIM4->CNT raw counter", "offset_count"],
+      sends: ["current motor_deg", "enc_cnt", "enc_raw"],
+      functions: ["EncoderReader_Init()", "EncoderReader_GetAngleDeg()", "EncoderReader_GetCount()", "EncoderReader_SetOffset()"],
+      variables: ["encoder_last_raw", "encoder_count", "encoder_offset", "encoder_initialized"]
+    },
+    {
+      title: "pulse_control.c",
+      file: "Core/Src/pulse_control.c",
+      role: "signed pulse_hz를 TIM1 PWM과 direction GPIO로 바꾸는 액추에이터 인터페이스다.",
+      receives: ["signed pulse_hz", "step count", "target direction"],
+      sends: ["PE9 pulse", "PE10 direction", "requested/applied Hz status", "reverse guard state"],
+      functions: ["PulseControl_SetFrequency()", "PulseControl_SendSteps()", "PulseControl_Stop()", "PulseControl_GetStatus()"],
+      variables: ["requested_frequency_hz", "applied_frequency_hz", "pending_direction", "pending_frequency_hz", "remaining_steps"]
+    },
+    {
+      title: "relay_control.c + homing.c",
+      file: "Core/Src/relay_control.c / Core/Src/homing.c",
+      role: "SVON/EMG 릴레이 출력과 startup zero-reference skeleton을 담당한다.",
+      receives: ["operator reset", "ADC absolute angle", "startup event"],
+      sends: ["Relay_ServoOn/Off()", "Relay_Emergency()", "encoder offset"],
+      functions: ["Relay_Init()", "Relay_ServoOn()", "Relay_Emergency()", "Homing_Start()"],
+      variables: ["homing_status", "offset_count", "GPIO relay state"]
     }
   ]
 };
@@ -699,6 +799,46 @@ function renderTeams() {
   });
 }
 
+function renderRuntimeAtlas() {
+  const flowHost = document.getElementById("runtime-flow");
+  const gridHost = document.getElementById("runtime-atlas-grid");
+
+  portalData.runtimeAtlas.forEach((entry) => {
+    const stage = makeEl("article", "runtime-stage");
+    stage.innerHTML = `
+      <span class="runtime-file-tag">${entry.title}</span>
+      <h3>${entry.role}</h3>
+      <p class="caption">${entry.file}</p>
+    `;
+    flowHost.append(stage);
+
+    const card = makeEl("article", "runtime-atlas-card");
+    card.innerHTML = `
+      <span class="runtime-file-tag">${entry.title}</span>
+      <p class="runtime-role">${entry.role}</p>
+      <div class="runtime-io-grid">
+        <div class="runtime-io-box">
+          <h4>받는 정보</h4>
+          <ul class="plain-list">${entry.receives.map((item) => `<li>${item}</li>`).join("")}</ul>
+        </div>
+        <div class="runtime-io-box">
+          <h4>보내는 정보</h4>
+          <ul class="plain-list">${entry.sends.map((item) => `<li>${item}</li>`).join("")}</ul>
+        </div>
+      </div>
+      <div class="runtime-list-block">
+        <h4>핵심 함수</h4>
+        <div class="badge-row">${entry.functions.map((item) => `<span class="code-badge">${item}</span>`).join("")}</div>
+      </div>
+      <div class="runtime-list-block">
+        <h4>핵심 변수 / 상태</h4>
+        <div class="badge-row">${entry.variables.map((item) => `<span class="code-badge">${item}</span>`).join("")}</div>
+      </div>
+    `;
+    gridHost.append(card);
+  });
+}
+
 function selectModule(moduleId) {
   const module = portalData.modules.find((entry) => entry.id === moduleId);
   const host = document.getElementById("module-detail");
@@ -726,7 +866,7 @@ function selectModule(moduleId) {
     </div>
     <pre class="code-snippet">${module.snippet}</pre>
     <div class="module-links">
-      <a href="${module.doxygen}">Doxygen source</a>
+      ${module.doxygen ? `<a href="${module.doxygen}">Doxygen source</a>` : ""}
       ${module.files.map((file) => `<a href="${file}">${file.split("/").slice(-2).join("/")}</a>`).join("")}
     </div>
   `;
@@ -929,6 +1069,7 @@ function init() {
   renderEvaluation();
   renderReqs();
   renderTeams();
+  renderRuntimeAtlas();
   renderModules();
   setupSimulation();
   setupNav();

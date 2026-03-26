@@ -4,14 +4,15 @@
 적용 대상: `servo_control_baqu`  
 적용 범위: `homing` 기구/시퀀스가 아직 없는 상태에서, 현재 steering runtime에 바로 적용 가능한 명령 lifecycle 규격
 
-## 0. 현재 구현 반영 메모 (2026-03-24)
+## 0. 현재 구현 반영 메모 (2026-03-25)
 
 현재 코드 기준으로 이미 반영된 항목:
 
 - `position_control.c`에 `command_id`, `CommandState_t`, `CommandResult_t`, `CommandSource_t` 반영
 - `CMD_START`, `CMD_REACHED`, `CMD_TIMEOUT`, `CMD_ABORT`, `CMD_FAULT` 이벤트 로그 반영
-- `main.c` CSV / keyboard snapshot / DIAG 경로에 lifecycle 정보 반영
+- `app_runtime.c` CSV / keyboard snapshot / DIAG 경로에 lifecycle 정보 반영
 - `encoder_reader.c`는 16비트 raw 중심값 직접 해석이 아니라 누적 `unwrap` count 방식으로 변경 완료
+- `position_control_diag.c`가 lifecycle 문자열과 debug var 미러링을 담당하도록 분리 완료
 
 현재 남아 있는 핵심 gap:
 
@@ -277,7 +278,7 @@ typedef struct {
 
 - `Core/Inc/position_control.h`
 - `Core/Src/position_control.c`
-- `Core/Src/main.c`
+- `Core/Src/app_runtime.c`
 
 ### 선택
 
@@ -303,7 +304,7 @@ typedef struct {
 - abort/fault 종료 처리
 - event log 출력
 
-### `main.c`
+### `app_runtime.c`
 
 - source 구분해서 target 전달
 - `UDP`, `Keyboard` 각각 명령 source 지정

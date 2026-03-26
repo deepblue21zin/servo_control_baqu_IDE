@@ -17,7 +17,7 @@
           아키텍처, 동작 방식, 증거, 다음 개발 방향을 한 번에 이해하도록 정리한 로컬 설명 포털이다.
         </p>
         <p class="baseline">
-          Current baseline: 2026-03-24 runtime with command lifecycle, encoder unwrap count, pulse status API, and current bench note `P-RUN / P4-00=2 / St-06=0`
+          Current baseline: 2026-03-25 runtime with `main.c -> app_runtime.c` split, `position_control_diag.c` split, encoder unwrap count, and current bench note `P-RUN / P4-00=2 / St-06=0`
         </p>
       </div>
 
@@ -32,6 +32,7 @@
         <button type="button" class="nav-link" data-target="issues">현재 문제</button>
         <button type="button" class="nav-link" data-target="reqs">앞으로 구현할 REQ</button>
         <button type="button" class="nav-link" data-target="team">팀원 6명 분배</button>
+        <button type="button" class="nav-link" data-target="atlas">런타임 맵 / 역할 요약</button>
         <button type="button" class="nav-link" data-target="code">코드 탐색</button>
         <button type="button" class="nav-link" data-target="links">Doxygen / 코드 브라우저</button>
       </nav>
@@ -99,7 +100,7 @@
           <div class="flow-arrow">UDP / steering_deg</div>
           <div class="flow-node">ethernet_communication.c</div>
           <div class="flow-arrow">mode + target + misc</div>
-          <div class="flow-node">main.c Scheduler</div>
+          <div class="flow-node">main.c boot<br>+ app_runtime.c</div>
           <div class="flow-arrow">1ms interrupt_flag</div>
           <div class="flow-node accent">position_control.c</div>
           <div class="flow-arrow">signed pulse_hz</div>
@@ -224,13 +225,13 @@
             <tbody>
               <tr>
                 <td>`ethernet_communication.c`</td>
-                <td>`main.c`</td>
+                <td>`app_runtime.c`</td>
                 <td>`AutoDrive_Packet_t.steering_angle`</td>
                 <td>`float`</td>
                 <td>`steering_deg`, clamp `[-45, +45]`</td>
               </tr>
               <tr>
-                <td>`main.c`</td>
+                <td>`app_runtime.c`</td>
                 <td>`position_control.c`</td>
                 <td>target</td>
                 <td>`float`</td>
@@ -258,7 +259,7 @@
                 <td>latched fail-safe event + reason code</td>
               </tr>
               <tr>
-                <td>`main.c` / `position_control.c`</td>
+                <td>`app_runtime.c` / `position_control_diag.c`</td>
                 <td>UART / plots / CubeMonitor</td>
                 <td>`CSV`, `LATENCY_STAGE`, `dbg_*`</td>
                 <td>text + global vars</td>
@@ -323,7 +324,7 @@
         <div class="status-grid">
           <article class="status-card done">
             <h3>Runtime skeleton</h3>
-            <p>`main.c` 1ms scheduler, `PositionControl_Update()`, watchdog refresh, keyboard bench mode</p>
+            <p>`main.c`는 얇은 부트 진입점으로 남기고, `app_runtime.c`가 startup, 1ms service, watchdog, keyboard bench를 담당한다.</p>
             <span class="state-tag">implemented</span>
           </article>
           <article class="status-card done">
@@ -477,7 +478,7 @@
           <article class="issue-card warning">
             <h3>P1. Startup auto-enable remains</h3>
             <p>
-              현재 `main.c`는 startup 후 `EncoderReader_Reset()`, target 0도 설정, `PositionControl_Enable()`까지 자동 진행한다.
+              현재 `AppRuntime_Init()`는 startup 후 `EncoderReader_Reset()`, target 0도 설정, `PositionControl_Enable()`까지 자동 진행한다.
               제품 관점의 readiness gate와는 아직 거리가 있다.
             </p>
             <span class="evidence">Need: INIT -> READY -> ARMED -> RUN contract</span>
@@ -532,6 +533,21 @@
         <div id="team-grid" class="team-grid"></div>
       </section>
 
+      <section id="atlas" class="panel">
+        <div class="section-head">
+          <p class="eyebrow">Runtime Atlas</p>
+          <h2>파일별 역할, 받는 정보, 보내는 정보, 핵심 함수와 변수</h2>
+          <p class="section-copy">
+            새로 분리된 `main.c`, `app_runtime.c`, `position_control_diag.c`를 포함해 현재 runtime을
+            파일 단위로 다시 푼 지도다. 각 카드에서 어떤 정보를 받아서 어디로 보내는지,
+            그리고 어떤 함수와 상태 변수가 핵심인지 한눈에 보이도록 구성했다.
+          </p>
+        </div>
+
+        <div id="runtime-flow" class="runtime-flow"></div>
+        <div id="runtime-atlas-grid" class="runtime-atlas-grid"></div>
+      </section>
+
       <section id="code" class="panel">
         <div class="section-head">
           <p class="eyebrow">Code Explorer</p>
@@ -561,7 +577,7 @@
         <div class="link-grid">
           <a class="link-card" href="../doxygen/html/index.html">
             <strong>Doxygen Runtime Portal</strong>
-            <span>README, include graph, call graph, source browser</span>
+            <span>README + runtime atlas + source browser</span>
           </a>
           <a class="link-card" href="../doxygen/html/files.html">
             <strong>Full Code Browser</strong>
