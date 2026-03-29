@@ -24,8 +24,9 @@
 #define APP_RUNTIME_AUTO_FIXED_PULSE_HZ          500000
 #define APP_RUNTIME_KEYBOARD_TEST_MODE           1
 #define APP_RUNTIME_KEYBOARD_STEP_DEG            1.0f
-#define APP_RUNTIME_ENCODER_DIAG_ENABLE          0
+#define APP_RUNTIME_ENCODER_DIAG_ENABLE          1
 #define APP_RUNTIME_ENCODER_DIAG_PERIOD_MS       100U
+#define APP_RUNTIME_VIRTUAL_ENCODER_LOG_ENABLE   0
 #define APP_RUNTIME_PERIODIC_CSV_LOG_ENABLE      1
 #define APP_RUNTIME_PERIODIC_CSV_LOG_PERIOD_MS   100U
 #define APP_RUNTIME_PERIODIC_DIAG_DIVIDER        100U
@@ -44,6 +45,76 @@ static SteerMode_t g_current_mode = STEER_MODE_NONE;
 #endif
 #if APP_RUNTIME_PERIODIC_CSV_LOG_ENABLE
 static uint8_t g_periodic_csv_enabled = 1U;
+#endif
+
+#if APP_RUNTIME_VIRTUAL_ENCODER_LOG_ENABLE
+typedef struct {
+    int64_t accum_count;
+    float count_residual;
+} AppRuntime_VirtualEncoder_t; /* Putty-only encoder estimator from applied pulse output. */
+
+static AppRuntime_VirtualEncoder_t g_virtual_encoder = {0};
+
+/* Reset the bench-only display encoder derived from pulse output. */
+static void AppRuntime_ResetVirtualEncoder(void)
+{
+    g_virtual_encoder.accum_count = 0;
+    g_virtual_encoder.count_residual = 0.0f;
+    EncoderReader_SetVirtualFeedbackCount(0);
+}
+
+/* Approximate encoder motion from the currently applied pulse frequency. */
+static void AppRuntime_UpdateVirtualEncoder(void)
+{
+    PulseControl_Status_t pulse_status = PulseControl_GetStatus();
+    float delta_pulses = 0.0f;
+    float delta_counts = 0.0f;
+    float total_counts = 0.0f;
+    int32_t whole_counts = 0;
+
+    if ((pulse_status.output_active == 0U) || (pulse_status.applied_frequency_hz == 0U)) {
+        EncoderReader_SetVirtualFeedbackCount(g_virtual_encoder.accum_count);
+        return;
+    }
+
+    delta_pulses = ((float)pulse_status.applied_frequency_hz) * 0.001f;
+    if (pulse_status.direction == DIR_CCW) {
+        delta_pulses = -delta_pulses;
+    }
+
+    delta_counts = delta_pulses * (DEG_PER_PULSE / ENCODER_DEG_PER_COUNT);
+    total_counts = g_virtual_encoder.count_residual + delta_counts;
+    whole_counts = (int32_t)total_counts;
+
+    g_virtual_encoder.accum_count += (int64_t)whole_counts;
+    g_virtual_encoder.count_residual = total_counts - (float)whole_counts;
+    EncoderReader_SetVirtualFeedbackCount(g_virtual_encoder.accum_count);
+}
+
+/* Return the Putty display count derived from the commanded motion. */
+static int32_t AppRuntime_GetDisplayEncoderCount(void)
+{
+    return (int32_t)g_virtual_encoder.accum_count;
+}
+
+/* Return a timer-like raw counter value for Putty display only. */
+static uint32_t AppRuntime_GetDisplayEncoderRaw(void)
+{
+    int32_t raw32 = 32768 + (int32_t)g_virtual_encoder.accum_count;
+    return (uint32_t)((uint16_t)raw32);
+}
+#else
+#define AppRuntime_ResetVirtualEncoder() ((void)0)
+#define AppRuntime_UpdateVirtualEncoder() ((void)0)
+static int32_t AppRuntime_GetDisplayEncoderCount(void)
+{
+    return EncoderReader_GetCount();
+}
+
+static uint32_t AppRuntime_GetDisplayEncoderRaw(void)
+{
+    return EncoderReader_GetRawCounter();
+}
 #endif
 
 /* Convert a steering-angle target into the equivalent motor-angle target. */
@@ -74,8 +145,8 @@ static void AppRuntime_ServicePeriodicCsv(void)
     CommandLifecycle_t cmd = PositionControl_GetCommandLifecycle();
     PulseControl_Status_t pulse_status = PulseControl_GetStatus();
     GPIO_PinState dir_state = HAL_GPIO_ReadPin(DIR_PIN_GPIO_Port, DIR_PIN_Pin);
-    int32_t enc_count = EncoderReader_GetCount();
-    uint16_t enc_raw = EncoderReader_GetRawCounter();
+    int32_t enc_count = AppRuntime_GetDisplayEncoderCount();
+    uint32_t enc_raw = AppRuntime_GetDisplayEncoderRaw();
 
     if (g_periodic_csv_enabled == 0U) {
         return;
@@ -86,7 +157,7 @@ static void AppRuntime_ServicePeriodicCsv(void)
     }
     last_ms = now_ms;
 
-    printf("CSV,%lu,%d,%.3f,%.3f,%.3f,%.0f,%d,%ld,%u,%ld,%lu,%u,%u,%lu,%d,%d\r\n",
+    printf("CSV,%lu,%d,%.3f,%.3f,%.3f,%.0f,%d,%ld,%lu,%ld,%lu,%u,%u,%lu,%d,%d\r\n",
            (unsigned long)now_ms,
            (int)PositionControl_GetMode(),
            AppRuntime_TargetMotorDegToSteeringDeg(s.target_angle),
@@ -95,7 +166,7 @@ static void AppRuntime_ServicePeriodicCsv(void)
            s.output,
            (int)dir_state,
            (long)enc_count,
-           (unsigned int)enc_raw,
+           (unsigned long)enc_raw,
            (long)pulse_status.requested_frequency_hz,
            (unsigned long)pulse_status.applied_frequency_hz,
            (unsigned int)pulse_status.output_active,
@@ -158,15 +229,15 @@ static void AppRuntime_TryLatencyAutoReport(void)
 #endif
 }
 
-/* Print live TIM4 encoder register details when bench diagnostics are enabled. */
+/* Print live TIM2 encoder register details when bench diagnostics are enabled. */
 static void AppRuntime_ServiceEncoderRuntimeDiag(void)
 {
 #if APP_RUNTIME_ENCODER_DIAG_ENABLE
     static uint32_t last_ms = 0U;
-    static uint16_t prev_cnt = 32768U;
+    static uint32_t prev_cnt = 32768UL;
     uint32_t now_ms = HAL_GetTick();
-    uint16_t cnt = 0U;
-    uint16_t delta_u16 = 0U;
+    uint32_t cnt = 0U;
+    uint32_t delta_u32 = 0U;
     int32_t delta = 0;
     uint32_t cr1 = 0U;
     uint32_t smcr = 0U;
@@ -186,26 +257,26 @@ static void AppRuntime_ServiceEncoderRuntimeDiag(void)
     }
     last_ms = now_ms;
 
-    cnt = (uint16_t)__HAL_TIM_GET_COUNTER(&htim4);
-    delta_u16 = (uint16_t)(cnt - prev_cnt);
-    delta = (int32_t)((int16_t)delta_u16);
-    cr1 = htim4.Instance->CR1;
-    smcr = htim4.Instance->SMCR;
-    ccmr1 = htim4.Instance->CCMR1;
-    ccer = htim4.Instance->CCER;
+    cnt = __HAL_TIM_GET_COUNTER(&htim2);
+    delta_u32 = (uint32_t)(cnt - prev_cnt);
+    delta = (int32_t)delta_u32;
+    cr1 = htim2.Instance->CR1;
+    smcr = htim2.Instance->SMCR;
+    ccmr1 = htim2.Instance->CCMR1;
+    ccer = htim2.Instance->CCER;
     cen = ((cr1 & TIM_CR1_CEN) != 0U) ? 1U : 0U;
     sms = (smcr & TIM_SMCR_SMS) >> TIM_SMCR_SMS_Pos;
     cc1s = (ccmr1 & TIM_CCMR1_CC1S) >> TIM_CCMR1_CC1S_Pos;
     cc2s = (ccmr1 & TIM_CCMR1_CC2S) >> TIM_CCMR1_CC2S_Pos;
     cc1e = ((ccer & TIM_CCER_CC1E) != 0U) ? 1U : 0U;
     cc2e = ((ccer & TIM_CCER_CC2E) != 0U) ? 1U : 0U;
-    enc_a_state = HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_12);
-    enc_b_state = HAL_GPIO_ReadPin(GPIOD, GPIO_PIN_13);
+    enc_a_state = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0);
+    enc_b_state = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_3);
 
-    printf("[ENCDBG] ms=%lu cnt=%u prev=%u delta=%ld A=%d B=%d CEN=%lu SMS=%lu CC1S=%lu CC2S=%lu CC1E=%lu CC2E=%lu CR1=0x%04lX SMCR=0x%04lX CCMR1=0x%04lX CCER=0x%04lX\r\n",
+    printf("[ENCDBG] ms=%lu cnt=%lu prev=%lu delta=%ld A=%d B=%d CEN=%lu SMS=%lu CC1S=%lu CC2S=%lu CC1E=%lu CC2E=%lu CR1=0x%04lX SMCR=0x%04lX CCMR1=0x%04lX CCER=0x%04lX\r\n",
            (unsigned long)now_ms,
-           (unsigned int)cnt,
-           (unsigned int)prev_cnt,
+           (unsigned long)cnt,
+           (unsigned long)prev_cnt,
            (long)delta,
            (int)enc_a_state,
            (int)enc_b_state,
@@ -251,10 +322,10 @@ static void AppRuntime_KeyboardPrintControlSnapshot(const char *reason)
     CommandLifecycle_t cmd = PositionControl_GetCommandLifecycle();
     PulseControl_Status_t pulse_status = PulseControl_GetStatus();
     GPIO_PinState dir_state = HAL_GPIO_ReadPin(DIR_PIN_GPIO_Port, DIR_PIN_Pin);
-    int32_t enc_count = EncoderReader_GetCount();
-    uint16_t enc_raw = EncoderReader_GetRawCounter();
+    int32_t enc_count = AppRuntime_GetDisplayEncoderCount();
+    uint32_t enc_raw = AppRuntime_GetDisplayEncoderRaw();
 
-    printf("[KB][%s] T=%.2fdeg C=%.2fdeg E=%.2fdeg O=%.0f DIR=%d ENC=%ld RAW=%u REQ=%ld AP=%lu RUN=%u REV=%u CMD=%lu/%s/%s\r\n",
+    printf("[KB][%s] T=%.2fdeg C=%.2fdeg E=%.2fdeg O=%.0f DIR=%d ENC=%ld RAW=%lu REQ=%ld AP=%lu RUN=%u REV=%u CMD=%lu/%s/%s\r\n",
            reason,
            AppRuntime_TargetMotorDegToSteeringDeg(s.target_angle),
            AppRuntime_TargetMotorDegToSteeringDeg(s.current_angle),
@@ -262,7 +333,7 @@ static void AppRuntime_KeyboardPrintControlSnapshot(const char *reason)
            s.output,
            (int)dir_state,
            (long)enc_count,
-           (unsigned int)enc_raw,
+           (unsigned long)enc_raw,
            (long)pulse_status.requested_frequency_hz,
            (unsigned long)pulse_status.applied_frequency_hz,
            (unsigned int)pulse_status.output_active,
@@ -500,14 +571,14 @@ static void AppRuntime_PrintPeriodicDiag(void)
     CommandLifecycle_t cmd = PositionControl_GetCommandLifecycle();
     PulseControl_Status_t pulse_status = PulseControl_GetStatus();
     GPIO_PinState dir_state = HAL_GPIO_ReadPin(DIR_PIN_GPIO_Port, DIR_PIN_Pin);
-    int32_t enc_count = EncoderReader_GetCount();
-    uint16_t enc_raw = EncoderReader_GetRawCounter();
+    int32_t enc_count = AppRuntime_GetDisplayEncoderCount();
+    uint32_t enc_raw = AppRuntime_GetDisplayEncoderRaw();
     float target_steer_deg = AppRuntime_TargetMotorDegToSteeringDeg(s.target_angle);
     float current_steer_deg = AppRuntime_TargetMotorDegToSteeringDeg(s.current_angle);
     float error_steer_deg = AppRuntime_TargetMotorDegToSteeringDeg(s.error);
 
 #if LATENCY_LOG_ENABLE
-    printf("[DIAG] MODE:%d CMD:%lu/%s/%s Tst:%.2f Cst:%.2f Est:%.2f O:%.0f REQ:%ld AP:%lu ARR:%lu CCR:%lu DIR:%d RUN:%u REV:%u ENC:%ld RAW:%u\r\n",
+    printf("[DIAG] MODE:%d CMD:%lu/%s/%s Tst:%.2f Cst:%.2f Est:%.2f O:%.0f REQ:%ld AP:%lu ARR:%lu CCR:%lu DIR:%d RUN:%u REV:%u ENC:%ld RAW:%lu\r\n",
            (int)PositionControl_GetMode(),
            (unsigned long)cmd.command_id,
            PositionControlDiag_CommandStateString(cmd.state),
@@ -524,7 +595,7 @@ static void AppRuntime_PrintPeriodicDiag(void)
            (unsigned int)pulse_status.output_active,
            (unsigned int)pulse_status.reverse_guard_active,
            (long)enc_count,
-           (unsigned int)enc_raw);
+           (unsigned long)enc_raw);
 #else
     (void)pulse_status;
     (void)enc_count;
@@ -555,6 +626,8 @@ static void AppRuntime_ServiceFastTick(void)
     PositionControl_Update();
 #endif
 
+    AppRuntime_UpdateVirtualEncoder();
+
     AppRuntime_ServiceEncoderRuntimeDiag();
 
     if (++g_debug_print_divider < APP_RUNTIME_PERIODIC_DIAG_DIVIDER) {
@@ -571,11 +644,16 @@ void AppRuntime_Init(void)
     LatencyProfiler_Init(SystemCoreClock);
     AppRuntime_ConfigureDirectionPin();
 
-    HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
+    HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
 
     Relay_Init();
     PulseControl_Init();
     EncoderReader_Init();
+#if APP_RUNTIME_VIRTUAL_ENCODER_LOG_ENABLE
+    EncoderReader_EnableVirtualFeedback(1U);
+#else
+    EncoderReader_EnableVirtualFeedback(0U);
+#endif
     PositionControl_Init();
 
     Relay_ServoOn();
@@ -586,7 +664,12 @@ void AppRuntime_Init(void)
         HAL_UART_Transmit(&huart3, (uint8_t *)msg, strlen(msg), 100);
     }
 
+#if APP_RUNTIME_VIRTUAL_ENCODER_LOG_ENABLE
+    printf("[VENC] Putty ENC/RAW uses pulse-integrated virtual encoder display.\r\n");
+#endif
+
     EncoderReader_Reset();
+    AppRuntime_ResetVirtualEncoder();
     PositionControl_SetTargetWithSource(AppRuntime_TargetSteeringDegToMotorDeg(0.0f), CMD_SRC_LOCALTEST);
 #if APP_RUNTIME_KEYBOARD_TEST_MODE
     g_keyboard_target_steer_deg = 0.0f;

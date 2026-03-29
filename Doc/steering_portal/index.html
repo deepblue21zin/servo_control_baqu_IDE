@@ -17,7 +17,7 @@
           아키텍처, 동작 방식, 증거, 다음 개발 방향을 한 번에 이해하도록 정리한 로컬 설명 포털이다.
         </p>
         <p class="baseline">
-          Current baseline: 2026-03-24 runtime with command lifecycle, encoder unwrap count, pulse status API, and current bench note `P-RUN / P4-00=2 / St-06=0`
+          Current baseline: 2026-03-29 runtime with `main.c -> app_runtime.c` split, `TIM2(PA0/PB3)` encoder path, real `[ENCDBG]` diagnostics, and optional virtual feedback path for controller-only bench tests
         </p>
       </div>
 
@@ -32,6 +32,7 @@
         <button type="button" class="nav-link" data-target="issues">현재 문제</button>
         <button type="button" class="nav-link" data-target="reqs">앞으로 구현할 REQ</button>
         <button type="button" class="nav-link" data-target="team">팀원 6명 분배</button>
+        <button type="button" class="nav-link" data-target="atlas">런타임 맵 / 역할 요약</button>
         <button type="button" class="nav-link" data-target="code">코드 탐색</button>
         <button type="button" class="nav-link" data-target="links">Doxygen / 코드 브라우저</button>
       </nav>
@@ -99,7 +100,7 @@
           <div class="flow-arrow">UDP / steering_deg</div>
           <div class="flow-node">ethernet_communication.c</div>
           <div class="flow-arrow">mode + target + misc</div>
-          <div class="flow-node">main.c Scheduler</div>
+          <div class="flow-node">main.c boot<br>+ app_runtime.c</div>
           <div class="flow-arrow">1ms interrupt_flag</div>
           <div class="flow-node accent">position_control.c</div>
           <div class="flow-arrow">signed pulse_hz</div>
@@ -224,13 +225,13 @@
             <tbody>
               <tr>
                 <td>`ethernet_communication.c`</td>
-                <td>`main.c`</td>
+                <td>`app_runtime.c`</td>
                 <td>`AutoDrive_Packet_t.steering_angle`</td>
                 <td>`float`</td>
                 <td>`steering_deg`, clamp `[-45, +45]`</td>
               </tr>
               <tr>
-                <td>`main.c`</td>
+                <td>`app_runtime.c`</td>
                 <td>`position_control.c`</td>
                 <td>target</td>
                 <td>`float`</td>
@@ -258,7 +259,7 @@
                 <td>latched fail-safe event + reason code</td>
               </tr>
               <tr>
-                <td>`main.c` / `position_control.c`</td>
+                <td>`app_runtime.c` / `position_control_diag.c`</td>
                 <td>UART / plots / CubeMonitor</td>
                 <td>`CSV`, `LATENCY_STAGE`, `dbg_*`</td>
                 <td>text + global vars</td>
@@ -323,7 +324,7 @@
         <div class="status-grid">
           <article class="status-card done">
             <h3>Runtime skeleton</h3>
-            <p>`main.c` 1ms scheduler, `PositionControl_Update()`, watchdog refresh, keyboard bench mode</p>
+            <p>`main.c`는 얇은 부트 진입점으로 남기고, `app_runtime.c`가 startup, 1ms service, watchdog, keyboard bench, real encoder `[ENCDBG]`를 담당한다.</p>
             <span class="state-tag">implemented</span>
           </article>
           <article class="status-card done">
@@ -343,7 +344,7 @@
           </article>
           <article class="status-card partial">
             <h3>Closed-loop tracking proof</h3>
-            <p>손으로 축을 돌릴 때 TIM4 count는 변하고 PE9 pulse도 확인됐지만, current bench에서는 드라이브 `St-06=0`이라 commanded motion closure가 미완료다.</p>
+            <p>`PE9/PE10` pulse path, `TIM2(PA0/PB3)` real encoder path, optional virtual feedback path까지는 정리됐다. 다만 authoritative real encoder truth는 아직 hardware bring-up 이슈가 남아 있다.</p>
             <span class="state-tag">partial</span>
           </article>
           <article class="status-card partial">
@@ -377,7 +378,7 @@
             </div>
             <svg id="actual-trace" viewBox="0 0 640 260" class="trace-svg" aria-label="Measured steering response chart"></svg>
             <p class="caption">
-              최근 bench에서는 target과 output은 변하지만 drive `St-06=0` 상태가 유지돼 motion closure가 아직 닫히지 않는다.
+              최근 bench에서는 target과 output은 정상적으로 변한다. 대신 real encoder chain은 `[ENCDBG]`와 scope로 따로 봐야 하는 상태라 final hardware closure는 아직 남아 있다.
             </p>
             <img class="plot-image" src="../../putty_log/plots/control_trace.png" alt="Control trace plot generated from PuTTY log">
           </article>
@@ -398,8 +399,8 @@
             <ul class="plain-list">
               <li>`EncoderReader_GetCount()`는 이제 centered raw가 아니라 누적 `unwrap` count를 사용한다.</li>
               <li>CSV에는 `enc_cnt`, `enc_raw`, `req_hz`, `applied_hz`, `out_active`, `rev_guard`, `cmd_id/state/result`가 함께 남는다.</li>
-              <li>최근 bench에서는 손으로 축을 돌릴 때 TIM4 count가 변하므로 encoder input chain 자체는 일부 확인됐다.</li>
-              <li>반면 drive monitor `St-06=0`, `St-04` 정지 상태라 command pulse recognition closure는 아직 없다.</li>
+              <li>현재 encoder 입력은 `TIM2`, `PA0/PB3` 기준으로 본다.</li>
+              <li>`[ENCDBG]`는 실제 TIM2 `cnt/delta/A/B`를 그대로 찍고, virtual feedback은 controller-only bench에서만 선택적으로 사용한다.</li>
               <li>latency evidence는 유효하지만 strict timing 분석 시 blocking UART logging 조건을 분리해서 해석해야 한다.</li>
             </ul>
           </article>
@@ -457,12 +458,13 @@
 
         <div class="issue-grid">
           <article class="issue-card critical">
-            <h3>P0. Drive command pulse not counted</h3>
+            <h3>P0. Real encoder truth still unstable</h3>
             <p>
-              현재 bench에서는 `P-RUN`, `P4-00=2`, `PE9` pulse 확인에도 불구하고 드라이브 `St-06=0`, `St-04` 정지 상태가 남아 있다.
-              따라서 현재 가장 큰 병목은 drive-side pulse recognition closure다.
+              현재 bench에서는 software pulse path와 controller 구조는 설명 가능하지만,
+              실제 encoder truth는 `TIM2(PA0/PB3)`와 hardware signal integrity를 더 닫아야 한다.
+              그래서 real closed-loop proof를 authoritative evidence로 쓰기 어렵다.
             </p>
-            <span class="evidence">Evidence: `St-06 = 0`, `St-04` static</span>
+            <span class="evidence">Evidence: `TIM2(PA0/PB3)`, `[ENCDBG]`, real A/B amplitude imbalance observation</span>
           </article>
 
           <article class="issue-card warning">
@@ -477,7 +479,7 @@
           <article class="issue-card warning">
             <h3>P1. Startup auto-enable remains</h3>
             <p>
-              현재 `main.c`는 startup 후 `EncoderReader_Reset()`, target 0도 설정, `PositionControl_Enable()`까지 자동 진행한다.
+              현재 `AppRuntime_Init()`는 startup 후 `EncoderReader_Reset()`, target 0도 설정, `PositionControl_Enable()`까지 자동 진행한다.
               제품 관점의 readiness gate와는 아직 거리가 있다.
             </p>
             <span class="evidence">Need: INIT -> READY -> ARMED -> RUN contract</span>
@@ -532,6 +534,21 @@
         <div id="team-grid" class="team-grid"></div>
       </section>
 
+      <section id="atlas" class="panel">
+        <div class="section-head">
+          <p class="eyebrow">Runtime Atlas</p>
+          <h2>파일별 역할, 받는 정보, 보내는 정보, 핵심 함수와 변수</h2>
+          <p class="section-copy">
+            새로 분리된 `main.c`, `app_runtime.c`, `position_control_diag.c`를 포함해 현재 runtime을
+            파일 단위로 다시 푼 지도다. 각 카드에서 어떤 정보를 받아서 어디로 보내는지,
+            그리고 어떤 함수와 상태 변수가 핵심인지 한눈에 보이도록 구성했다.
+          </p>
+        </div>
+
+        <div id="runtime-flow" class="runtime-flow"></div>
+        <div id="runtime-atlas-grid" class="runtime-atlas-grid"></div>
+      </section>
+
       <section id="code" class="panel">
         <div class="section-head">
           <p class="eyebrow">Code Explorer</p>
@@ -561,7 +578,7 @@
         <div class="link-grid">
           <a class="link-card" href="../doxygen/html/index.html">
             <strong>Doxygen Runtime Portal</strong>
-            <span>README, include graph, call graph, source browser</span>
+            <span>README + runtime atlas + source browser</span>
           </a>
           <a class="link-card" href="../doxygen/html/files.html">
             <strong>Full Code Browser</strong>

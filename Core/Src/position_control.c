@@ -1,5 +1,6 @@
 #include "position_control.h"
 #include "position_control_diag.h"
+#include "position_control_safety.h"
 #include "encoder_reader.h"
 #include "pulse_control.h"
 #include "relay_control.h"
@@ -15,12 +16,6 @@ static uint32_t command_next_id = 1U;
 static CommandSource_t pending_command_source = CMD_SRC_NONE;
 
 #define POSITION_COMMAND_TIMEOUT_MS 0U
-
-static SafetyLimits_t safety_limits = {
-    .max_error_allowed = MAX_TRACKING_ERROR_DEG,
-    .max_velocity = 0.0f,
-    .watchdog_timeout_ms = POSITION_COMMAND_TIMEOUT_MS
-};
 
 static PID_Params_t pid_params = {
     .Kp = 50.0f,
@@ -147,6 +142,20 @@ static void PositionControl_SyncDiagState(void)
     PositionControlDiag_UpdateDebugVars(&state, control_enabled, control_mode, fault_flag);
 }
 
+/* Mirror the latest safety evaluation into controller-local fault state. */
+static bool PositionControl_ApplySafetyResult(const PositionControlSafetyResult_t* safety_result)
+{
+    if (safety_result == NULL) {
+        fault_flag = 0U;
+        PositionControl_ReportError(POS_CTRL_OK);
+        return true;
+    }
+
+    fault_flag = safety_result->fault_flag;
+    PositionControl_ReportError(safety_result->error);
+    return safety_result->is_safe;
+}
+
 static bool PositionControl_CommandReadyForStart(void)
 {
     if (!control_enabled) {
@@ -164,6 +173,7 @@ static bool PositionControl_CommandReadyForStart(void)
 static void PositionControl_CommandStart(CommandSource_t source)
 {
     uint32_t now_ms = HAL_GetTick();
+    SafetyLimits_t active_limits = PositionControlSafety_GetLimits();
 
     command_lifecycle.command_id = command_next_id++;
     command_lifecycle.state = CMD_ACTIVE;
@@ -176,7 +186,7 @@ static void PositionControl_CommandStart(CommandSource_t source)
     command_lifecycle.final_error_deg = MotorDegToSteeringDeg(state.error);
     command_lifecycle.start_ms = now_ms;
     command_lifecycle.end_ms = 0U;
-    command_lifecycle.timeout_ms = safety_limits.watchdog_timeout_ms;
+    command_lifecycle.timeout_ms = active_limits.watchdog_timeout_ms;
     pending_command_source = CMD_SRC_NONE;
     PositionControl_ResetStatsTracking();
 
@@ -289,6 +299,12 @@ static float PID_Calculate(float error, float dt)
 
 int PositionControl_Init(void)
 {
+    PositionControlSafety_Init(&(SafetyLimits_t){
+        .max_error_allowed = MAX_TRACKING_ERROR_DEG,
+        .max_velocity = 0.0f,
+        .watchdog_timeout_ms = POSITION_COMMAND_TIMEOUT_MS
+    });
+
     pid_state.prev_error = 0.0f;
     pid_state.integral = 0.0f;
     pid_state.last_time_ms = HAL_GetTick();
@@ -319,7 +335,7 @@ int PositionControl_Init(void)
     command_lifecycle.final_error_deg = 0.0f;
     command_lifecycle.start_ms = 0U;
     command_lifecycle.end_ms = 0U;
-    command_lifecycle.timeout_ms = safety_limits.watchdog_timeout_ms;
+    command_lifecycle.timeout_ms = PositionControlSafety_GetLimits().watchdog_timeout_ms;
     PositionControl_ClearStats();
     PositionControl_SyncDiagState();
 
@@ -332,6 +348,7 @@ void PositionControl_Update(void)
     bool was_stable = state.is_stable;
     uint32_t current_time = 0U;
     float dt = 0.001f;
+    PositionControlSafetyResult_t safety_result = {0};
 
     DBG_LOOP_SET();
 
@@ -385,19 +402,14 @@ void PositionControl_Update(void)
         }
     }
 
-    if (!PositionControl_CheckSafety()) {
-        CommandResult_t fault_result = CMD_RESULT_NONE;
-        if (fault_flag == 1U) {
-            fault_result = CMD_RESULT_FAULT_LIMIT;
-        } else if (fault_flag == 2U) {
-            fault_result = CMD_RESULT_FAULT_TRACKING;
-        } else if (fault_flag == 4U) {
-            fault_result = CMD_RESULT_FAULT_VELOCITY;
-        }
+    safety_result = PositionControlSafety_Evaluate(state.current_angle,
+                                                   state.error,
+                                                   measured_velocity_deg_per_s);
+    if (!PositionControl_ApplySafetyResult(&safety_result)) {
 
         state.output = 0.0f;
         if (command_lifecycle.state == CMD_ACTIVE) {
-            PositionControl_CommandFinish(CMD_FAULTED, fault_result, current_time);
+            PositionControl_CommandFinish(CMD_FAULTED, safety_result.result, current_time);
         }
         PositionControl_SyncDiagState();
         LAT_END(LAT_STAGE_CONTROL);
@@ -618,56 +630,32 @@ void PositionControl_Reset(void)
 
 void PositionControl_SetSafetyLimits(SafetyLimits_t* limits)
 {
-    SafetyLimits_t next_limits = safety_limits;
+    SafetyLimits_t applied_limits = {0};
 
     if (limits == NULL) {
         return;
     }
 
-    if (limits->max_error_allowed > 0.0f) {
-        next_limits.max_error_allowed = fabsf(limits->max_error_allowed);
-    }
-    next_limits.max_velocity = fabsf(limits->max_velocity);
-    next_limits.watchdog_timeout_ms = limits->watchdog_timeout_ms;
-
     __disable_irq();
-    safety_limits = next_limits;
-    command_lifecycle.timeout_ms = safety_limits.watchdog_timeout_ms;
+    PositionControlSafety_SetLimits(limits);
+    applied_limits = PositionControlSafety_GetLimits();
+    command_lifecycle.timeout_ms = applied_limits.watchdog_timeout_ms;
     __enable_irq();
 
     POSCTRL_LOG(DEBUG_INFO,
                 "[PosCtrl] Safety limits updated: max_error=%.2f deg, max_velocity=%.2f deg/s, timeout=%lu ms\r\n",
-                safety_limits.max_error_allowed,
-                safety_limits.max_velocity,
-                (unsigned long)safety_limits.watchdog_timeout_ms);
+                applied_limits.max_error_allowed,
+                applied_limits.max_velocity,
+                (unsigned long)applied_limits.watchdog_timeout_ms);
 }
 
 bool PositionControl_CheckSafety(void)
 {
-    if (state.current_angle > MAX_ANGLE_DEG + 5.0f ||
-        state.current_angle < MIN_ANGLE_DEG - 5.0f) {
-        fault_flag = 1U;
-        PositionControl_ReportError(POS_CTRL_ERR_OVER_LIMIT);
-        return false;
-    }
+    PositionControlSafetyResult_t safety_result = PositionControlSafety_Evaluate(state.current_angle,
+                                                                                 state.error,
+                                                                                 measured_velocity_deg_per_s);
 
-    if ((safety_limits.max_error_allowed > 0.0f) &&
-        (fabsf(state.error) > safety_limits.max_error_allowed)) {
-        fault_flag = 2U;
-        PositionControl_ReportError(POS_CTRL_ERR_SAFETY);
-        return false;
-    }
-
-    if ((safety_limits.max_velocity > 0.0f) &&
-        (fabsf(measured_velocity_deg_per_s) > safety_limits.max_velocity)) {
-        fault_flag = 4U;
-        PositionControl_ReportError(POS_CTRL_ERR_VELOCITY);
-        return false;
-    }
-
-    fault_flag = 0U;
-    PositionControl_ReportError(POS_CTRL_OK);
-    return true;
+    return PositionControl_ApplySafetyResult(&safety_result);
 }
 
 bool PositionControl_IsSafe(void)

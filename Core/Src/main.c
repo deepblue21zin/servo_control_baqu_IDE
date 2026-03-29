@@ -95,8 +95,8 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM1_Init();
   MX_IWDG_Init();
-  MX_TIM4_Init();
   MX_LWIP_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   AppRuntime_Init();
   /* USER CODE END 2 */
@@ -207,4 +207,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-

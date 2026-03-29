@@ -6,6 +6,26 @@
 
 ---
 
+## 2026-03-25 구조 갱신 안내
+
+이 문서는 초기 구조 학습용 메모를 포함하고 있어서 일부 하위 섹션은 현재 코드와 차이가 있다.  
+지금 코드를 읽을 때는 아래 최신 구조를 먼저 기준으로 본다.
+
+- `main.c`
+  CubeMX peripheral init과 `AppRuntime_Init()`, `AppRuntime_RunIteration()` 호출만 담당하는 얇은 진입점
+- `app_runtime.c`
+  startup 시퀀스, keyboard bench, UDP mode handling, periodic CSV/DIAG, watchdog, 1 ms fast tick 서비스 담당
+- `position_control.c`
+  PID, lifecycle, safety, ESTOP 같은 제어 코어 담당
+- `position_control_diag.c`
+  command state/result/source 문자열, debug var 미러링, 상태 출력 담당
+- `encoder_reader.c`
+  TIM4 raw 중심값 직접 해석 대신 raw delta 누적으로 `unwrap count`를 계산
+
+즉 아래 상세 설명 중 `main.c`가 keyboard/CSV/1 ms 서비스 전체를 직접 가진다고 적힌 부분은 현재는 `app_runtime.c`로 이동한 것으로 읽으면 된다.
+
+---
+
 ## 목차
 
 1. [전체 모듈 관계도](#전체-모듈-관계도)
