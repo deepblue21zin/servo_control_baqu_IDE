@@ -1,180 +1,157 @@
 # Autonomous Steering Servo Control System
 
-STM32F429ZI 기반 조향 서브컨트롤러 프로젝트다. 상위 제어기에서 받은 `steering_deg` 명령을 내부 `motor_deg`, `enc_count`, `pulse_hz`로 변환하고, 1 ms 폐루프 제어로 pulse/direction 출력과 엔코더 피드백을 묶는다.
+STM32F429ZI 기반 조향 서브컨트롤러 프로젝트다. 상위 제어기에서 받은 `steering_deg` 명령을 내부 `motor_deg`, `enc_count`, `pulse_hz`로 변환하고, 1 ms 제어 루프에서 pulse/direction 출력, safety, telemetry를 함께 관리한다.
 
 ## 1. Current Snapshot
 
-| 항목 | 현재 상태 |
+| 항목 | 현재 기준 |
 |---|---|
 | MCU | STM32F429ZI, 180 MHz |
 | Servo Driver | LS ELECTRIC XDL-L7SA004BAA |
 | Motor / Encoder | XML-FBL04AMK1, 12000 PPR, quadrature x4 = 48000 count/rev |
-| Loop | SysTick 기반 1 ms 제어 루프 |
+| Loop | SysTick 기반 1 ms 제어 |
 | External Unit | `steering_deg` |
 | Internal Unit | `motor_deg`, `enc_count`, `pulse_hz` |
 | Pulse Output | `PE9 = TIM1_CH1`, `PE10 = direction GPIO` |
-| Encoder Input | `PD12 = TIM4_CH1`, `PD13 = TIM4_CH2` |
-| Network | LwIP UDP 구현 존재, 현재 bench 기본값은 keyboard bench 모드 |
-| Watchdog | IWDG 사용, 현재 설정 기준 약 0.5 s |
-| Runtime Trace | CSV, command lifecycle event, latency batch, keyboard snapshot |
+| Encoder Input | `PA0 = TIM2_CH1`, `PB3 = TIM2_CH2` |
+| Bench Default | keyboard bench ON, periodic CSV ON, real encoder diag ON |
+| Virtual Feedback | 코드 경로는 존재하지만 현재 기본값은 `OFF` |
+| Watchdog | IWDG 사용, 현재 설정 기준 약 32.8 s |
+| Runtime Trace | CSV, command lifecycle, latency batch, `[ENCDBG]` real TIM2 snapshot |
 
-## 2. What Is Implemented Now
+## 2. Runtime Layout
 
-### 2.1 Runtime Layout
+- `main.c`는 CubeMX init 뒤 `AppRuntime_Init()`, `AppRuntime_RunIteration()`만 호출하는 얇은 부트 엔트리다.
+- `app_runtime.c`는 startup sequence, keyboard bench, periodic CSV/DIAG, UDP handling, watchdog refresh, fast tick service를 담당한다.
+- `position_control.c`는 PID, command lifecycle, enable/disable, emergency path를 담당한다.
+- `position_control_diag.c`는 command state/result/source 문자열과 주기 상태 출력 같은 진단 책임을 맡는다.
+- `position_control_safety.c`는 angle / tracking / velocity limit 평가를 담당한다.
+- `pulse_control.c`는 signed `pulse_hz`를 `PE9` 펄스와 `PE10` 방향으로 변환한다.
+- `encoder_reader.c`는 TIM2 raw counter를 읽고 누적 count와 각도로 변환하며, 선택적으로 virtual feedback도 받을 수 있다.
 
-- `main.c`는 CubeMX peripheral init 이후 `AppRuntime_Init()`, `AppRuntime_RunIteration()`만 호출하는 얇은 부트 진입점이다.
-- `app_runtime.c`는 app startup, keyboard bench, periodic CSV/DIAG, UDP mode handling, watchdog refresh, fast tick service를 담당한다.
-- `position_control.c`는 PID, safety check, emergency path, command lifecycle을 담당한다.
-- `position_control_diag.c`는 command state/result/source 문자열, debug var 미러링, 상태 출력 같은 진단 책임을 맡는다.
-- `pulse_control.c`는 signed `pulse_hz`를 받아 `PE9` 펄스와 `PE10` 방향으로 변환한다.
-- `encoder_reader.c`는 TIM4 raw counter를 읽고 누적 `unwrap` count로 각도를 계산한다.
+## 3. Current Pin / Timer Map
 
-### 2.2 Command Lifecycle
+| 기능 | 핀 / 주변장치 | 비고 |
+|---|---|---|
+| Pulse | `PE9 / TIM1_CH1` | line driver input -> `PF+/PF-` |
+| Direction | `PE10 / GPIO` | line driver input -> `PR+/PR-` |
+| Encoder A | `PA0 / TIM2_CH1` | 현재 `GPIO_NOPULL` |
+| Encoder B | `PB3 / TIM2_CH2` | 현재 `GPIO_NOPULL` |
+| Timer Encoder | `TIM2` | 32-bit counter, `TIM_ENCODERMODE_TI12` |
 
-현재 runtime은 homing 없이도 명령 단위를 추적한다.
+현재 `tim.c` 기준:
 
-- source: `UDP`, `KEYBOARD`, `SERVICE`, `LOCALTEST`
-- state: `CMD_IDLE`, `CMD_ACTIVE`, `CMD_REACHED`, `CMD_TIMEOUT`, `CMD_ABORTED`, `CMD_FAULTED`
-- result: `REACHED`, `TIMEOUT`, `ESTOP`, `DISABLED`, `REPLACED`, `FAULT_LIMIT`, `FAULT_TRACKING`
-- event log: `CMD_START`, `CMD_REACHED`, `CMD_TIMEOUT`, `CMD_ABORT`, `CMD_FAULT`
+- `TIM2` encoder mode
+- `IC1Filter = 0`, `IC2Filter = 0`
+- `GPIO_MODE_AF_PP`
+- `GPIO_NOPULL`
 
-현재 정책:
+즉 지금 실제 엔코더 truth를 보려면 `TIM2`, `PA0/PB3`, `[ENCDBG]` 기준으로 해석해야 한다.
 
-- target 수락 시 `command_id` 발급
-- `abs(error_steering_deg) <= 0.5 deg`가 100 ms 유지되면 `CMD_REACHED`
-- `CMD_REACHED` 직후 `PulseControl_Stop()`으로 출력을 정지
-- 진행 중 새 명령이 들어오면 기존 명령은 `CMD_ABORT(reason=REPLACED)`로 종료
+## 4. Current Bench Defaults In Code
 
-### 2.3 Pulse Contract
+`app_runtime.c` 기준 기본 매크로는 현재 아래와 같다.
 
-현재 `pulse_control.c` 기준 계약은 아래와 같다.
+- `APP_RUNTIME_AUTO_FIXED_PULSE_TEST = 0`
+- `APP_RUNTIME_KEYBOARD_TEST_MODE = 1`
+- `APP_RUNTIME_ENCODER_DIAG_ENABLE = 1`
+- `APP_RUNTIME_VIRTUAL_ENCODER_LOG_ENABLE = 0`
+- `APP_RUNTIME_PERIODIC_CSV_LOG_ENABLE = 1`
 
-- 입력: signed `freq_hz`
-- 출력 범위 clamp: `10 Hz ~ 100000 Hz`
-- direction polarity: `DIR_ACTIVE_HIGH_FOR_CW`
-- reverse guard: 방향 반전 시 `stop -> wait 1 ms -> dir change -> wait 1 ms -> restart`
-- status API: `requested_frequency_hz`, `applied_frequency_hz`, `ARR`, `CCR`, `direction`, `output_active`, `reverse_guard_active`
+부팅 시 동작:
+
+- `HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL)`
+- `Relay_Init()`, `PulseControl_Init()`, `EncoderReader_Init()`, `PositionControl_Init()`
+- `Relay_ServoOn()`
+- `EncoderReader_Reset()`
+- `PositionControl_SetTargetWithSource(...0.0f...)`
+- `PositionControl_Enable()`
+
+즉 현재 baseline은 아직도 **startup auto-enable**이 남아 있는 bring-up 중심 구조다.
+
+## 5. Current Feedback Modes
+
+현재 `encoder_reader.c`는 두 가지 피드백 경로를 지원한다.
+
+### 5.1 Real Encoder Path
+
+- source: `TIM2->CNT`
+- pins: `PA0/PB3`
+- debug: `[ENCDBG] cnt / delta / A / B`
+- 용도: 실제 하드웨어 truth 확인
+
+### 5.2 Virtual Feedback Path
+
+- source: `PulseControl_GetStatus().applied_frequency_hz`
+- update: 1 ms 적분
+- 용도: 실제 엔코더가 불안정할 때 controller-only bench
 
 주의:
 
-- `constants.h`에는 `MAX_PULSE_FREQ = 1000000`이 남아 있지만, 현재 실제 펌웨어 clamp는 `100000 Hz`다.
-- 즉 문서와 코드 기준으로는 "설계 상수 1 MHz"보다 "현재 런타임 계약 100 kHz"를 먼저 봐야 한다.
+- 현재 기본 빌드는 `APP_RUNTIME_VIRTUAL_ENCODER_LOG_ENABLE = 0` 이다.
+- virtual feedback을 켜면 CSV의 `current_deg`, `enc_cnt`, `enc_raw`가 실제 TIM2가 아니라 적분값이 될 수 있다.
+- 실제 TIM2 하드웨어 엔코더 변화는 항상 `[ENCDBG]`로 확인하는 것이 안전하다.
 
-### 2.4 Encoder Contract
+## 6. Current Bench Interpretation
 
-현재 `encoder_reader.c`는 centered raw를 직접 각도로 쓰지 않고, raw delta를 누적하는 방식으로 바뀌었다.
+2026-03-29 기준 현재 소프트웨어 상태는 아래처럼 정리할 수 있다.
 
-- TIM4 counter 중심값: `32768`
-- raw read: `__HAL_TIM_GET_COUNTER(&htim4)`
-- update rule: `delta = (int16_t)(raw - last_raw)`
-- exported count: 누적 `unwrap` count - `offset`
-- exported angle: `count * (360 / 48000)`
+- keyboard bench에서 목표각을 주면 `mode`, `output`, `requested/applied Hz`는 정상적으로 갱신된다.
+- `pulse_control.c` 기준 output contract는 살아 있고, `requested_frequency_hz`, `applied_frequency_hz`, `reverse_guard_active`를 함께 볼 수 있다.
+- 실제 엔코더 테스트에서는 `[ENCDBG]`가 TIM2 카운터와 `A/B` 핀 상태를 찍는다.
+- 최근 하드웨어 점검에서는 encoder A/B 채널 진폭이 균형적이지 않은 상황이 관찰되어, 실제 sensor truth는 아직 불안정하다.
+- 따라서 현재 bench는 “소프트웨어 제어 구조와 pulse output 계약은 검증 가능하지만, 실제 encoder truth closure는 계속 하드웨어 bring-up 중”인 상태다.
 
-즉 현재 `GetCount()`는 raw center 기준값이 아니라 누적 count를 반환한다.
+## 7. Current Risks And Gaps
 
-## 3. Current Bench State
+### 7.1 Real Encoder Truth
 
-2026-03-25 기준 최근 bring-up에서 확인한 상태는 아래와 같다.
+- 실제 TIM2 encoder path는 아직 완전히 닫히지 않았다.
+- 최근 관찰 기준으로 A/B 두 채널 진폭이 균형적이지 않아, 실제 `cnt/delta`를 authoritative truth로 쓰기 어렵다.
 
-| 항목 | 현재 관찰 |
-|---|---|
-| `PE9` | command 시 펄스 출력 확인 |
-| `PE10` | direction GPIO로 사용, 펄스가 아니라 High/Low 상태 변화가 정상 |
-| TIM4 encoder | 손으로 축을 돌릴 때 `CNT` 변화 확인 |
-| Drive 상태 | `P-RUN` 확인 |
-| Drive parameter | `P4-00 = 2` 확인 |
-| Drive monitor | `St-06 = 0`, `St-04` 정지 상태 확인 |
-
-현재 해석:
-
-- MCU 내부 pulse output과 encoder feedback path는 각각 일부 동작 근거가 있다.
-- 하지만 드라이브가 현재 command pulse를 내부 명령으로 카운트하지 못하는 상태가 가장 큰 현안이다.
-- 따라서 "closed-loop steering validated"라고 부르기엔 아직 bench closure가 부족하다.
-
-## 4. Current Runtime Behavior
-
-### 4.1 Default Bring-up Path
-
-현재 bring-up 기본 경로는 `app_runtime.c`의 `AppRuntime_Init()`에 모여 있다.
-
-- `APP_RUNTIME_KEYBOARD_TEST_MODE = 1`
-- `APP_RUNTIME_PERIODIC_CSV_LOG_ENABLE = 1`
-- `APP_RUNTIME_ENCODER_DIAG_ENABLE = 0`
-- startup 시 `Relay_ServoOn()` 이후 `EncoderReader_Reset()`
-- 이어서 `PositionControl_SetTargetWithSource(..., CMD_SRC_LOCALTEST)`와 `PositionControl_Enable()` 수행
-
-즉 현재는 startup state machine 없이 enable까지 자동 진행된다.
-
-### 4.2 CSV / Snapshot Format
-
-현재 주기 CSV 헤더는 다음과 같다.
-
-```text
-CSV_HEADER,ms,mode,target_deg,current_deg,error_deg,output,dir,enc_cnt,enc_raw,req_hz,applied_hz,out_active,rev_guard,cmd_id,cmd_state,cmd_result
-```
-
-keyboard snapshot과 periodic DIAG에도 같은 축의 정보를 반영한다.
-
-### 4.3 Latency Evidence
-
-`latency_profiler.c` 기반 DWT 측정 경로는 유지되고 있다.
-
-- `Sense`, `Control`, `Actuate`, `Comms`
-- `avg`, `p99`, `max`
-- `LATENCY_BATCH_BEGIN`, `LATENCY_STAGE`, `LATENCY_BATCH_END`
-
-다만 엄격한 timing 검증 시에는 UART 로그 부하를 최소화해야 한다.
-
-## 5. Current Risks And Gaps
-
-### 5.1 Bench Closure
-
-- 드라이브 `St-06 = 0` 상태라 command pulse 인식이 아직 닫히지 않았다.
-- `P-RUN`, `P4-00 = 2`, `PE9` 파형만으로는 실제 motion proof가 되지 않는다.
-
-### 5.2 Startup Safety
+### 7.2 Startup Safety
 
 - boot-time auto enable이 남아 있다.
-- `homing.c`와 `relay_control.c`는 존재하지만 실제 readiness gate로 완전히 통합되지 않았다.
+- homing, readiness, arm contract가 startup state machine으로 아직 닫히지 않았다.
 
-### 5.3 Fault Policy
+### 7.3 Watchdog Policy
 
-- lifecycle은 들어갔지만 latched fault / clear policy는 아직 없다.
-- stale sensor, implausible motion, wrong-direction 같은 richer fault taxonomy가 더 필요하다.
+- IWDG는 존재하지만 timeout이 약 32.8 s라서 steering safe-state 기준으로는 너무 길다.
+- “watchdog 존재”보다 “몇 ms 안에 SAFE로 전환하는가”를 다시 설계해야 한다.
 
-### 5.4 Logging Path
+### 7.4 Parameter Ownership
 
-- 현재 UART 로그는 blocking path라 제어 주기와 관찰값에 영향을 줄 수 있다.
-- async UART DMA + ring buffer 정리가 남아 있다.
+- `project_params.h`가 존재하지만 현재 app/runtime 전체가 그 파일 하나로 완전히 통일되진 않았다.
+- 현재 운용 파라미터와 legacy 로컬 매크로가 혼재해 있어 추가 정리가 필요하다.
 
-## 6. Important Source Files
+## 8. Important Source Files
 
 | 파일 | 역할 |
 |---|---|
-| `Core/Src/main.c` | CubeMX init과 app runtime 호출만 담당하는 부트 진입점 |
-| `Core/Src/app_runtime.c` | startup, keyboard bench, UDP mode, CSV/DIAG, watchdog, 1 ms service |
-| `Core/Src/position_control.c` | PID, safety, lifecycle, ESTOP |
-| `Core/Src/position_control_diag.c` | command 문자열, debug vars, 상태 출력 |
-| `Core/Src/pulse_control.c` | pulse/direction output, reverse guard, applied Hz status |
-| `Core/Src/encoder_reader.c` | TIM4 raw -> unwrap count -> angle |
-| `Core/Src/ethernet_communication.c` | UDP packet / mode handling |
-| `Core/Src/homing.c` | ADC 기반 zero reference skeleton |
-| `Core/Src/relay_control.c` | SVON / EMG relay control |
+| `Core/Src/main.c` | CubeMX init + app runtime 호출 |
+| `Core/Src/app_runtime.c` | startup, keyboard bench, CSV/DIAG, watchdog, fast tick |
+| `Core/Src/position_control.c` | PID, lifecycle, enable/disable, ESTOP |
+| `Core/Src/position_control_diag.c` | 상태 문자열, diagnostic print |
+| `Core/Src/position_control_safety.c` | safety limit evaluation |
+| `Core/Src/pulse_control.c` | pulse/direction output, reverse guard, runtime status |
+| `Core/Src/encoder_reader.c` | TIM2 raw -> count/angle, optional virtual feedback |
+| `Core/Src/relay_control.c` | servo on / emergency relay control |
+| `Core/Src/homing.c` | ADC potentiometer 기반 homing skeleton |
 
-## 7. Documentation Index
+## 9. Documentation Index
 
 | 문서 | 설명 |
 |---|---|
-| `Doc/README.md` | 문서 인덱스와 현재 runtime 요약 |
-| `Doc/command_lifecycle_no_homing_spec.md` | no-homing lifecycle 명세와 현재 구현 상태 |
-| `Doc/steering_portal/index.html` | 현재 구현, REQ, evidence를 시각화한 로컬 포털 |
-| `Doc/doxygen/html/index.html` | 역할, 입출력, 함수, 변수 요약이 포함된 코드 브라우저 랜딩 |
-| `Doc/change_code/2026-03-25.md` | 오늘 코드/문서 변경 이력 |
-| `Doc/hardware_pinmap.md` | 실제 핀 매핑 참고 |
-| `Doc/latency_*.md` 문서군 | latency 측정 계약과 evidence 관리 |
+| `Doc/README.md` | 문서 인덱스와 현재 runtime 기준 |
+| `Doc/code_modules.md` | 모듈 역할과 ownership 관점 메모 |
+| `Doc/command_lifecycle_no_homing_spec.md` | no-homing lifecycle 명세 |
+| `Doc/REQ/steering_project_req_ownership_guide.html` | REQ / ownership / target state machine 정리 |
+| `Doc/steering_portal/index.html` | 현재 구현과 evidence를 시각화한 로컬 포털 |
+| `Doc/doxygen/html/index.html` | 코드 브라우저와 역할 요약 |
+| `Doc/change_code/2026-03-29.md` | 오늘 변경 이력 |
 
-## 8. One-Line Summary
+## 10. One-Line Summary
 
-현재 프로젝트는 "1 ms steering sub-controller의 구조, command lifecycle, pulse status, encoder unwrap, traceability"에 더해 "runtime 분리와 diagnostic 분리"까지 진행된 상태이고, 다음 핵심 과제는 "드라이브가 command pulse를 실제 motion으로 받아들이는 bench closure"다.
+현재 프로젝트는 `TIM2 real encoder debug`와 `virtual feedback bench`를 모두 가진 1 ms steering sub-controller baseline이며, 다음 핵심 과제는 **실제 encoder truth와 startup safety contract를 닫는 것**이다.
 
-Last updated: 2026-03-25
+Last updated: 2026-03-29
