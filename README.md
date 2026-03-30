@@ -146,12 +146,30 @@ STM32F429ZI 기반 조향 서브컨트롤러 프로젝트다. 상위 제어기�
 | `Doc/code_modules.md` | 모듈 역할과 ownership 관점 메모 |
 | `Doc/command_lifecycle_no_homing_spec.md` | no-homing lifecycle 명세 |
 | `Doc/REQ/steering_project_req_ownership_guide.html` | REQ / ownership / target state machine 정리 |
+| `Doc/members/adc_encoder.html` | ADC + encoder 담당 상세 할당서 |
+| `Doc/members/pulse_control.html` | pulse control 담당 상세 할당서 |
+| `Doc/members/homing_relay.html` | homing + relay 담당 상세 할당서 |
 | `Doc/steering_portal/index.html` | 현재 구현과 evidence를 시각화한 로컬 포털 |
+| `Doc/putty/index.html` | `putty.log` bridge live, 타입 분류, 자동 해석, recording 저장용 로컬 뷰어 |
+| `putty_log/start_putty_live_viewer.ps1` | Python bridge, 브라우저, PuTTY logging을 한 번에 띄우는 런처 |
 | `Doc/doxygen/html/index.html` | 코드 브라우저와 역할 요약 |
-| `Doc/change_code/2026-03-29.md` | 오늘 변경 이력 |
+| `Doc/change_code/2026-03-30.md` | 오늘 변경 이력 |
 
-## 10. One-Line Summary
+현재 실제 팀원 할당을 바로 내려야 할 때는 `Doc/members/adc_encoder.html`, `Doc/members/pulse_control.html`, `Doc/members/homing_relay.html` 순서로 보는 것이 가장 빠르다.
+
+## 10. PuTTY Log Viewer
+
+최근 bench 로그는 기존 PNG plot 외에도 `Doc/putty/index.html`에서 바로 볼 수 있다.
+
+- 기본 입력은 `putty_log/putty.log`이며, `LATENCY`, `KB`, `CMD`, `CSV`, `ENCDBG`, `BOOT/SYSTEM` 타입으로 자동 분류한다.
+- 가장 추천되는 실행 방식은 `putty_log/start_putty_live_viewer.ps1`이며, 이 스크립트는 Python bridge와 브라우저를 띄우고 필요하면 PuTTY도 같이 실행한다.
+- bridge 모드에서는 `putty.log`에 새 줄이 추가될 때 브라우저가 거의 즉시 반영한다.
+- `로컬 파일 권한 연결` 또는 `snapshot 업로드` 모드도 있어, 브라우저 환경에 따라 fallback 할 수 있다.
+- recording을 켜면 새로 들어온 파싱 이벤트만 세션으로 쌓고 JSON으로 저장할 수 있다.
+- 자동 해석은 deadline miss, command timeout/fault, feedback 정체 같은 흔한 bench 패턴을 우선 요약한다.
+
+## 11. One-Line Summary
 
 현재 프로젝트는 `TIM2 real encoder debug`와 `virtual feedback bench`를 모두 가진 1 ms steering sub-controller baseline이며, 다음 핵심 과제는 **실제 encoder truth와 startup safety contract를 닫는 것**이다.
 
-Last updated: 2026-03-29
+Last updated: 2026-03-30

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PuTTY Live Log Viewer</title>
+  <link rel="stylesheet" href="../steering_portal/styles.css">
+  <link rel="stylesheet" href="putty_live_viewer.css">
+</head>
+<body class="putty-viewer-body">
+  <div class="putty-viewer-shell">
+    <header class="panel viewer-hero-panel">
+      <div class="section-head">
+        <p class="eyebrow">Live Debug Viewer</p>
+        <h1>PuTTY Log Live Viewer</h1>
+        <p class="section-copy">
+          `putty.log`를 브라우저에서 읽어 `LATENCY`, `KB`, `CMD`, `CSV`, `ENCDBG`, `BOOT/SYSTEM` 타입으로 자동 분류한다.
+          Python bridge를 쓰면 새 로그 라인이 들어오는 즉시 반영되고, fallback으로 polling, 파일 권한 연결, snapshot 업로드도 지원한다.
+        </p>
+      </div>
+
+      <div class="viewer-hero-grid">
+        <article class="card">
+          <h2>연결 방식</h2>
+          <div class="viewer-action-grid">
+            <label class="control-stack" for="fetch-path">
+              Log path
+              <input id="fetch-path" class="viewer-input" type="text" value="putty_log/putty.log">
+            </label>
+            <div class="viewer-button-row">
+              <button id="connect-stream" type="button" class="sim-button">Bridge live 연결</button>
+              <button id="connect-fetch" type="button" class="sim-button secondary">파일 polling 연결</button>
+              <button id="connect-file-handle" type="button" class="sim-button secondary">로컬 파일 권한 연결</button>
+              <label class="upload-button">
+                snapshot 업로드
+                <input id="upload-log" type="file" accept=".log,.txt">
+              </label>
+            </div>
+            <div class="viewer-button-row">
+              <label class="control-stack compact" for="poll-interval">
+                Polling
+                <select id="poll-interval" class="viewer-select">
+                  <option value="1000">1.0 s</option>
+                  <option value="2000" selected>2.0 s</option>
+                  <option value="5000">5.0 s</option>
+                </select>
+              </label>
+              <button id="toggle-live" type="button" class="sim-button secondary">Auto refresh OFF</button>
+              <button id="refresh-now" type="button" class="sim-button secondary">지금 다시 읽기</button>
+            </div>
+          </div>
+          <div id="source-status" class="status-banner viewer-status-banner">
+            아직 로그 소스가 연결되지 않았다. `Bridge live 연결`, `파일 polling 연결`, `로컬 파일 권한 연결`, `snapshot 업로드` 중 하나를 선택하면 된다.
+          </div>
+          <p class="caption viewer-note">
+            가장 추천되는 방식은 `putty_log/start_putty_live_viewer.ps1`로 Python bridge, 브라우저, PuTTY logging을 한 번에 띄우는 것이다.
+            브리지 모드에서는 `putty.log`에 새 줄이 추가될 때 브라우저가 거의 즉시 반영한다.
+            파일로 직접 열었을 때는 upload 또는 파일 권한 연결 모드를 사용하면 된다.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>Recording</h2>
+          <p class="caption">
+            recording을 켜면 새로 들어온 파싱 이벤트만 별도 세션에 쌓고, JSON으로 저장할 수 있다.
+            bench 중 중요한 타이밍이나 timeout 구간만 따로 evidence로 남길 때 쓰기 좋다.
+          </p>
+          <div class="viewer-button-row">
+            <button id="toggle-recording" type="button" class="sim-button">Recording 시작</button>
+            <button id="save-recording" type="button" class="sim-button secondary" disabled>Recording 저장</button>
+            <button id="clear-recordings" type="button" class="sim-button secondary">세션 목록 비우기</button>
+          </div>
+          <div id="recording-status" class="status-banner viewer-status-banner neutral">
+            recording이 꺼져 있다.
+          </div>
+          <div id="recording-list" class="recording-list"></div>
+        </article>
+      </div>
+    </header>
+
+    <section class="viewer-summary-grid">
+      <article class="card">
+        <div class="trace-header">
+          <h2>Session Status</h2>
+          <span id="session-stamp" class="trace-badge measured">idle</span>
+        </div>
+        <div id="session-metrics" class="viewer-metric-grid"></div>
+      </article>
+
+      <article class="card">
+        <div class="trace-header">
+          <h2>자동 해석</h2>
+          <span id="insight-badge" class="trace-badge">0 insights</span>
+        </div>
+        <div id="insight-list" class="insight-list">
+          <article class="insight-card info">
+            <strong>로그를 연결하면 자동 해석이 나타난다.</strong>
+            <p class="caption">deadline miss, command timeout, feedback 정체, 최근 target 변화 같은 힌트를 여기에 보여준다.</p>
+          </article>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel viewer-types-panel">
+      <div class="section-head compact">
+        <p class="eyebrow">Record Split</p>
+        <h2>기록 종류별 분류</h2>
+        <p class="section-copy">카드를 누르면 아래 타임라인이 해당 타입만 보이도록 필터된다.</p>
+      </div>
+      <div id="filter-chips" class="filter-chip-row"></div>
+      <div id="type-card-grid" class="type-card-grid"></div>
+    </section>
+
+    <section class="viewer-detail-grid">
+      <article class="card">
+        <div class="trace-header">
+          <h2>Timeline</h2>
+          <span id="timeline-caption" class="trace-badge measured">0 rows</span>
+        </div>
+        <div class="table-card viewer-table-card">
+          <table class="viewer-table">
+            <thead>
+              <tr>
+                <th>Line</th>
+                <th>Type</th>
+                <th>Title</th>
+                <th>Interpretation</th>
+              </tr>
+            </thead>
+            <tbody id="timeline-body">
+              <tr>
+                <td colspan="4" class="empty-cell">연결된 로그가 없다.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="trace-header">
+          <h2>Selected Record</h2>
+          <span id="detail-type-badge" class="trace-badge">none</span>
+        </div>
+        <div id="detail-panel" class="detail-panel">
+          <p class="caption">왼쪽 타임라인에서 항목을 선택하면 파싱 결과와 원본 로그가 표시된다.</p>
+        </div>
+      </article>
+    </section>
+  </div>
+
+  <script src="putty_live_viewer.js"></script>
+</body>
+</html>

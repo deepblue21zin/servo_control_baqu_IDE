@@ -1,6 +1,6 @@
 # Autonomous Steering Sub-Controller Documentation Index
 
-이 문서는 `servo_control_baqu` 문서 묶음의 현재 기준점을 정리한다. 최신 기준은 2026-03-29 코드와 bench 관찰값이다.
+이 문서는 `servo_control_baqu` 문서 묶음의 현재 기준점을 정리한다. 최신 기준은 2026-03-29 코드 baseline과 2026-03-30 로그 뷰어 문서 갱신본이다.
 
 ## 1. Current Runtime Summary
 
@@ -41,11 +41,21 @@
    현재 lifecycle 정책과 남은 gap을 볼 수 있다.
 4. [`REQ/steering_project_req_ownership_guide.html`](REQ/steering_project_req_ownership_guide.html)  
    목표 상태전이, ownership, REQ를 현업식으로 정리한 문서다.
-5. [`steering_portal/index.html`](steering_portal/index.html)  
+5. [`members/adc_encoder.html`](members/adc_encoder.html)  
+   ADC + encoder 담당자에게 바로 전달할 상세 REQ와 현재 구현/부족점 정리다.
+6. [`members/pulse_control.html`](members/pulse_control.html)  
+   pulse/direction 담당자의 actuator contract와 실험 증거 요구사항을 정리한 문서다.
+7. [`members/homing_relay.html`](members/homing_relay.html)  
+   startup, homing, relay safety 담당자의 state machine 중심 할당 문서다.
+8. [`steering_portal/index.html`](steering_portal/index.html)  
    현재 구현, evidence, 현재 점수를 시각적으로 확인할 수 있다.
-6. [`doxygen/html/index.html`](doxygen/html/index.html)  
+9. [`putty/index.html`](putty/index.html)  
+   `putty.log`를 bridge live 또는 polling으로 읽고 타입별 분류, 자동 해석, recording 저장까지 한 화면에서 처리하는 로컬 뷰어다.
+10. [`../putty_log/start_putty_live_viewer.ps1`](../putty_log/start_putty_live_viewer.ps1)  
+   Python bridge, 브라우저, PuTTY logging을 한 번에 띄우는 런처다.
+11. [`doxygen/html/index.html`](doxygen/html/index.html)  
    파일별 역할, 입력/출력, 핵심 함수/변수를 빠르게 탐색할 수 있다.
-7. [`change_code/2026-03-29.md`](change_code/2026-03-29.md)  
+12. [`change_code/2026-03-30.md`](change_code/2026-03-30.md)  
    당일 변경 이력을 순서대로 확인할 수 있다.
 
 ## 3. Core Documents
@@ -55,11 +65,16 @@
 | [`code_modules.md`](code_modules.md) | 모듈 역할과 구조 메모 | 높음 |
 | [`command_lifecycle_no_homing_spec.md`](command_lifecycle_no_homing_spec.md) | no-homing lifecycle 규격 | 높음 |
 | [`REQ/steering_project_req_ownership_guide.html`](REQ/steering_project_req_ownership_guide.html) | REQ / ownership / target state machine | 높음 |
+| [`members/adc_encoder.html`](members/adc_encoder.html) | ADC + encoder 담당 상세 할당서 | 높음 |
+| [`members/pulse_control.html`](members/pulse_control.html) | pulse control 담당 상세 할당서 | 높음 |
+| [`members/homing_relay.html`](members/homing_relay.html) | homing + relay 담당 상세 할당서 | 높음 |
 | [`hardware_pinmap.md`](hardware_pinmap.md) | 실제 핀/배선 확인 | 높음 |
 | [`latency_measurement_spec.md`](latency_measurement_spec.md) | latency 측정 기준 | 높음 |
 | [`latency_contract.md`](latency_contract.md) | timing contract | 높음 |
 | [`latency_data_evidence.md`](latency_data_evidence.md) | evidence 관리 | 높음 |
 | [`steering_portal/index.html`](steering_portal/index.html) | 설명 포털 | 높음 |
+| [`putty/index.html`](putty/index.html) | live PuTTY 로그 분류/해석/recording 뷰어 | 높음 |
+| [`../putty_log/start_putty_live_viewer.ps1`](../putty_log/start_putty_live_viewer.ps1) | bridge + browser + PuTTY 런처 | 높음 |
 | [`doxygen/html/index.html`](doxygen/html/index.html) | 코드 브라우저와 역할 요약 | 높음 |
 
 ## 4. Current Gaps To Keep In Mind
@@ -77,4 +92,4 @@
 
 ## 6. One-Line Use Guide
 
-현재 상태를 설명해야 할 때는 `README -> code_modules -> REQ guide -> steering_portal -> doxygen -> change_code/2026-03-29.md` 순서로 보는 것이 가장 빠르다.
+현재 상태를 설명해야 할 때는 `README -> REQ guide -> members 할당서 3종 -> steering_portal -> putty viewer/launcher -> doxygen -> change_code/2026-03-30.md` 순서로 보는 것이 가장 빠르다.

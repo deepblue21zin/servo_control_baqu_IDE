@@ -1,0 +1,341 @@
+:root {
+  --viewer-ok: #0b6c58;
+  --viewer-warn: #8a5304;
+  --viewer-error: #8f2516;
+  --viewer-info: #215c93;
+}
+
+.putty-viewer-body {
+  min-height: 100vh;
+}
+
+.putty-viewer-shell {
+  width: min(1520px, calc(100% - 32px));
+  margin: 22px auto 32px;
+  display: grid;
+  gap: 22px;
+  position: relative;
+  z-index: 1;
+}
+
+.viewer-hero-panel h1 {
+  margin: 0;
+  font-family: "Bahnschrift", "Aptos Display", "Segoe UI Variable Display", sans-serif;
+  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  letter-spacing: -0.03em;
+}
+
+.viewer-hero-grid,
+.viewer-summary-grid,
+.viewer-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.viewer-summary-grid {
+  align-items: start;
+}
+
+.viewer-action-grid,
+.control-stack,
+.recording-list,
+.insight-list {
+  display: grid;
+  gap: 12px;
+}
+
+.control-stack {
+  font-weight: 700;
+}
+
+.control-stack.compact {
+  min-width: 112px;
+}
+
+.viewer-input,
+.viewer-select {
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(33, 92, 147, 0.16);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  font: inherit;
+}
+
+.viewer-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.sim-button.secondary {
+  background: rgba(33, 92, 147, 0.04);
+}
+
+.upload-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(33, 92, 147, 0.22);
+  background: rgba(33, 92, 147, 0.05);
+  color: var(--accent);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.upload-button input {
+  display: none;
+}
+
+.viewer-status-banner {
+  margin-top: 4px;
+}
+
+.viewer-status-banner.neutral {
+  background: rgba(33, 92, 147, 0.06);
+  border-color: rgba(33, 92, 147, 0.10);
+  color: var(--accent);
+}
+
+.viewer-note {
+  margin-top: 12px;
+}
+
+.viewer-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.viewer-metric-card,
+.type-card,
+.recording-card,
+.insight-card {
+  padding: 16px 18px;
+  border-radius: 20px;
+  background: rgba(248, 251, 254, 0.94);
+  border: 1px solid rgba(33, 73, 122, 0.08);
+}
+
+.viewer-metric-card strong,
+.type-card strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 1.22rem;
+}
+
+.insight-card {
+  border-left: 5px solid rgba(33, 92, 147, 0.32);
+}
+
+.insight-card.ok {
+  border-left-color: rgba(11, 108, 88, 0.8);
+}
+
+.insight-card.warn {
+  border-left-color: rgba(176, 106, 8, 0.8);
+}
+
+.insight-card.error {
+  border-left-color: rgba(181, 61, 42, 0.8);
+}
+
+.type-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.type-card {
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.type-card:hover,
+.type-card.active {
+  transform: translateY(-2px);
+  border-color: rgba(33, 92, 147, 0.24);
+  box-shadow: 0 12px 24px rgba(33, 92, 147, 0.08);
+}
+
+.type-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.type-count {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.type-card p {
+  margin-bottom: 0;
+}
+
+.filter-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.filter-chip {
+  border: 1px solid rgba(33, 92, 147, 0.16);
+  background: rgba(33, 92, 147, 0.05);
+  color: var(--accent);
+  padding: 10px 14px;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.filter-chip.active {
+  background: linear-gradient(135deg, rgba(33, 92, 147, 0.16), rgba(15, 123, 121, 0.08));
+  border-color: rgba(33, 92, 147, 0.28);
+}
+
+.viewer-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.viewer-table th,
+.viewer-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(33, 73, 122, 0.08);
+  vertical-align: top;
+  text-align: left;
+}
+
+.viewer-table tbody tr {
+  cursor: pointer;
+}
+
+.viewer-table tbody tr:hover,
+.viewer-table tbody tr.active {
+  background: rgba(33, 92, 147, 0.05);
+}
+
+.event-type-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(33, 92, 147, 0.08);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.event-type-pill.warn {
+  background: rgba(176, 106, 8, 0.10);
+  color: var(--viewer-warn);
+}
+
+.event-type-pill.error {
+  background: rgba(181, 61, 42, 0.10);
+  color: var(--viewer-error);
+}
+
+.event-type-pill.ok {
+  background: rgba(11, 108, 88, 0.10);
+  color: var(--viewer-ok);
+}
+
+.empty-cell {
+  text-align: center;
+  color: var(--muted);
+}
+
+.detail-panel {
+  display: grid;
+  gap: 14px;
+}
+
+.detail-list {
+  display: grid;
+  gap: 12px;
+}
+
+.detail-row {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(248, 251, 254, 0.94);
+  border: 1px solid rgba(33, 73, 122, 0.08);
+}
+
+.detail-key {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.detail-raw {
+  margin: 0;
+  padding: 16px;
+  border-radius: 18px;
+  background: #0e2234;
+  color: #dce9f4;
+  overflow-x: auto;
+  font-family: "Consolas", "Cascadia Mono", monospace;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.recording-card strong {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.recording-meta {
+  display: grid;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.mono {
+  font-family: "Consolas", "Cascadia Mono", monospace;
+}
+
+@media (max-width: 1180px) {
+  .viewer-hero-grid,
+  .viewer-summary-grid,
+  .viewer-detail-grid,
+  .type-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 780px) {
+  .putty-viewer-shell {
+    width: min(100%, calc(100% - 24px));
+  }
+
+  .viewer-button-row,
+  .filter-chip-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .viewer-metric-grid,
+  .detail-row {
+    grid-template-columns: 1fr;
+  }
+}
