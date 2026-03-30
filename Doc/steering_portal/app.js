@@ -7,7 +7,7 @@ const portalData = {
     { label: "Loop period", value: "1 ms", note: "SysTick based control loop" },
     { label: "Runtime split", value: "main -> app", note: "boot entry and app supervisor are now separated" },
     { label: "Encoder mode", value: "TIM2 + virtual option", note: "PA0/PB3 real path with optional pulse-integrated bench feedback" },
-    { label: "Bench default", value: "ENCDBG ON", note: "keyboard bench + real TIM2 diag, virtual feedback OFF, Doc/putty live viewer available" }
+    { label: "Bench default", value: "ENCDBG ON", note: "keyboard bench + real TIM2 diag, virtual feedback OFF, Doc/putty live viewer와 MATLAB/Simulink 적용 계획 문서가 준비돼 있다" }
   ],
   latency: [
     { name: "Sense", avg: 3.344, p99: 3.372 },
@@ -286,7 +286,9 @@ const portalData = {
       title: "Motion Control & Fault Manager",
       scope: "position_control.c, lifecycle, timeout, fault reason",
       deliverable: "fault latch, clear policy, wrong-direction / stale sensor diagnostics",
-      evidence: "state transition log, timeout case, fault injection trace"
+      evidence: "state transition log, timeout case, fault injection trace",
+      brief: "../members/position_control.html",
+      briefLabel: "상세 할당서"
     },
     {
       owner: "Team B",
@@ -320,14 +322,18 @@ const portalData = {
       title: "Communication & System Integration",
       scope: "ethernet_communication.c, app_runtime.c mode transitions, timeout behavior",
       deliverable: "keyboard/UDP/system mode contract and recovery gating",
-      evidence: "mode transition log, timeout fail-safe proof, packet-to-target trace"
+      evidence: "mode transition log, timeout fail-safe proof, packet-to-target trace",
+      brief: "../members/ethernet_integration.html",
+      briefLabel: "상세 할당서"
     },
     {
       owner: "Team F",
       title: "Verification & Tooling",
       scope: "latency_profiler.c, position_control_diag.c, debug_vars, plotting scripts, documentation portal",
       deliverable: "evidence automation, async logging support, portal maintenance, PuTTY live viewer and bridge upkeep",
-      evidence: "latency report, PNG plots, portal snapshot, live viewer recording JSON, bridge launcher, submission-ready artifact set"
+      evidence: "latency report, PNG plots, portal snapshot, live viewer recording JSON, bridge launcher, submission-ready artifact set",
+      brief: "../members/verification_tooling.html",
+      briefLabel: "상세 할당서"
     }
   ],
   modules: [

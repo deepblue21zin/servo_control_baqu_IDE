@@ -39,23 +39,31 @@
    각 모듈의 역할과 ownership 관점 설명을 볼 수 있다.
 3. [`command_lifecycle_no_homing_spec.md`](command_lifecycle_no_homing_spec.md)  
    현재 lifecycle 정책과 남은 gap을 볼 수 있다.
-4. [`REQ/steering_project_req_ownership_guide.html`](REQ/steering_project_req_ownership_guide.html)  
+4. [`REQ/steering_project_req_ownership_guide.html`](REQ/steering_project_req_ownership_guide.html)
    목표 상태전이, ownership, REQ를 현업식으로 정리한 문서다.
-5. [`members/adc_encoder.html`](members/adc_encoder.html)  
+5. [`matlab_simulink_application_plan.md`](matlab_simulink_application_plan.md)
+   현재 프로젝트에 MATLAB / Simulink를 어떤 순서와 경계로 붙여야 하는지 정리한 실행 계획 문서다.
+6. [`members/position_control.html`](members/position_control.html)
+   position control 담당자에게 바로 전달할 상세 REQ와 현재 구현/부족점 정리다.
+7. [`members/adc_encoder.html`](members/adc_encoder.html)
    ADC + encoder 담당자에게 바로 전달할 상세 REQ와 현재 구현/부족점 정리다.
-6. [`members/pulse_control.html`](members/pulse_control.html)  
+8. [`members/pulse_control.html`](members/pulse_control.html)
    pulse/direction 담당자의 actuator contract와 실험 증거 요구사항을 정리한 문서다.
-7. [`members/homing_relay.html`](members/homing_relay.html)  
+9. [`members/homing_relay.html`](members/homing_relay.html)
    startup, homing, relay safety 담당자의 state machine 중심 할당 문서다.
-8. [`steering_portal/index.html`](steering_portal/index.html)  
+10. [`members/ethernet_integration.html`](members/ethernet_integration.html)
+   ethernet, mode transition, timeout, system integration 담당자의 상세 할당 문서다.
+11. [`members/verification_tooling.html`](members/verification_tooling.html)
+   latency, debug vars, plotting, portal, evidence automation 담당자의 상세 할당 문서다.
+12. [`steering_portal/index.html`](steering_portal/index.html)
    현재 구현, evidence, 현재 점수를 시각적으로 확인할 수 있다.
-9. [`putty/index.html`](putty/index.html)  
+13. [`putty/index.html`](putty/index.html)
    `putty.log`를 bridge live 또는 polling으로 읽고 타입별 분류, 자동 해석, recording 저장까지 한 화면에서 처리하는 로컬 뷰어다.
-10. [`../putty_log/start_putty_live_viewer.ps1`](../putty_log/start_putty_live_viewer.ps1)  
+14. [`../putty_log/start_putty_live_viewer.ps1`](../putty_log/start_putty_live_viewer.ps1)
    Python bridge, 브라우저, PuTTY logging을 한 번에 띄우는 런처다.
-11. [`doxygen/html/index.html`](doxygen/html/index.html)  
+15. [`doxygen/html/index.html`](doxygen/html/index.html)
    파일별 역할, 입력/출력, 핵심 함수/변수를 빠르게 탐색할 수 있다.
-12. [`change_code/2026-03-30.md`](change_code/2026-03-30.md)  
+16. [`change_code/2026-03-30.md`](change_code/2026-03-30.md)
    당일 변경 이력을 순서대로 확인할 수 있다.
 
 ## 3. Core Documents
@@ -65,9 +73,13 @@
 | [`code_modules.md`](code_modules.md) | 모듈 역할과 구조 메모 | 높음 |
 | [`command_lifecycle_no_homing_spec.md`](command_lifecycle_no_homing_spec.md) | no-homing lifecycle 규격 | 높음 |
 | [`REQ/steering_project_req_ownership_guide.html`](REQ/steering_project_req_ownership_guide.html) | REQ / ownership / target state machine | 높음 |
+| [`matlab_simulink_application_plan.md`](matlab_simulink_application_plan.md) | MATLAB / Simulink 적용 계획 | 높음 |
+| [`members/position_control.html`](members/position_control.html) | position control 담당 상세 할당서 | 높음 |
 | [`members/adc_encoder.html`](members/adc_encoder.html) | ADC + encoder 담당 상세 할당서 | 높음 |
 | [`members/pulse_control.html`](members/pulse_control.html) | pulse control 담당 상세 할당서 | 높음 |
 | [`members/homing_relay.html`](members/homing_relay.html) | homing + relay 담당 상세 할당서 | 높음 |
+| [`members/ethernet_integration.html`](members/ethernet_integration.html) | ethernet / system integration 담당 상세 할당서 | 높음 |
+| [`members/verification_tooling.html`](members/verification_tooling.html) | verification / tooling 담당 상세 할당서 | 높음 |
 | [`hardware_pinmap.md`](hardware_pinmap.md) | 실제 핀/배선 확인 | 높음 |
 | [`latency_measurement_spec.md`](latency_measurement_spec.md) | latency 측정 기준 | 높음 |
 | [`latency_contract.md`](latency_contract.md) | timing contract | 높음 |
@@ -92,4 +104,4 @@
 
 ## 6. One-Line Use Guide
 
-현재 상태를 설명해야 할 때는 `README -> REQ guide -> members 할당서 3종 -> steering_portal -> putty viewer/launcher -> doxygen -> change_code/2026-03-30.md` 순서로 보는 것이 가장 빠르다.
+현재 상태를 설명해야 할 때는 `README -> REQ guide -> MATLAB/Simulink 적용 계획 -> members 할당서 6종 -> steering_portal -> putty viewer/launcher -> doxygen -> change_code/2026-03-30.md` 순서로 보는 것이 가장 빠르다.

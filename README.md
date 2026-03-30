@@ -146,16 +146,21 @@ STM32F429ZI 기반 조향 서브컨트롤러 프로젝트다. 상위 제어기�
 | `Doc/code_modules.md` | 모듈 역할과 ownership 관점 메모 |
 | `Doc/command_lifecycle_no_homing_spec.md` | no-homing lifecycle 명세 |
 | `Doc/REQ/steering_project_req_ownership_guide.html` | REQ / ownership / target state machine 정리 |
+| `Doc/matlab_simulink_application_plan.md` | MATLAB / Simulink 적용 계획과 실행 순서 |
+| `Doc/members/position_control.html` | position control 담당 상세 할당서 |
 | `Doc/members/adc_encoder.html` | ADC + encoder 담당 상세 할당서 |
 | `Doc/members/pulse_control.html` | pulse control 담당 상세 할당서 |
 | `Doc/members/homing_relay.html` | homing + relay 담당 상세 할당서 |
+| `Doc/members/ethernet_integration.html` | ethernet / system integration 담당 상세 할당서 |
+| `Doc/members/verification_tooling.html` | verification / tooling 담당 상세 할당서 |
 | `Doc/steering_portal/index.html` | 현재 구현과 evidence를 시각화한 로컬 포털 |
 | `Doc/putty/index.html` | `putty.log` bridge live, 타입 분류, 자동 해석, recording 저장용 로컬 뷰어 |
 | `putty_log/start_putty_live_viewer.ps1` | Python bridge, 브라우저, PuTTY logging을 한 번에 띄우는 런처 |
 | `Doc/doxygen/html/index.html` | 코드 브라우저와 역할 요약 |
 | `Doc/change_code/2026-03-30.md` | 오늘 변경 이력 |
 
-현재 실제 팀원 할당을 바로 내려야 할 때는 `Doc/members/adc_encoder.html`, `Doc/members/pulse_control.html`, `Doc/members/homing_relay.html` 순서로 보는 것이 가장 빠르다.
+현재 실제 팀원 할당을 바로 내려야 할 때는 `Doc/members/position_control.html`, `Doc/members/adc_encoder.html`, `Doc/members/pulse_control.html`, `Doc/members/homing_relay.html`, `Doc/members/ethernet_integration.html`, `Doc/members/verification_tooling.html` 순서로 보면 전체 워크스트림을 한 번에 정리할 수 있다.
+MATLAB / Simulink를 이제 붙이려면 `Doc/matlab_simulink_application_plan.md`를 먼저 보고, 그 다음 `Doc/putty/index.html`과 현재 CSV / ENCDBG 로그를 같이 보는 흐름을 추천한다.
 
 ## 10. PuTTY Log Viewer
 
