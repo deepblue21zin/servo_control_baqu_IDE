@@ -14,15 +14,16 @@ STM32F429ZI 기반 조향 서브컨트롤러 프로젝트다. 상위 제어기�
 | Internal Unit | `motor_deg`, `enc_count`, `pulse_hz` |
 | Pulse Output | `PE9 = TIM1_CH1`, `PE10 = direction GPIO` |
 | Encoder Input | `PA0 = TIM2_CH1`, `PB3 = TIM2_CH2` |
-| Bench Default | keyboard bench ON, periodic CSV ON, real encoder diag ON |
+| Bench Default | `APP_RUNTIME_INPUT_SOURCE = APP_RUNTIME_INPUT_SOURCE_KEYBOARD`, periodic CSV ON, real encoder diag ON |
 | Virtual Feedback | 코드 경로는 존재하지만 현재 기본값은 `OFF` |
 | Watchdog | IWDG 사용, 현재 설정 기준 약 32.8 s |
 | Runtime Trace | CSV, command lifecycle, latency batch, `[ENCDBG]` real TIM2 snapshot |
+| Latest Bench Evidence | `26-04-05` real TIM2 log 기준 `-20 / 20 / 30 / 40 deg`가 약 0.02 deg 이내로 정착, 대신 large-step settling은 약 14~16 s |
 
 ## 2. Runtime Layout
 
 - `main.c`는 CubeMX init 뒤 `AppRuntime_Init()`, `AppRuntime_RunIteration()`만 호출하는 얇은 부트 엔트리다.
-- `app_runtime.c`는 startup sequence, keyboard bench, periodic CSV/DIAG, UDP handling, watchdog refresh, fast tick service를 담당한다.
+- `app_runtime.c`는 startup sequence, 입력 소스 선택 기준의 keyboard/UDP handling, periodic CSV/DIAG, watchdog refresh, fast tick service를 담당한다.
 - `position_control.c`는 PID, command lifecycle, enable/disable, emergency path를 담당한다.
 - `position_control_diag.c`는 command state/result/source 문자열과 주기 상태 출력 같은 진단 책임을 맡는다.
 - `position_control_safety.c`는 angle / tracking / velocity limit 평가를 담당한다.
@@ -50,13 +51,15 @@ STM32F429ZI 기반 조향 서브컨트롤러 프로젝트다. 상위 제어기�
 
 ## 4. Current Bench Defaults In Code
 
-`app_runtime.c` 기준 기본 매크로는 현재 아래와 같다.
+`project_params.h` 기준 현재 기본 설정은 아래와 같다.
 
 - `APP_RUNTIME_AUTO_FIXED_PULSE_TEST = 0`
-- `APP_RUNTIME_KEYBOARD_TEST_MODE = 1`
+- `APP_RUNTIME_INPUT_SOURCE = APP_RUNTIME_INPUT_SOURCE_KEYBOARD`
 - `APP_RUNTIME_ENCODER_DIAG_ENABLE = 1`
 - `APP_RUNTIME_VIRTUAL_ENCODER_LOG_ENABLE = 0`
 - `APP_RUNTIME_PERIODIC_CSV_LOG_ENABLE = 1`
+
+실제 UDP 시험으로 바꿀 때는 `APP_RUNTIME_INPUT_SOURCE`를 `APP_RUNTIME_INPUT_SOURCE_UDP`로 바꾸면 된다.
 
 부팅 시 동작:
 
@@ -94,20 +97,20 @@ STM32F429ZI 기반 조향 서브컨트롤러 프로젝트다. 상위 제어기�
 
 ## 6. Current Bench Interpretation
 
-2026-03-29 기준 현재 소프트웨어 상태는 아래처럼 정리할 수 있다.
+2026-04-05 log 기준 현재 소프트웨어 상태는 아래처럼 정리할 수 있다.
 
-- keyboard bench에서 목표각을 주면 `mode`, `output`, `requested/applied Hz`는 정상적으로 갱신된다.
-- `pulse_control.c` 기준 output contract는 살아 있고, `requested_frequency_hz`, `applied_frequency_hz`, `reverse_guard_active`를 함께 볼 수 있다.
-- 실제 엔코더 테스트에서는 `[ENCDBG]`가 TIM2 카운터와 `A/B` 핀 상태를 찍는다.
-- 최근 하드웨어 점검에서는 encoder A/B 채널 진폭이 균형적이지 않은 상황이 관찰되어, 실제 sensor truth는 아직 불안정하다.
-- 따라서 현재 bench는 “소프트웨어 제어 구조와 pulse output 계약은 검증 가능하지만, 실제 encoder truth closure는 계속 하드웨어 bring-up 중”인 상태다.
+- keyboard bench에서 목표각을 주면 `mode`, `output`, `requested/applied Hz`, `CMD_* lifecycle`이 정상적으로 갱신된다.
+- `26-04-05` run에서는 `-20 / 20 / 30 / 40 deg`가 모두 real `TIM2` 기준으로 목표 근처까지 정착했고, steady-state error는 약 0.02 deg 이내였다.
+- 같은 run에서 `enc_cnt`는 20 / 30 / 40 deg에 대해 대략 `33311 / 49985 / 66635`로 증가해 스케일 일관성도 좋아 보인다.
+- 반대로 `-19 -> -1 deg` rapid step 구간에서는 거의 매번 `CMD_ABORT ... REPLACED`가 발생해 중간 목표를 따라가지 못했고, 40 / 30 / 20 deg large step settling time은 약 14~16 s였다.
+- 따라서 현재 bench는 “최종 각도 정합성은 꽤 좋지만, transient response와 sensor authoritative closure는 계속 bring-up 중”인 상태다.
 
 ## 7. Current Risks And Gaps
 
 ### 7.1 Real Encoder Truth
 
-- 실제 TIM2 encoder path는 아직 완전히 닫히지 않았다.
-- 최근 관찰 기준으로 A/B 두 채널 진폭이 균형적이지 않아, 실제 `cnt/delta`를 authoritative truth로 쓰기 어렵다.
+- 실제 TIM2 encoder path는 최근 `26-04-05` log에서 settled angle과 linear `enc_cnt`를 보여주며 내부 일관성은 좋아졌다.
+- 다만 stale sensor, encoder-ADC cross-check, scope-correlated line signal, long-run wrap evidence가 없어 아직 authoritative truth로 최종 선언하긴 이르다.
 
 ### 7.2 Startup Safety
 
@@ -153,11 +156,11 @@ STM32F429ZI 기반 조향 서브컨트롤러 프로젝트다. 상위 제어기�
 | `Doc/members/homing_relay.html` | homing + relay 담당 상세 할당서 |
 | `Doc/members/ethernet_integration.html` | ethernet / system integration 담당 상세 할당서 |
 | `Doc/members/verification_tooling.html` | verification / tooling 담당 상세 할당서 |
-| `Doc/steering_portal/index.html` | 현재 구현과 evidence를 시각화한 로컬 포털 |
+| `Doc/steering_portal/index.html` | 현재 구현, evidence, 코드 영역별 역할 설명, 주요 소스 파일별 상세 브리프를 시각화한 로컬 포털 |
 | `Doc/putty/index.html` | `putty.log` bridge live, 타입 분류, 자동 해석, recording 저장용 로컬 뷰어 |
 | `putty_log/start_putty_live_viewer.ps1` | Python bridge, 브라우저, PuTTY logging을 한 번에 띄우는 런처 |
 | `Doc/doxygen/html/index.html` | 코드 브라우저와 역할 요약 |
-| `Doc/change_code/2026-03-30.md` | 오늘 변경 이력 |
+| `Doc/change_code/2026-04-06.md` | 오늘 변경 이력 |
 
 현재 실제 팀원 할당을 바로 내려야 할 때는 `Doc/members/position_control.html`, `Doc/members/adc_encoder.html`, `Doc/members/pulse_control.html`, `Doc/members/homing_relay.html`, `Doc/members/ethernet_integration.html`, `Doc/members/verification_tooling.html` 순서로 보면 전체 워크스트림을 한 번에 정리할 수 있다.
 MATLAB / Simulink를 이제 붙이려면 `Doc/matlab_simulink_application_plan.md`를 먼저 보고, 그 다음 `Doc/putty/index.html`과 현재 CSV / ENCDBG 로그를 같이 보는 흐름을 추천한다.
@@ -177,4 +180,4 @@ MATLAB / Simulink를 이제 붙이려면 `Doc/matlab_simulink_application_plan.m
 
 현재 프로젝트는 `TIM2 real encoder debug`와 `virtual feedback bench`를 모두 가진 1 ms steering sub-controller baseline이며, 다음 핵심 과제는 **실제 encoder truth와 startup safety contract를 닫는 것**이다.
 
-Last updated: 2026-03-30
+Last updated: 2026-04-06

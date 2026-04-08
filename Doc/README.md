@@ -1,6 +1,6 @@
 # Autonomous Steering Sub-Controller Documentation Index
 
-이 문서는 `servo_control_baqu` 문서 묶음의 현재 기준점을 정리한다. 최신 기준은 2026-03-29 코드 baseline과 2026-03-30 로그 뷰어 문서 갱신본이다.
+이 문서는 `servo_control_baqu` 문서 묶음의 현재 기준점을 정리한다. 최신 기준은 2026-04-06 문서/설정 갱신본이며, `26-04-05` keyboard bench log 재판정과 UDP 시험 전환 설정까지 포함해 본다.
 
 ## 1. Current Runtime Summary
 
@@ -16,20 +16,21 @@
 
 ### 1.2 Current Bench Defaults
 
-- `APP_RUNTIME_KEYBOARD_TEST_MODE = 1`
+- `APP_RUNTIME_INPUT_SOURCE = APP_RUNTIME_INPUT_SOURCE_KEYBOARD`
 - `APP_RUNTIME_ENCODER_DIAG_ENABLE = 1`
 - `APP_RUNTIME_VIRTUAL_ENCODER_LOG_ENABLE = 0`
 - `APP_RUNTIME_PERIODIC_CSV_LOG_ENABLE = 1`
 - startup 시 `Relay_ServoOn()`과 `PositionControl_Enable()`가 자동으로 실행됨
 
-즉 현재 baseline은 keyboard bench와 encoder diag가 켜진 bring-up 중심 빌드다.
+즉 현재 baseline은 keyboard bench와 encoder diag가 켜진 bring-up 중심 빌드다. 실제 UDP 시험으로 넘어갈 때는 `project_params.h`에서 `APP_RUNTIME_INPUT_SOURCE`만 `APP_RUNTIME_INPUT_SOURCE_UDP`로 바꾸면 된다.
 
 ### 1.3 Current Bench Status
 
 - 소프트웨어상 target, output, requested/applied Hz는 정상적으로 변한다.
 - 실제 encoder truth는 `TIM2`, `PA0/PB3`, `[ENCDBG]` 기준으로 확인해야 한다.
 - virtual feedback 경로는 코드에 존재하지만 현재 기본값은 `OFF`다.
-- 최근 하드웨어 점검에서는 encoder 채널 진폭 불균형이 관찰되어, real encoder chain closure가 아직 미완료다.
+- `26-04-05` run에서는 `-20 / 20 / 30 / 40 deg` settled point와 linear `enc_cnt`가 확인되어 final angle 정합성은 좋아졌다.
+- 반대로 rapid step 구간은 `CMD_ABORT ... REPLACED`가 반복되고 40 / 30 / 20 deg settling time이 약 14~16 s라 transient tuning은 아직 부족하다.
 
 ## 2. Recommended Reading Order
 
@@ -56,14 +57,14 @@
 11. [`members/verification_tooling.html`](members/verification_tooling.html)
    latency, debug vars, plotting, portal, evidence automation 담당자의 상세 할당 문서다.
 12. [`steering_portal/index.html`](steering_portal/index.html)
-   현재 구현, evidence, 현재 점수를 시각적으로 확인할 수 있다.
+   현재 구현, evidence, 코드 영역별 역할 설명, 주요 소스 파일별 상세 브리프, 현재 점수를 시각적으로 확인할 수 있다.
 13. [`putty/index.html`](putty/index.html)
    `putty.log`를 bridge live 또는 polling으로 읽고 타입별 분류, 자동 해석, recording 저장까지 한 화면에서 처리하는 로컬 뷰어다.
 14. [`../putty_log/start_putty_live_viewer.ps1`](../putty_log/start_putty_live_viewer.ps1)
    Python bridge, 브라우저, PuTTY logging을 한 번에 띄우는 런처다.
 15. [`doxygen/html/index.html`](doxygen/html/index.html)
    파일별 역할, 입력/출력, 핵심 함수/변수를 빠르게 탐색할 수 있다.
-16. [`change_code/2026-03-30.md`](change_code/2026-03-30.md)
+16. [`change_code/2026-04-06.md`](change_code/2026-04-06.md)
    당일 변경 이력을 순서대로 확인할 수 있다.
 
 ## 3. Core Documents
@@ -91,7 +92,7 @@
 
 ## 4. Current Gaps To Keep In Mind
 
-- real encoder truth가 아직 hardware closure를 못 끝냈다.
+- real encoder truth는 최근 log 기준으로 내부 일관성은 좋아졌지만 stale/cross-check/scope closure를 아직 못 끝냈다.
 - startup auto-enable 제거 전이라 startup safety 설명이 약하다.
 - watchdog timeout이 약 32.8 s로 steering safe-state 기준에는 너무 길다.
 - `project_params.h`가 생겼지만 현재 app/runtime 전체가 완전히 단일 파라미터 파일로 정리되진 않았다.
@@ -104,4 +105,4 @@
 
 ## 6. One-Line Use Guide
 
-현재 상태를 설명해야 할 때는 `README -> REQ guide -> MATLAB/Simulink 적용 계획 -> members 할당서 6종 -> steering_portal -> putty viewer/launcher -> doxygen -> change_code/2026-03-30.md` 순서로 보는 것이 가장 빠르다.
+현재 상태를 설명해야 할 때는 `README -> REQ guide -> MATLAB/Simulink 적용 계획 -> members 할당서 6종 -> steering_portal(코드 영역 설명 포함) -> putty viewer/launcher -> doxygen -> change_code/2026-04-06.md` 순서로 보는 것이 가장 빠르다.

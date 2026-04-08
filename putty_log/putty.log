@@ -1,883 +1,986 @@
-=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2026.03.15 21:29:28 =~=~=~=~=~=~=~=~=~=~=~=
-LATENCY_BATCH_BEGIN,seq=566,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=566,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=566,name=Control,count=2000,avg_cycles=446,p99_cycles=446,max_cycles=446,avg_us=2.478,p99_us=2.478,max_us=2.478
-LATENCY_STAGE,seq=566,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
-LATENCY_STAGE,seq=566,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
-LATENCY_BATCH_END,seq=566
-LATENCY_BATCH_BEGIN,seq=567,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=567,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=567,name=Control,count=2000,avg_cycles=446,p99_cycles=446,max_cycles=446,avg_us=2.478,p99_us=2.478,max_us=2.478
-LATENCY_STAGE,seq=567,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
-LATENCY_STAGE,seq=567,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=567
-LATENCY_BATCH_BEGIN,seq=568,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=568,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=568,name=Control,count=2000,avg_cycles=446,p99_cycles=446,max_cycles=446,avg_us=2.478,p99_us=2.478,max_us=2.478
-LATENCY_STAGE,seq=568,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
-LATENCY_STAGE,seq=568,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,maxLATENCY_BATCH_BEGIN,seq=617,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=617,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=617,name=Control,count=2000,avg_cycles=446,p99_cycles=446,max_cycles=446,avg_us=2.478,p99_us=2.478,max_us=2.478
-LATENCY_STAGE,seq=617,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
-LATENCY_STAGE,seq=617,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=487,avg_us=1.900,p99_us=1.917,max_us=2.706
-LATENCY_BATCH_END,seq=617
-LATENCY_BATCH_BEGIN,seq=618,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=618,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=618,name=Control,count=2000,avg_cycles=446,p99_cycles=446,max_cycles=446,avg_us=2.478,p99_us=2.478,max_us=2.478
-LATENCY_STAGE,seq=618,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
-LATENCY_STAGE,seq=618,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=497,avg_us=1.900,p99_us=1.911,max_us=2.761
-LATENCY_BATCH_END,seq=618
-[KB] unknown key 'r' (0x72)
-[KB] control enabled
-LATENCY_BATCH_BEGIN,seq=619,samples=2000,core_hz=180000000,deadline_miss=2
-LATENCY_STAGE,seq=619,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=619,name=Control,count=2000,avg_cycles=447,p99_cycles=449,max_cycles=455,avg_us=2.483,p99_us=2.494,max_us=2.528
-LATENCY_STAGE,seq=619,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
-LATENCY_STAGE,seq=619,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
-LATENCY_BATCH_END,seq=619
-LATENCY_BATCH_BEGIN,seq=620,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=620,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=620,name=Control,count=2000,avg_cycles=447,p99_cycles=449,max_cycles=449,avg_us=2.483,p99_us=2.494,max_us=2.494
-LATENCY_STAGE,seq=620,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
-LATENCY_STAGE,seq=620,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=497,avg_us=1.900,p99_us=1.917,max_us=2.761
-LATENCY_BATCH_END,seq=620
-LATENCY_BATCH_BEGIN,seq=621,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=621,name=Sense,count=2000,avg_cycles=168,p99_cycles=173,max_cycles=174,avg_us=0.933,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=621,name=Control,count=2000,avg_cycles=446,p99_cycles=446,max_cycles=446,avg_us=2.478,p99_us=2.478,max_us=2.478
-LATENCY_STAGE,seq=621,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
-LATENCY_STAGE,seq=621,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=621
-LATENCY_BATCH_BEGIN,seq=622,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=622,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=622,name=Control,count=2000,avg_cycles=446,p99_cycles=446,max_cycles=446,avg_us=2.478,p99_us=2.478,max_us=2.478
-LATENCY_STAGE,seq=622,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
-LATENCY_STAGE,seq=622,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=622
-[KB] target steer=-30.0 deg motor=-360.0 deg ret=0
-[KB][target] T=-30.00deg C=0.00deg E=45.00deg O=10000 DIR=1 ENC=32769
-LATENCY_BATCH_BEGIN,seq=623,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=623,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=623,name=Control,count=2000,avg_cycles=452,p99_cycles=460,max_cycles=466,avg_us=2.511,p99_us=2.556,max_us=2.589
-LATENCY_STAGE,seq=623,name=Actuate,count=2000,avg_cycles=408,p99_cycles=412,max_cycles=456,avg_us=2.267,p99_us=2.289,max_us=2.533
-LATENCY_STAGE,seq=623,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=623
-LATENCY_BATCH_BEGIN,seq=624,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=624,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=624,name=Control,count=2000,avg_cycles=460,p99_cycles=460,max_cycles=460,avg_us=2.556,p99_us=2.556,max_us=2.556
-LATENCY_STAGE,seq=624,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=624,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=624
-[KB][snapshot] T=-30.00deg C=0.00deg E=-30.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=625,samples=2000,core_hz=180000000,deadline_miss=6
-LATENCY_STAGE,seq=625,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=625,name=Control,count=2000,avg_cycles=460,p99_cycles=460,max_cycles=466,avg_us=2.556,p99_us=2.556,max_us=2.589
-LATENCY_STAGE,seq=625,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=625,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=625
-LATENCY_BATCH_BEGIN,seq=626,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=626,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=626,name=Control,count=2000,avg_cycles=463,p99_cycles=465,max_cycles=465,avg_us=2.572,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=626,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=626,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=626
-[KB] target steer=-45.0 deg motor=-540.0 deg ret=0
-[KB][target] T=-45.00deg C=0.00deg E=-30.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=627,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=627,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=627,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=471,avg_us=2.583,p99_us=2.583,max_us=2.617
-LATENCY_STAGE,seq=627,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=627,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=487,avg_us=1.900,p99_us=1.911,max_us=2.706
-LATENCY_BATCH_END,seq=627
-LATENCY_BATCH_BEGIN,seq=628,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=628,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=628,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=628,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=628,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=628
-[KB] target steer=0.0 deg motor=0.0 deg ret=0
-[KB][target] T=0.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=629,samples=2000,core_hz=180000000,deadline_miss=10
-LATENCY_STAGE,seq=629,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=629,name=Control,count=2000,avg_cycles=458,p99_cycles=465,max_cycles=465,avg_us=2.544,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=629,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
-LATENCY_STAGE,seq=629,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=489,avg_us=1.900,p99_us=1.917,max_us=2.717
-LATENCY_BATCH_END,seq=629
-LATENCY_BATCH_BEGIN,seq=630,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=630,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=630,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=458,avg_us=2.517,p99_us=2.517,max_us=2.544
-LATENCY_STAGE,seq=630,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=630,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
-LATENCY_BATCH_END,seq=630
-[KB] target steer=45.0 deg motor=540.0 deg ret=0
-[KB][target] T=45.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=631,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=631,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=631,name=Control,count=2000,avg_cycles=449,p99_cycles=453,max_cycles=458,avg_us=2.494,p99_us=2.517,max_us=2.544
-LATENCY_STAGE,seq=631,name=Actuate,count=2000,avg_cycles=407,p99_cycles=412,max_cycles=455,avg_us=2.261,p99_us=2.289,max_us=2.528
-LATENCY_STAGE,seq=631,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=631
-[KB] target steer=0.0 deg motor=0.0 deg ret=0
-[KB][target] T=0.00deg C=0.00deg E=45.00deg O=10000 DIR=1 ENC=32769
-LATENCY_BATCH_BEGIN,seq=632,samples=2000,core_hz=180000000,deadline_miss=10
-LATENCY_STAGE,seq=632,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=632,name=Control,count=2000,avg_cycles=451,p99_cycles=453,max_cycles=466,avg_us=2.506,p99_us=2.517,max_us=2.589
-LATENCY_STAGE,seq=632,name=Actuate,count=2000,avg_cycles=406,p99_cycles=408,max_cycles=457,avg_us=2.256,p99_us=2.267,max_us=2.539
-LATENCY_STAGE,seq=632,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
-LATENCY_BATCH_END,seq=632
-[KB] target steer=-10.0 deg motor=-120.0 deg ret=0
-[KB][target] T=-10.00deg C=0.00deg E=-0.00deg O=1542 DIR=1 ENC=32769
-LATENCY_BATCH_BEGIN,seq=633,samples=2000,core_hz=180000000,deadline_miss=10
-LATENCY_STAGE,seq=633,name=Sense,count=2000,avg_cycles=167,p99_cycles=172,max_cycles=174,avg_us=0.928,p99_us=0.956,max_us=0.967
-LATENCY_STAGE,seq=633,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=466,avg_us=2.517,p99_us=2.517,max_us=2.589
-LATENCY_STAGE,seq=633,name=Actuate,count=2000,avg_cycles=407,p99_cycles=413,max_cycles=456,avg_us=2.261,p99_us=2.294,max_us=2.533
-LATENCY_STAGE,seq=633,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=484,avg_us=1.900,p99_us=1.911,max_us=2.689
-LATENCY_BATCH_END,seq=633
-LATENCY_BATCH_BEGIN,seq=634,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=634,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=634,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=453,avg_us=2.517,p99_us=2.517,max_us=2.517
-LATENCY_STAGE,seq=634,name=Actuate,count=2000,avg_cycles=412,p99_cycles=413,max_cycles=413,avg_us=2.289,p99_us=2.294,max_us=2.294
-LATENCY_STAGE,seq=634,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=490,avg_us=1.900,p99_us=1.917,max_us=2.722
-LATENCY_BATCH_END,seq=634
-[KB] target steer=-45.0 deg motor=-540.0 deg ret=0
-[KB][target] T=-45.00deg C=0.00deg E=-10.00deg O=-5975 DIR=0 ENC=32769
-[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=635,samples=2000,core_hz=180000000,deadline_miss=17
-LATENCY_STAGE,seq=635,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=635,name=Control,count=2000,avg_cycles=459,p99_cycles=465,max_cycles=466,avg_us=2.550,p99_us=2.583,max_us=2.589
-LATENCY_STAGE,seq=635,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=635,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=635
-[KB] target steer=40.0 deg motor=480.0 deg ret=0
-[KB][target] T=40.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=636,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=636,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=636,name=Control,count=2000,avg_cycles=463,p99_cycles=465,max_cycles=613,avg_us=2.572,p99_us=2.583,max_us=3.406
-LATENCY_STAGE,seq=636,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=455,avg_us=2.283,p99_us=2.289,max_us=2.528
-LATENCY_STAGE,seq=636,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=636
-LATENCY_BATCH_BEGIN,seq=637,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=637,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=637,name=Control,count=2000,avg_cycles=449,p99_cycles=449,max_cycles=449,avg_us=2.494,p99_us=2.494,max_us=2.494
-LATENCY_STAGE,seq=637,name=Actuate,count=2000,avg_cycles=406,p99_cycles=407,max_cycles=407,avg_us=2.256,p99_us=2.261,max_us=2.261
-LATENCY_STAGE,seq=637,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=637
-[KB] target steer=-40.0 deg motor=-480.0 deg ret=0
-[KB][target] T=-40.00deg C=0.00deg E=40.00deg O=10000 DIR=1 ENC=32769
-[KB][snapshot] T=-40.00deg C=0.00deg E=-40.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=638,samples=2000,core_hz=180000000,deadline_miss=18
-LATENCY_STAGE,seq=638,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=638,name=Control,count=2000,avg_cycles=459,p99_cycles=460,max_cycles=466,avg_us=2.550,p99_us=2.556,max_us=2.589
-LATENCY_STAGE,seq=638,name=Actuate,count=2000,avg_cycles=410,p99_cycles=412,max_cycles=456,avg_us=2.278,p99_us=2.289,max_us=2.533
-LATENCY_STAGE,seq=638,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=638
-[KB] target steer=-45.0 deg motor=-540.0 deg ret=0
-[KB][target] T=-45.00deg C=0.00deg E=-40.00deg O=-10000 DIR=0 ENC=32769
-[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=639,samples=2000,core_hz=180000000,deadline_miss=23
-LATENCY_STAGE,seq=639,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=180,avg_us=0.928,p99_us=0.961,max_us=1.000
-LATENCY_STAGE,seq=639,name=Control,count=2000,avg_cycles=463,p99_cycles=465,max_cycles=471,avg_us=2.572,p99_us=2.583,max_us=2.617
-LATENCY_STAGE,seq=639,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=639,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=639
-[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=640,samples=2000,core_hz=180000000,deadline_miss=57
-LATENCY_STAGE,seq=640,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=640,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=471,avg_us=2.583,p99_us=2.583,max_us=2.617
-LATENCY_STAGE,seq=640,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=640,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=497,avg_us=1.900,p99_us=1.911,max_us=2.761
-LATENCY_BATCH_END,seq=640
-[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-[KB][snapshot] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=641,samples=2000,core_hz=180000000,deadline_miss=12
-LATENCY_STAGE,seq=641,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=641,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=471,avg_us=2.583,p99_us=2.583,max_us=2.617
-LATENCY_STAGE,seq=641,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=641,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=641
-[KB] target steer=0.0 deg motor=0.0 deg ret=0
-[KB][target] T=0.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=642,samples=2000,core_hz=180000000,deadline_miss=52
-LATENCY_STAGE,seq=642,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=642,name=Control,count=2000,avg_cycles=453,p99_cycles=465,max_cycles=465,avg_us=2.517,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=642,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
-LATENCY_STAGE,seq=642,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=486,avg_us=1.900,p99_us=1.917,max_us=2.700
-LATENCY_BATCH_END,seq=642
-[KB] target steer=-45.0 deg motor=-540.0 deg ret=0
-[KB][target] T=-45.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=643,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=643,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=643,name=Control,count=2000,avg_cycles=461,p99_cycles=465,max_cycles=471,avg_us=2.561,p99_us=2.583,max_us=2.617
-LATENCY_STAGE,seq=643,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=643,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
-LATENCY_BATCH_END,seq=643
-LATENCY_BATCH_BEGIN,seq=644,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=644,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=644,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=644,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=644,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
-LATENCY_BATCH_END,seq=644
-[KB] target steer=0.0 deg motor=0.0 deg ret=0
-[KB][target] T=0.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=645,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=645,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=645,name=Control,count=2000,avg_cycles=463,p99_cycles=465,max_cycles=465,avg_us=2.572,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=645,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
-LATENCY_STAGE,seq=645,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=645
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=646,samples=2000,core_hz=180000000,deadline_miss=65
-LATENCY_STAGE,seq=646,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=646,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=464,avg_us=2.517,p99_us=2.517,max_us=2.578
-LATENCY_STAGE,seq=646,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=646,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=499,avg_us=1.900,p99_us=1.917,max_us=2.772
-LATENCY_BATCH_END,seq=646
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=647,samples=2000,core_hz=180000000,deadline_miss=17
-LATENCY_STAGE,seq=647,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=647,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=464,avg_us=2.517,p99_us=2.517,max_us=2.578
-LATENCY_STAGE,seq=647,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=647,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=486,avg_us=1.900,p99_us=1.911,max_us=2.700
-LATENCY_BATCH_END,seq=647
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=648,samples=2000,core_hz=180000000,deadline_miss=35
-LATENCY_STAGE,seq=648,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=180,avg_us=0.928,p99_us=0.961,max_us=1.000
-LATENCY_STAGE,seq=648,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=464,avg_us=2.517,p99_us=2.517,max_us=2.578
-LATENCY_STAGE,seq=648,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=648,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=648
-[KB] target steer=-45.0 deg motor=-540.0 deg ret=0
-[KB][target] T=-45.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=649,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=649,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=649,name=Control,count=2000,avg_cycles=461,p99_cycles=465,max_cycles=471,avg_us=2.561,p99_us=2.583,max_us=2.617
-LATENCY_STAGE,seq=649,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=649,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=538,avg_us=1.900,p99_us=1.917,max_us=2.989
-LATENCY_BATCH_END,seq=649
-LATENCY_BATCH_BEGIN,seq=650,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=650,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=650,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=650,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=650,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=650
-LATENCY_BATCH_BEGIN,seq=651,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=651,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=651,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=651,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=651,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=489,avg_us=1.900,p99_us=1.917,max_us=2.717
-LATENCY_BATCH_END,seq=651
-[KB] invalid target "--100"
-LATENCY_BATCH_BEGIN,seq=652,samples=2000,core_hz=180000000,deadline_miss=2
-LATENCY_STAGE,seq=652,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=652,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=471,avg_us=2.583,p99_us=2.583,max_us=2.617
-LATENCY_STAGE,seq=652,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=652,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=487,avg_us=1.900,p99_us=1.917,max_us=2.706
-LATENCY_BATCH_END,seq=652
-LATENCY_BATCH_BEGIN,seq=653,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=653,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=653,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=653,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=653,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=653
-[KB] target steer=-40.0 deg motor=-480.0 deg ret=0
-[KB][target] T=-40.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=654,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=654,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=177,avg_us=0.928,p99_us=0.961,max_us=0.983
-LATENCY_STAGE,seq=654,name=Control,count=2000,avg_cycles=464,p99_cycles=465,max_cycles=465,avg_us=2.578,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=654,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
-LATENCY_STAGE,seq=654,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=499,avg_us=1.900,p99_us=1.917,max_us=2.772
-LATENCY_BATCH_END,seq=654
-[KB] target steer=0.0 deg motor=0.0 deg ret=0
-[KB][target] T=0.00deg C=0.00deg E=-40.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=655,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=655,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=177,avg_us=0.928,p99_us=0.961,max_us=0.983
-LATENCY_STAGE,seq=655,name=Control,count=2000,avg_cycles=464,p99_cycles=465,max_cycles=465,avg_us=2.578,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=655,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
-LATENCY_STAGE,seq=655,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=655
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=656,samples=2000,core_hz=180000000,deadline_miss=39
-LATENCY_STAGE,seq=656,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=656,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=464,avg_us=2.517,p99_us=2.517,max_us=2.578
-LATENCY_STAGE,seq=656,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=656,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=656
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB] target steer=-45.0 deg motor=-540.0 deg ret=0
-[KB][target] T=-45.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=657,samples=2000,core_hz=180000000,deadline_miss=23
-LATENCY_STAGE,seq=657,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=657,name=Control,count=2000,avg_cycles=457,p99_cycles=465,max_cycles=471,avg_us=2.539,p99_us=2.583,max_us=2.617
-LATENCY_STAGE,seq=657,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=657,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=495,avg_us=1.900,p99_us=1.911,max_us=2.750
-LATENCY_BATCH_END,seq=657
-LATENCY_BATCH_BEGIN,seq=658,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=658,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=658,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=658,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=658,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
-LATENCY_BATCH_END,seq=658
-LATENCY_BATCH_BEGIN,seq=659,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=659,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=659,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=659,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=659,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=493,avg_us=1.900,p99_us=1.917,max_us=2.739
-LATENCY_BATCH_END,seq=659
-LATENCY_BATCH_BEGIN,seq=660,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=660,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=660,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=660,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=660,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=497,avg_us=1.900,p99_us=1.917,max_us=2.761
-LATENCY_BATCH_END,seq=660
-LATENCY_BATCH_BEGIN,seq=661,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=661,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=661,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=661,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=661,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=483,avg_us=1.900,p99_us=1.917,max_us=2.683
-LATENCY_BATCH_END,seq=661
-LATENCY_BATCH_BEGIN,seq=662,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=662,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=662,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=662,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=662,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=483,avg_us=1.900,p99_us=1.917,max_us=2.683
-LATENCY_BATCH_END,seq=662
-[KB] target steer=-45.0 deg motor=-540.0 deg ret=0
-[KB][target] T=-45.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=663,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=663,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=663,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=471,avg_us=2.583,p99_us=2.583,max_us=2.617
-LATENCY_STAGE,seq=663,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=663,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=490,avg_us=1.900,p99_us=1.917,max_us=2.722
-LATENCY_BATCH_END,seq=663
-LATENCY_BATCH_BEGIN,seq=664,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=664,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=664,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=664,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=664,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=664
-[KB] target steer=-30.0 deg motor=-360.0 deg ret=0
-[KB][target] T=-30.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=665,samples=2000,core_hz=180000000,deadline_miss=12
-LATENCY_STAGE,seq=665,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=173,avg_us=0.928,p99_us=0.961,max_us=0.961
-LATENCY_STAGE,seq=665,name=Control,count=2000,avg_cycles=464,p99_cycles=465,max_cycles=465,avg_us=2.578,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=665,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=461,avg_us=2.283,p99_us=2.289,max_us=2.561
-LATENCY_STAGE,seq=665,name=Comms,count=2048,avg_cycles=1412,p99_cycles=345,max_cycles=2190852,avg_us=7.844,p99_us=1.917,max_us=12171.399
-LATENCY_BATCH_END,seq=665
-LATENCY_BATCH_BEGIN,seq=666,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=666,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=666,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=666,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=666,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=666
-[KB] target steer=0.0 deg motor=0.0 deg ret=0
-[KB][target] T=0.00deg C=0.00deg E=-30.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=667,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=667,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=177,avg_us=0.928,p99_us=0.961,max_us=0.983
-LATENCY_STAGE,seq=667,name=Control,count=2000,avg_cycles=463,p99_cycles=465,max_cycles=612,avg_us=2.572,p99_us=2.583,max_us=3.400
-LATENCY_STAGE,seq=667,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
-LATENCY_STAGE,seq=667,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=667
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=668,samples=2000,core_hz=180000000,deadline_miss=36
-LATENCY_STAGE,seq=668,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=668,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=464,avg_us=2.517,p99_us=2.517,max_us=2.578
-LATENCY_STAGE,seq=668,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=668,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=668
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB] target steer=-45.0 deg motor=-540.0 deg ret=0
-[KB][target] T=-45.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=669,samples=2000,core_hz=180000000,deadline_miss=17
-LATENCY_STAGE,seq=669,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=669,name=Control,count=2000,avg_cycles=455,p99_cycles=465,max_cycles=471,avg_us=2.528,p99_us=2.583,max_us=2.617
-LATENCY_STAGE,seq=669,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=669,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=499,avg_us=1.900,p99_us=1.917,max_us=2.772
-LATENCY_BATCH_END,seq=669
-LATENCY_BATCH_BEGIN,seq=670,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=670,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=670,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=670,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=670,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
-LATENCY_BATCH_END,seq=670
-LATENCY_BATCH_BEGIN,seq=671,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=671,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=671,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=671,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=671,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=671
-LATENCY_BATCH_BEGIN,seq=672,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=672,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=672,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=672,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=672,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=493,avg_us=1.900,p99_us=1.917,max_us=2.739
-LATENCY_BATCH_END,seq=672
-LATENCY_BATCH_BEGIN,seq=673,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=673,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=673,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=673,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=673,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=499,avg_us=1.900,p99_us=1.917,max_us=2.772
-LATENCY_BATCH_END,seq=673
-LATENCY_BATCH_BEGIN,seq=674,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=674,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=674,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=674,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=674,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=487,avg_us=1.900,p99_us=1.917,max_us=2.706
-LATENCY_BATCH_END,seq=674
-[KB] target steer=-40.0 deg motor=-480.0 deg ret=0
-[KB][target] T=-40.00deg C=0.00deg E=-45.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=675,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=675,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=675,name=Control,count=2000,avg_cycles=464,p99_cycles=465,max_cycles=465,avg_us=2.578,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=675,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
-LATENCY_STAGE,seq=675,name=Comms,count=2048,avg_cycles=343,p99_cycles=345,max_cycles=495,avg_us=1.906,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=675
-LATENCY_BATCH_BEGIN,seq=676,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=676,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=676,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=676,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=676,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=676
-[KB] target steer=-1.0 deg motor=-12.0 deg ret=0
-[KB][target] T=-1.00deg C=0.00deg E=-40.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=677,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=677,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=677,name=Control,count=2000,avg_cycles=460,p99_cycles=465,max_cycles=465,avg_us=2.556,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=677,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
-LATENCY_STAGE,seq=677,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=677
-[KB][snapshot] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
-[KB][snapshot] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
-[KB][snapshot] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
-[KB][snapshot] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
-[KB][snapshot] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=678,samples=2000,core_hz=180000000,deadline_miss=30
-LATENCY_STAGE,seq=678,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=678,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=464,avg_us=2.544,p99_us=2.544,max_us=2.578
-LATENCY_STAGE,seq=678,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=678,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=678
-[KB] target steer=-1.0 deg motor=-12.0 deg ret=0
-[KB][target] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
-[KB][snapshot] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
-[KB][snapshot] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
-[KB][snapshot] T=-1.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=679,samples=2000,core_hz=180000000,deadline_miss=29
-LATENCY_STAGE,seq=679,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=679,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=464,avg_us=2.544,p99_us=2.544,max_us=2.578
-LATENCY_STAGE,seq=679,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=555,avg_us=2.283,p99_us=2.289,max_us=3.083
-LATENCY_STAGE,seq=679,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=679
-[KB] target steer=-2.0 deg motor=-24.0 deg ret=0
-[KB][target] T=-2.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
-[KB][snapshot] T=-2.00deg C=0.00deg E=-2.00deg O=-6200 DIR=0 ENC=32769
-[KB][snapshot] T=-2.00deg C=0.00deg E=-2.00deg O=-6200 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=680,samples=2000,core_hz=180000000,deadline_miss=23
-LATENCY_STAGE,seq=680,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=680,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=471,avg_us=2.544,p99_us=2.544,max_us=2.617
-LATENCY_STAGE,seq=680,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=680,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=485,avg_us=1.900,p99_us=1.911,max_us=2.694
-LATENCY_BATCH_END,seq=680
-LATENCY_BATCH_BEGIN,seq=681,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=681,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=681,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=681,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=681,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=681
-[KB] target steer=-3.0 deg motor=-36.0 deg ret=0
-[KB][target] T=-3.00deg C=0.00deg E=-2.00deg O=-6200 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=682,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=682,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=682,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=471,avg_us=2.544,p99_us=2.544,max_us=2.617
-LATENCY_STAGE,seq=682,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=682,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=682
-LATENCY_BATCH_BEGIN,seq=683,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=683,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=683,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=683,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=683,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=683
-[KB] target steer=-2.0 deg motor=-24.0 deg ret=0
-[KB][target] T=-2.00deg C=0.00deg E=-3.00deg O=-6800 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=684,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=684,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=179,avg_us=0.928,p99_us=0.961,max_us=0.994
-LATENCY_STAGE,seq=684,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=460,avg_us=2.544,p99_us=2.544,max_us=2.556
-LATENCY_STAGE,seq=684,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
-LATENCY_STAGE,seq=684,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=499,avg_us=1.900,p99_us=1.917,max_us=2.772
-LATENCY_BATCH_END,seq=684
-LATENCY_BATCH_BEGIN,seq=685,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=685,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=685,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=685,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=685,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=484,avg_us=1.900,p99_us=1.911,max_us=2.689
-LATENCY_BATCH_END,seq=685
-[KB] target steer=-10.0 deg motor=-120.0 deg ret=0
-[KB][target] T=-10.00deg C=0.00deg E=-2.00deg O=-6200 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=686,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=686,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=173,avg_us=0.928,p99_us=0.961,max_us=0.961
-LATENCY_STAGE,seq=686,name=Control,count=2000,avg_cycles=462,p99_cycles=465,max_cycles=471,avg_us=2.567,p99_us=2.583,max_us=2.617
-LATENCY_STAGE,seq=686,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=686,name=Comms,count=2048,avg_cycles=343,p99_cycles=345,max_cycles=537,avg_us=1.906,p99_us=1.917,max_us=2.983
-LATENCY_BATCH_END,seq=686
-[KB] target steer=0.0 deg motor=0.0 deg ret=0
-[KB][target] T=0.00deg C=0.00deg E=-10.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=687,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=687,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=687,name=Control,count=2000,avg_cycles=463,p99_cycles=465,max_cycles=465,avg_us=2.572,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=687,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
-LATENCY_STAGE,seq=687,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=499,avg_us=1.900,p99_us=1.911,max_us=2.772
-LATENCY_BATCH_END,seq=687
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=688,samples=2000,core_hz=180000000,deadline_miss=23
-LATENCY_STAGE,seq=688,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=688,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=464,avg_us=2.517,p99_us=2.517,max_us=2.578
-LATENCY_STAGE,seq=688,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=688,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=688
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB] target steer=-1.0 deg motor=-12.0 deg ret=0
-[KB][target] T=-1.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=689,samples=2000,core_hz=180000000,deadline_miss=23
-LATENCY_STAGE,seq=689,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=689,name=Control,count=2000,avg_cycles=456,p99_cycles=458,max_cycles=471,avg_us=2.533,p99_us=2.544,max_us=2.617
-LATENCY_STAGE,seq=689,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=689,name=Comms,count=2048,avg_cycles=950,p99_cycles=345,max_cycles=1244580,avg_us=5.278,p99_us=1.917,max_us=6914.333
-LATENCY_BATCH_END,seq=689
-LATENCY_BATCH_BEGIN,seq=690,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=690,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=690,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=690,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=690,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=489,avg_us=1.900,p99_us=1.917,max_us=2.717
-LATENCY_BATCH_END,seq=690
-LATENCY_BATCH_BEGIN,seq=691,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=691,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=691,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=691,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=691,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=691
-LATENCY_BATCH_BEGIN,seq=692,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=692,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=692,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=692,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=692,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=692
-LATENCY_BATCH_BEGIN,seq=693,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=693,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=693,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=693,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=693,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=693
-LATENCY_BATCH_BEGIN,seq=694,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=694,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=180,avg_us=0.928,p99_us=0.961,max_us=1.000
-LATENCY_STAGE,seq=694,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=694,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=694,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=694
-LATENCY_BATCH_BEGIN,seq=695,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=695,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=695,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=695,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=695,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=695
-LATENCY_BATCH_BEGIN,seq=696,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=696,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=696,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=696,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=696,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=696
-LATENCY_BATCH_BEGIN,seq=697,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=697,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=697,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=697,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=697,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=697
-[KB] target steer=-10.0 deg motor=-120.0 deg ret=0
-[KB][target] T=-10.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=698,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=698,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=698,name=Control,count=2000,avg_cycles=458,p99_cycles=465,max_cycles=471,avg_us=2.544,p99_us=2.583,max_us=2.617
-LATENCY_STAGE,seq=698,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=698,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=698
-LATENCY_BATCH_BEGIN,seq=699,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=699,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=699,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=699,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=699,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=699
-LATENCY_BATCH_BEGIN,seq=700,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=700,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=700,name=Control,count=2000,avg_cycles=465,p99_cycles=465,max_cycles=465,avg_us=2.583,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=700,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=700,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=700
-[KB] target steer=0.0 deg motor=0.0 deg ret=0
-[KB][target] T=0.00deg C=0.00deg E=-10.00deg O=-10000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=701,samples=2000,core_hz=180000000,deadline_miss=10
-LATENCY_STAGE,seq=701,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=701,name=Control,count=2000,avg_cycles=463,p99_cycles=465,max_cycles=465,avg_us=2.572,p99_us=2.583,max_us=2.583
-LATENCY_STAGE,seq=701,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
-LATENCY_STAGE,seq=701,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=701
-[KB] target steer=0.0 deg motor=0.0 deg ret=0
-[KB][target] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB] target steer=0.0 deg motor=0.0 deg ret=0
-[KB][target] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=702,samples=2000,core_hz=180000000,deadline_miss=20
-LATENCY_STAGE,seq=702,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=702,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=464,avg_us=2.517,p99_us=2.517,max_us=2.578
-LATENCY_STAGE,seq=702,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=702,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=495,avg_us=1.900,p99_us=1.911,max_us=2.750
-LATENCY_BATCH_END,seq=702
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-[KB][snapshot] T=0.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=703,samples=2000,core_hz=180000000,deadline_miss=30
-LATENCY_STAGE,seq=703,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=703,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=464,avg_us=2.517,p99_us=2.517,max_us=2.578
-LATENCY_STAGE,seq=703,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=703,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=703
-[KB] target steer=-1.0 deg motor=-12.0 deg ret=0
-[KB][target] T=-1.00deg C=0.00deg E=-0.00deg O=-5000 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=704,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=704,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=704,name=Control,count=2000,avg_cycles=456,p99_cycles=458,max_cycles=471,avg_us=2.533,p99_us=2.544,max_us=2.617
-LATENCY_STAGE,seq=704,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=704,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=704
-LATENCY_BATCH_BEGIN,seq=705,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=705,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=705,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=705,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=705,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=486,avg_us=1.900,p99_us=1.911,max_us=2.700
-LATENCY_BATCH_END,seq=705
-[KB] target steer=-2.0 deg motor=-24.0 deg ret=0
-[KB][target] T=-2.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
-[KB] target steer=-3.0 deg motor=-36.0 deg ret=0
-[KB][target] T=-3.00deg C=0.00deg E=-2.00deg O=-6200 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=706,samples=2000,core_hz=180000000,deadline_miss=21
-LATENCY_STAGE,seq=706,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=706,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=471,avg_us=2.544,p99_us=2.544,max_us=2.617
-LATENCY_STAGE,seq=706,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=706,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=567,avg_us=1.900,p99_us=1.911,max_us=3.150
-LATENCY_BATCH_END,seq=706
-[KB] target steer=-2.0 deg motor=-24.0 deg ret=0
-[KB][target] T=-2.00deg C=0.00deg E=-3.00deg O=-6800 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=707,samples=2000,core_hz=180000000,deadline_miss=10
-LATENCY_STAGE,seq=707,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=707,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=460,avg_us=2.544,p99_us=2.544,max_us=2.556
-LATENCY_STAGE,seq=707,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
-LATENCY_STAGE,seq=707,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=707
-LATENCY_BATCH_BEGIN,seq=708,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=708,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=708,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=708,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=708,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=708
-[KB] target steer=-1.0 deg motor=-12.0 deg ret=0
-[KB][target] T=-1.00deg C=0.00deg E=-2.00deg O=-6200 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=709,samples=2000,core_hz=180000000,deadline_miss=11
-LATENCY_STAGE,seq=709,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=709,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=460,avg_us=2.544,p99_us=2.544,max_us=2.556
-LATENCY_STAGE,seq=709,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
-LATENCY_STAGE,seq=709,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=709
-LATENCY_BATCH_BEGIN,seq=710,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=710,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=177,avg_us=0.928,p99_us=0.961,max_us=0.983
-LATENCY_STAGE,seq=710,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=710,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=710,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=497,avg_us=1.900,p99_us=1.917,max_us=2.761
-LATENCY_BATCH_END,seq=710
-LATENCY_BATCH_BEGIN,seq=711,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=711,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=711,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=711,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=711,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=711
-LATENCY_BATCH_BEGIN,seq=712,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=712,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=712,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=712,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=712,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=712
-LATENCY_BATCH_BEGIN,seq=713,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=713,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=713,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=713,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=713,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=713
-LATENCY_BATCH_BEGIN,seq=714,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=714,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=714,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=714,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=714,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=487,avg_us=1.900,p99_us=1.917,max_us=2.706
-LATENCY_BATCH_END,seq=714
-LATENCY_BATCH_BEGIN,seq=715,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=715,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=715,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=715,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=715,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=487,avg_us=1.900,p99_us=1.917,max_us=2.706
-LATENCY_BATCH_END,seq=715
-LATENCY_BATCH_BEGIN,seq=716,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=716,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=716,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=716,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=716,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=497,avg_us=1.900,p99_us=1.917,max_us=2.761
-LATENCY_BATCH_END,seq=716
-LATENCY_BATCH_BEGIN,seq=717,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=717,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=717,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=717,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=717,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=717
-LATENCY_BATCH_BEGIN,seq=718,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=718,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=718,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=718,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=718,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=718
-LATENCY_BATCH_BEGIN,seq=719,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=719,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=719,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=719,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=719,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=491,avg_us=1.900,p99_us=1.911,max_us=2.728
-LATENCY_BATCH_END,seq=719
-LATENCY_BATCH_BEGIN,seq=720,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=720,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=720,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=720,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=720,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=720
-LATENCY_BATCH_BEGIN,seq=721,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=721,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=721,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=721,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=721,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=721
-LATENCY_BATCH_BEGIN,seq=722,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=722,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=722,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=722,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=722,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=722
-LATENCY_BATCH_BEGIN,seq=723,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=723,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=723,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=723,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=723,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=487,avg_us=1.900,p99_us=1.917,max_us=2.706
-LATENCY_BATCH_END,seq=723
-LATENCY_BATCH_BEGIN,seq=724,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=724,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=724,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=724,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=724,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=724
-LATENCY_BATCH_BEGIN,seq=725,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=725,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=725,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=600,avg_us=2.544,p99_us=2.544,max_us=3.333
-LATENCY_STAGE,seq=725,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=725,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=725
-LATENCY_BATCH_BEGIN,seq=726,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=726,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=726,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=726,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=726,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=495,avg_us=1.900,p99_us=1.917,max_us=2.750
-LATENCY_BATCH_END,seq=726
-LATENCY_BATCH_BEGIN,seq=727,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=727,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=727,name=Control,count=2000,avg_cycles=458,p99_cycles=458,max_cycles=458,avg_us=2.544,p99_us=2.544,max_us=2.544
-LATENCY_STAGE,seq=727,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=727,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=727
-[KB] target steer=0.0 deg motor=0.0 deg ret=0
-[KB][target] T=0.00deg C=0.00deg E=-1.00deg O=-5600 DIR=0 ENC=32769
-LATENCY_BATCH_BEGIN,seq=728,samples=2000,core_hz=180000000,deadline_miss=10
-LATENCY_STAGE,seq=728,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=728,name=Control,count=2000,avg_cycles=456,p99_cycles=458,max_cycles=460,avg_us=2.533,p99_us=2.544,max_us=2.556
-LATENCY_STAGE,seq=728,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=456,avg_us=2.283,p99_us=2.289,max_us=2.533
-LATENCY_STAGE,seq=728,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=728
-LATENCY_BATCH_BEGIN,seq=729,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=729,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=729,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=458,avg_us=2.517,p99_us=2.517,max_us=2.544
-LATENCY_STAGE,seq=729,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=729,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=495,avg_us=1.900,p99_us=1.911,max_us=2.750
-LATENCY_BATCH_END,seq=729
-LATENCY_BATCH_BEGIN,seq=730,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=730,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=730,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=458,avg_us=2.517,p99_us=2.517,max_us=2.544
-LATENCY_STAGE,seq=730,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=730,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=499,avg_us=1.900,p99_us=1.917,max_us=2.772
-LATENCY_BATCH_END,seq=730
-LATENCY_BATCH_BEGIN,seq=731,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=731,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=731,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=458,avg_us=2.517,p99_us=2.517,max_us=2.544
-LATENCY_STAGE,seq=731,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=731,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=731
-LATENCY_BATCH_BEGIN,seq=732,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=732,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=732,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=458,avg_us=2.517,p99_us=2.517,max_us=2.544
-LATENCY_STAGE,seq=732,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=732,name=Comms,count=2048,avg_cycles=342,p99_cycles=345,max_cycles=491,avg_us=1.900,p99_us=1.917,max_us=2.728
-LATENCY_BATCH_END,seq=732
-LATENCY_BATCH_BEGIN,seq=733,samples=2000,core_hz=180000000,deadline_miss=0
-LATENCY_STAGE,seq=733,name=Sense,count=2000,avg_cycles=167,p99_cycles=173,max_cycles=174,avg_us=0.928,p99_us=0.961,max_us=0.967
-LATENCY_STAGE,seq=733,name=Control,count=2000,avg_cycles=453,p99_cycles=453,max_cycles=458,avg_us=2.517,p99_us=2.517,max_us=2.544
-LATENCY_STAGE,seq=733,name=Actuate,count=2000,avg_cycles=411,p99_cycles=412,max_cycles=412,avg_us=2.283,p99_us=2.289,max_us=2.289
-LATENCY_STAGE,seq=733,name=Comms,count=2048,avg_cycles=342,p99_cycles=344,max_cycles=499,avg_us=1.900,p99_us=1.911,max_us=2.772
-LATENCY_BATCH_END,seq=733
-L
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2026.04.05 19:39:43 =~=~=~=~=~=~=~=~=~=~=~=
+[ENCDBG] ms=10090 cnt=3746319000 prev=3750855995 delta=-4536995 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,10105,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=10190 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,10205,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=10290 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,10305,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=10390 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,10405,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=10490 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,10505,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=10590 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,10605,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=10690 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,10705,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=10790 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,10805,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=10890 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,10905,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=10990 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,11005,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=11090 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,11105,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=11190 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,11205,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=11290 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,11305,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=11390 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,11405,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=11490 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,11505,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=11590 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,11605,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=11690 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,11705,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=11790 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,11805,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=11890 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,11905,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=11990 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,12005,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=12090 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,12105,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=12190 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,12205,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=12290 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,12305,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=12390 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,12405,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=12490 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,12505,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=12590 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,12605,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=12690 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,12705,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=12790 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,12805,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=12890 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,12905,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=12990 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,13005,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=13090 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,13105,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=13190 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,13205,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=13290 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,13305,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=13390 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,13405,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=13490 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,13505,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=13590 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,13605,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=13690 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,13705,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=13790 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,13805,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=13890 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,13905,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=13990 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,14005,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=14090 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,14105,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=14190 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,14205,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=14290 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,14305,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=14390 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,14405,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=14490 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,14505,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=14590 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,14605,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=14690 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,14705,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=14790 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,14805,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=14890 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,14905,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=14990 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,15005,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=15090 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,15105,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=15190 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,15205,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=15290 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,15305,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=15390 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,15405,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=15490 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,15505,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=15590 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,15605,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=15690 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,15705,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=15790 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,15805,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=15890 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,15905,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=15990 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,16005,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=16090 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,16105,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=16190 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,16205,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=16290 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,16305,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=16390 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,16405,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=16490 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,16505,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=16590 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,16605,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=16690 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,16705,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=16790 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,16805,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=16890 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,16905,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=16990 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,17005,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=17090 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,17105,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=17190 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,17205,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=17290 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,17305,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=17390 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,17405,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=17490 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,17505,99,0.000,-253278.609,253278.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[KB] target steer=1.0 deg motor=12.5 deg ret=0
+[KB][target] T=1.00deg C=-253278.61deg E=253279.61deg O=0 DIR=1 ENC=-422131048 RAW=19096 REQ=0 AP=0 RUN=0 REV=0 CMD=1/FAULTED/FAULT_LIMIT
+[ENCDBG] ms=17590 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,17605,99,1.000,-253278.609,253279.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=17690 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,17705,99,1.000,-253278.609,253279.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=17790 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,17805,99,1.000,-253278.609,253279.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=17890 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,17905,99,1.000,-253278.609,253279.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[KB] target steer=2.0 deg motor=25.0 deg ret=0
+[KB][target] T=2.00deg C=-253278.61deg E=253280.61deg O=0 DIR=1 ENC=-422131048 RAW=19096 REQ=0 AP=0 RUN=0 REV=0 CMD=1/FAULTED/FAULT_LIMIT
+[ENCDBG] ms=17990 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,18005,99,2.000,-253278.609,253280.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=18090 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,18105,99,2.000,-253278.609,253280.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=18190 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,18205,99,2.000,-253278.609,253280.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[KB] target steer=3.0 deg motor=37.5 deg ret=0
+[KB][target] T=3.00deg C=-253278.61deg E=253281.61deg O=0 DIR=1 ENC=-422131048 RAW=19096 REQ=0 AP=0 RUN=0 REV=0 CMD=1/FAULTED/FAULT_LIMIT
+[ENCDBG] ms=18290 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,18305,99,3.000,-253278.609,253281.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=18390 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,18405,99,3.000,-253278.609,253281.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=18490 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,18505,99,3.000,-253278.609,253281.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=18590 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,18605,99,3.000,-253278.609,253281.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=18690 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,18705,99,3.000,-253278.609,253281.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=18790 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,18805,99,3.000,-253278.609,253281.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[KB] target steer=4.0 deg motor=50.0 deg ret=0
+[KB][target] T=4.00deg C=-253278.61deg E=253282.61deg O=0 DIR=1 ENC=-422131048 RAW=19096 REQ=0 AP=0 RUN=0 REV=0 CMD=1/FAULTED/FAULT_LIMIT
+[ENCDBG] ms=18890 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,18905,99,4.000,-253278.609,253282.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=18990 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+[KB] target steer=5.0 deg motor=62.5 deg ret=0
+[KB][target] T=5.00deg C=-253278.61deg E=253283.61deg O=0 DIR=1 ENC=-422131048 RAW=19096 REQ=0 AP=0 RUN=0 REV=0 CMD=1/FAULTED/FAULT_LIMIT
+CSV,19022,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=19090 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,19122,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=19190 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,19222,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=19290 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,19322,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=19390 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,19422,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=19490 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,19522,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=19590 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,19622,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=19690 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,19722,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=19790 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,19822,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=19890 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,19922,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=19990 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,20022,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=20090 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,20122,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=20190 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,20222,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=20290 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,20322,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=20390 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,20422,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=20490 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,20522,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=20590 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,20622,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=20690 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,20722,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=20790 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,20822,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=20890 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,20922,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=20990 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,21022,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=21090 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,21122,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=21190 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,21222,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=21290 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,21322,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=21390 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,21422,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=21490 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,21522,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=21590 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,21622,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=21690 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,21722,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=21790 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,21822,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=21890 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,21922,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=21990 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,22022,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=22090 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,22122,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=22190 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,22222,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=22290 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,22322,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=22390 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,22422,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=22490 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,22522,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=22590 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,22622,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=22690 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,22722,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=22790 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,22822,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=22890 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,22922,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=22990 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,23022,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=23090 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,23122,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=23190 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,23222,99,5.000,-253278.609,253283.609,0,1,-422131048,19096,0,0,0,0,1,5,6
+[ENCDBG] ms=23290 cnt=3746319000 prev=3746319000 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,23322,99,5.000,-253278.938,253283.938,0,1,-422131582,18562,0,0,0,0,1,5,6
+[ENCDBG] ms=23390 cnt=3746317954 prev=3746319000 delta=-1046 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,23422,99,5.000,-253279.281,253284.281,0,1,-422132138,18006,0,0,0,0,1,5,6
+[ENCDBG] ms=23490 cnt=3746317910 prev=3746317954 delta=-44 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,23522,99,5.000,-253279.281,253284.281,0,1,-422132138,18006,0,0,0,0,1,5,6
+[ENCDBG] ms=23590 cnt=3746317910 prev=3746317910 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,23622,99,5.000,-253279.609,253284.609,0,1,-422132710,17434,0,0,0,0,1,5,6
+[ENCDBG] ms=23690 cnt=3746316164 prev=3746317910 delta=-1746 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,23722,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=23790 cnt=3746316122 prev=3746316164 delta=-42 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,23822,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=23890 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,23922,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=23990 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,24022,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=24090 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,24122,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=24190 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,24222,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=24290 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,24322,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=24390 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,24422,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=24490 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,24522,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=24590 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,24622,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=24690 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,24722,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=24790 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,24822,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=24890 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,24922,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=24990 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,25022,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=25090 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,25122,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=25190 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,25222,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=25290 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,25322,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=25390 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,25422,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=25490 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,25522,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=25590 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,25622,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=25690 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,25722,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=25790 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,25822,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=25890 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,25922,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=25990 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,26022,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=26090 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,26122,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=26190 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,26222,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=26290 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,26322,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=26390 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,26422,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=26490 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,26522,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=26590 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,26622,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=26690 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,26722,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=26790 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,26822,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=26890 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,26922,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=26990 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,27022,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=27090 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,27122,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=27190 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,27222,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=27290 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,27322,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=27390 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,27422,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=27490 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,27522,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=27590 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,27622,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=27690 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,27722,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=27790 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,27822,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=27890 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,27922,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=27990 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,28022,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=28090 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,28122,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=28190 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,28222,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=28290 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,28322,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=28390 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,28422,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=28490 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,28522,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=28590 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,28622,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=28690 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,28722,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=28790 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,28822,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=28890 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,28922,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=28990 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,29022,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=29090 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,29122,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=29190 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,29222,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=29290 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,29322,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=29390 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,29422,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=29490 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,29522,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=29590 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,29622,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=29690 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,29722,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=29790 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,29822,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=29890 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,29922,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=29990 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,30022,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=30090 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,30122,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=30190 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,30222,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=30290 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,30322,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=30390 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,30422,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=30490 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,30522,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=30590 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,30622,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=30690 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,30722,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=30790 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,30822,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=30890 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,30922,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=30990 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,31022,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=31090 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,31122,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=31190 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,31222,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=31290 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,31322,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=31390 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,31422,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=31490 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,31522,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=31590 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,31622,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=31690 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,31722,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=31790 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,31822,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=31890 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,31922,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=31990 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,32022,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=32090 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,32122,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=32190 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,32222,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=32290 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,32322,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=32390 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,32422,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=32490 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,32522,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=32590 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,32622,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=32690 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,32722,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=32790 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,32822,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=32890 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,32922,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=32990 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,33022,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=33090 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,33122,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=33190 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,33222,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=33290 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,33322,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=33390 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,33422,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=33490 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,33522,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=33590 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,33622,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=33690 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,33722,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=33790 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,33822,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=33890 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,33922,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=33990 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,34022,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=34090 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,34122,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=34190 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,34222,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=34290 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,34322,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=34390 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,34422,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=34490 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,34522,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=34590 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,34622,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=34690 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,34722,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=34790 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,34822,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=34890 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,34922,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=34990 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,35022,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=35090 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,35122,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=35190 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,35222,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=35290 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,35322,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=35390 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,35422,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=35490 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,35522,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=35590 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,35622,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=35690 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,35722,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=35790 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,35822,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=35890 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,35922,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=35990 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,36022,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=36090 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,36122,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=36190 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,36222,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=36290 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,36322,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=36390 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,36422,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=36490 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,36522,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=36590 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,36622,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=36690 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,36722,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=36790 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,36822,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=36890 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,36922,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=36990 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,37022,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=37090 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,37122,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=37190 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,37222,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=37290 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,37322,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=37390 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,37422,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=37490 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,37522,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=37590 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,37622,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=37690 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,37722,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=37790 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,37822,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=37890 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,37922,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=37990 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,38022,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=38090 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,38122,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=38190 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,38222,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=38290 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,38322,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=38390 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,38422,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=38490 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,38522,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=38590 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,38622,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=38690 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,38722,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=38790 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,38822,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=38890 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,38922,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=38990 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,39022,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=39090 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,39122,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=39190 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,39222,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=39290 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,39322,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=39390 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,39422,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=39490 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,39522,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=39590 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,39622,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=39690 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,39722,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=39790 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,39822,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=39890 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,39922,99,5.000,-253280.328,253285.328,0,1,-422133926,16218,0,0,0,0,1,5,6
+[ENCDBG] ms=39990 cnt=3746316122 prev=3746316122 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,40022,99,5.000,-253280.375,253285.375,0,1,-422133972,16172,0,0,0,0,1,5,6
+[ENCDBG] ms=40090 cnt=3746315927 prev=3746316122 delta=-195 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,40122,99,5.000,-253280.500,253285.500,0,1,-422134179,15965,0,0,0,0,1,5,6
+[ENCDBG] ms=40190 cnt=3746315689 prev=3746315927 delta=-238 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,40222,99,5.000,-253280.609,253285.609,0,1,-422134359,15785,0,0,0,0,1,5,6
+[ENCDBG] ms=40290 cnt=3746315689 prev=3746315689 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,40322,99,5.000,-253280.609,253285.609,0,1,-422134359,15785,0,0,0,0,1,5,6
+[ENCDBG] ms=40390 cnt=3746315689 prev=3746315689 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,40422,99,5.000,-253280.609,253285.609,0,1,-422134359,15785,0,0,0,0,1,5,6
+[ENCDBG] ms=40490 cnt=3746315689 prev=3746315689 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,40522,99,5.000,-253280.609,253285.609,0,1,-422134359,15785,0,0,0,0,1,5,6
+[ENCDBG] ms=40590 cnt=3746315689 prev=3746315689 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,40622,99,5.000,-253280.609,253285.609,0,1,-422134359,15785,0,0,0,0,1,5,6
+[ENCDBG] ms=40690 cnt=3746315689 prev=3746315689 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,40722,99,5.000,-253280.609,253285.609,0,1,-422134359,15785,0,0,0,0,1,5,6
+[ENCDBG] ms=40790 cnt=3746315689 prev=3746315689 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,40822,99,5.000,-253280.609,253285.609,0,1,-422134359,15785,0,0,0,0,1,5,6
+[ENCDBG] ms=40890 cnt=3746315674 prev=3746315689 delta=-15 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,40922,99,5.000,-253280.641,253285.641,0,1,-422134395,15749,0,0,0,0,1,5,6
+[ENCDBG] ms=40990 cnt=3746315628 prev=3746315674 delta=-46 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,41022,99,5.000,-253280.656,253285.656,0,1,-422134420,15724,0,0,0,0,1,5,6
+[ENCDBG] ms=41090 cnt=3746315628 prev=3746315628 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,41122,99,5.000,-253280.656,253285.656,0,1,-422134420,15724,0,0,0,0,1,5,6
+[ENCDBG] ms=41190 cnt=3746315603 prev=3746315628 delta=-25 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,41222,99,5.000,-253280.797,253285.797,0,1,-422134686,15458,0,0,0,0,1,5,6
+[ENCDBG] ms=41290 cnt=3746314547 prev=3746315603 delta=-1056 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,41322,99,5.000,-253281.609,253286.609,0,1,-422136081,14063,0,0,0,0,1,5,6
+[ENCDBG] ms=41390 cnt=3746313685 prev=3746314547 delta=-862 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,41422,99,5.000,-253281.797,253286.797,0,1,-422136363,13781,0,0,0,0,1,5,6
+[ENCDBG] ms=41490 cnt=3746313685 prev=3746313685 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,41522,99,5.000,-253281.797,253286.797,0,1,-422136363,13781,0,0,0,0,1,5,6
+[ENCDBG] ms=41590 cnt=3746313685 prev=3746313685 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,41622,99,5.000,-253281.797,253286.797,0,1,-422136363,13781,0,0,0,0,1,5,6
+[ENCDBG] ms=41690 cnt=3746313685 prev=3746313685 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,41722,99,5.000,-253281.797,253286.797,0,1,-422136363,13781,0,0,0,0,1,5,6
+[ENCDBG] ms=41790 cnt=3746313685 prev=3746313685 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,41822,99,5.000,-253281.797,253286.797,0,1,-422136363,13781,0,0,0,0,1,5,6
+[ENCDBG] ms=41890 cnt=3746313682 prev=3746313685 delta=-3 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,41922,99,5.000,-253281.812,253286.812,0,1,-422136378,13766,0,0,0,0,1,5,6
+[ENCDBG] ms=41990 cnt=3746313670 prev=3746313682 delta=-12 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,42022,99,5.000,-253281.812,253286.812,0,1,-422136378,13766,0,0,0,0,1,5,6
+[ENCDBG] ms=42090 cnt=3746313670 prev=3746313670 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,42122,99,5.000,-253281.812,253286.812,0,1,-422136398,13746,0,0,0,0,1,5,6
+[ENCDBG] ms=42190 cnt=3746313637 prev=3746313670 delta=-33 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,42222,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=42290 cnt=3746313631 prev=3746313637 delta=-6 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,42322,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=42390 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,42422,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=42490 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,42522,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=42590 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,42622,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=42690 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,42722,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=42790 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,42822,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=42890 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,42922,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=42990 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,43022,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=43090 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,43122,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=43190 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,43222,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=43290 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,43322,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=43390 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,43422,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=43490 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,43522,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=43590 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,43622,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=43690 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,43722,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=43790 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,43822,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=43890 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,43922,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=43990 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,44022,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=44090 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,44122,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=44190 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,44222,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=44290 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,44322,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=44390 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,44422,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=44490 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,44522,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=44590 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,44622,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=44690 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,44722,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=44790 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,44822,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=44890 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,44922,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=44990 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,45022,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=45090 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,45122,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=45190 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,45222,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=45290 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,45322,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=45390 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,45422,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=45490 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,45522,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=45590 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,45622,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=45690 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,45722,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=45790 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,45822,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=45890 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,45922,99,5.000,-253281.828,253286.828,0,1,-422136417,13727,0,0,0,0,1,5,6
+[ENCDBG] ms=45990 cnt=3746313631 prev=3746313631 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,46022,99,5.000,-253281.828,253286.828,0,1,-422136427,13717,0,0,0,0,1,5,6
+[ENCDBG] ms=46090 cnt=3746313561 prev=3746313631 delta=-70 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,46122,99,5.000,-253281.875,253286.875,0,1,-422136487,13657,0,0,0,0,1,5,6
+[ENCDBG] ms=46190 cnt=3746313494 prev=3746313561 delta=-67 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,46222,99,5.000,-253281.922,253286.922,0,1,-422136554,13590,0,0,0,0,1,5,6
+[ENCDBG] ms=46290 cnt=3746313467 prev=3746313494 delta=-27 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,46322,99,5.000,-253281.938,253286.938,0,1,-422136581,13563,0,0,0,0,1,5,6
+[ENCDBG] ms=46390 cnt=3746313467 prev=3746313467 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,46422,99,5.000,-253281.938,253286.938,0,1,-422136581,13563,0,0,0,0,1,5,6
+[ENCDBG] ms=46490 cnt=3746313467 prev=3746313467 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,46522,99,5.000,-253281.938,253286.938,0,1,-422136581,13563,0,0,0,0,1,5,6
+[ENCDBG] ms=46590 cnt=3746313467 prev=3746313467 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,46622,99,5.000,-253281.938,253286.938,0,1,-422136581,13563,0,0,0,0,1,5,6
+[ENCDBG] ms=46690 cnt=3746313467 prev=3746313467 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,46722,99,5.000,-253281.938,253286.938,0,1,-422136581,13563,0,0,0,0,1,5,6
+[ENCDBG] ms=46790 cnt=3746313467 prev=3746313467 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,46822,99,5.000,-253281.938,253286.938,0,1,-422136581,13563,0,0,0,0,1,5,6
+[ENCDBG] ms=46890 cnt=3746313467 prev=3746313467 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,46922,99,5.000,-253281.938,253286.938,0,1,-422136581,13563,0,0,0,0,1,5,6
+[ENCDBG] ms=46990 cnt=3746313467 prev=3746313467 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,47022,99,5.000,-253281.938,253286.938,0,1,-422136581,13563,0,0,0,0,1,5,6
+[ENCDBG] ms=47090 cnt=3746313452 prev=3746313467 delta=-15 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,47122,99,5.000,-253281.953,253286.953,0,1,-422136596,13548,0,0,0,0,1,5,6
+[ENCDBG] ms=47190 cnt=3746313412 prev=3746313452 delta=-40 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,47222,99,5.000,-253281.969,253286.969,0,1,-422136636,13508,0,0,0,0,1,5,6
+[ENCDBG] ms=47290 cnt=3746313412 prev=3746313412 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,47322,99,5.000,-253281.969,253286.969,0,1,-422136636,13508,0,0,0,0,1,5,6
+[ENCDBG] ms=47390 cnt=3746313388 prev=3746313412 delta=-24 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,47422,99,5.000,-253282.000,253287.000,0,1,-422136683,13461,0,0,0,0,1,5,6
+[ENCDBG] ms=47490 cnt=3746313295 prev=3746313388 delta=-93 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,47522,99,5.000,-253282.047,253287.047,0,1,-422136755,13389,0,0,0,0,1,5,6
+[ENCDBG] ms=47590 cnt=3746313274 prev=3746313295 delta=-21 A=1 B=1 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,47622,99,5.000,-253282.047,253287.047,0,1,-422136774,13370,0,0,0,0,1,5,6
+[ENCDBG] ms=47690 cnt=3746313274 prev=3746313274 delta=0 A=1 B=1 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,47722,99,5.000,-253282.047,253287.047,0,1,-422136774,13370,0,0,0,0,1,5,6
+[ENCDBG] ms=47790 cnt=3746313274 prev=3746313274 delta=0 A=1 B=1 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,47822,99,5.000,-253282.234,253287.234,0,1,-422137102,13042,0,0,0,0,1,5,6
+[ENCDBG] ms=47890 cnt=3746312169 prev=3746313274 delta=-1105 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,47922,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=47990 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,48022,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=48090 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,48122,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=48190 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,48222,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=48290 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,48322,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=48390 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,48422,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=48490 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,48522,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=48590 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,48622,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=48690 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,48722,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=48790 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,48822,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=48890 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,48922,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=48990 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,49022,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=49090 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,49122,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=49190 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,49222,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=49290 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,49322,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=49390 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,49422,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=49490 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,49522,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=49590 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,49622,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=49690 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,49722,99,5.000,-253282.719,253287.719,0,1,-422137879,12265,0,0,0,0,1,5,6
+[ENCDBG] ms=49790 cnt=3746312169 prev=3746312169 delta=0 A=1 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,49822,99,5.000,-253282.859,253287.859,0,1,-422138099,12045,0,0,0,0,1,5,6
+[ENCDBG] ms=49890 cnt=3746311949 prev=3746312169 delta=-220 A=1 B=1 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,49922,99,5.000,-253282.859,253287.859,0,1,-422138099,12045,0,0,0,0,1,5,6
+[ENCDBG] ms=49990 cnt=3746311949 prev=3746311949 delta=0 A=1 B=1 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,50022,99,5.000,-253282.859,253287.859,0,1,-422138099,12045,0,0,0,0,1,5,6
+[ENCDBG] ms=50090 cnt=3746311949 prev=3746311949 delta=0 A=1 B=1 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,50122,99,5.000,-253282.859,253287.859,0,1,-422138099,12045,0,0,0,0,1,5,6
+[ENCDBG] ms=50190 cnt=3746311949 prev=3746311949 delta=0 A=1 B=1 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,50222,99,5.000,-253282.859,253287.859,0,1,-422138099,12045,0,0,0,0,1,5,6
+[ENCDBG] ms=50290 cnt=3746311949 prev=3746311949 delta=0 A=1 B=1 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,50322,99,5.000,-253282.859,253287.859,0,1,-422138099,12045,0,0,0,0,1,5,6
+[ENCDBG] ms=50390 cnt=3746311935 prev=3746311949 delta=-14 A=1 B=1 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,50422,99,5.000,-253282.859,253287.859,0,1,-422138112,12032,0,0,0,0,1,5,6
+[ENCDBG] ms=50490 cnt=3746311942 prev=3746311935 delta=7 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,50522,99,5.000,-253282.859,253287.859,0,1,-422138106,12038,0,0,0,0,1,5,6
+[ENCDBG] ms=50590 cnt=3746311942 prev=3746311942 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,50622,99,5.000,-253282.859,253287.859,0,1,-422138106,12038,0,0,0,0,1,5,6
+[ENCDBG] ms=50690 cnt=3746311942 prev=3746311942 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,50722,99,5.000,-253282.859,253287.859,0,1,-422138106,12038,0,0,0,0,1,5,6
+[ENCDBG] ms=50790 cnt=3746311942 prev=3746311942 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0001 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,50822,99,5.000,-253282.859,253287.859,0,1,-422138106,12038,0,0,0,0,1,5,6
+[ENCDBG] ms=50890 cnt=3746311928 prev=3746311942 delta=-14 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,50922,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=50990 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,51022,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=51090 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,51122,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=51190 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,51222,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=51290 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,51322,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=51390 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,51422,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=51490 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,51522,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=51590 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,51622,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=51690 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,51722,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=51790 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,51822,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=51890 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,51922,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=51990 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,52022,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=52090 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,52122,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=52190 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,52222,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=52290 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,52322,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=52390 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,52422,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=52490 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,52522,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=52590 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,52622,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=52690 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,52722,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=52790 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,52822,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=52890 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,52922,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=52990 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,53022,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=53090 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,53122,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=53190 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,53222,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=53290 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,53322,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=53390 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,53422,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=53490 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,53522,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=53590 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,53622,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=53690 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,53722,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=53790 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,53822,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=53890 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,53922,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=53990 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,54022,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=54090 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,54122,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=54190 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,54222,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=54290 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,54322,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=54390 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,54422,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=54490 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,54522,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=54590 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,54622,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=54690 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,54722,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=54790 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,54822,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=54890 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,54922,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=54990 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,55022,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=55090 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,55122,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=55190 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,55222,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=55290 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,55322,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=55390 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,55422,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=55490 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,55522,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=55590 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,55622,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=55690 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,55722,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=55790 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,55822,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=55890 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,55922,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=55990 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,56022,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=56090 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,56122,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=56190 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,56222,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=56290 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,56322,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=56390 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,56422,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=56490 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,56522,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=56590 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,56622,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=56690 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,56722,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=56790 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,56822,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=56890 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,56922,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=56990 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,57022,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=57090 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,57122,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=57190 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,57222,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=57290 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,57322,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=57390 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,57422,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=57490 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,57522,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=57590 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,57622,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=57690 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,57722,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=57790 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,57822,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=57890 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,57922,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=57990 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,58022,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=58090 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,58122,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=58190 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,58222,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=58290 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,58322,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=58390 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,58422,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=58490 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,58522,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=58590 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,58622,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[ENCDBG] ms=58690 cnt=3746311928 prev=3746311928 delta=0 A=0 B=0 CEN=1 SMS=3 CC1S=1 CC2S=1 CC1E=1 CC2E=1 CR1=0x0011 SMCR=0x0003 CCMR1=0x0101 CCER=0x0011
+CSV,58722,99,5.000,-253282.859,253287.859,0,1,-422138120,12024,0,0,0,0,1,5,6
+[

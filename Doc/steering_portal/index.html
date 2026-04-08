@@ -17,7 +17,7 @@
           아키텍처, 동작 방식, 증거, 다음 개발 방향을 한 번에 이해하도록 정리한 로컬 설명 포털이다.
         </p>
         <p class="baseline">
-          Current baseline: 2026-03-29 runtime with `main.c -> app_runtime.c` split, `TIM2(PA0/PB3)` encoder path, real `[ENCDBG]` diagnostics, and optional virtual feedback path for controller-only bench tests
+          Current baseline: 2026-04-05 keyboard bench evidence with `main.c -> app_runtime.c` split, real `TIM2(PA0/PB3)` settled tracking at -20 / 20 / 30 / 40 deg, command lifecycle trace, and optional virtual feedback path for controller-only bench tests
         </p>
       </div>
 
@@ -33,6 +33,8 @@
         <button type="button" class="nav-link" data-target="reqs">앞으로 구현할 REQ</button>
         <button type="button" class="nav-link" data-target="team">팀원 6명 분배</button>
         <button type="button" class="nav-link" data-target="atlas">런타임 맵 / 역할 요약</button>
+        <button type="button" class="nav-link" data-target="codeguide">코드 영역 설명</button>
+        <button type="button" class="nav-link" data-target="modulebriefs">모듈별 상세 설명</button>
         <button type="button" class="nav-link" data-target="code">코드 탐색</button>
         <button type="button" class="nav-link" data-target="links">Doxygen / 코드 브라우저</button>
       </nav>
@@ -344,7 +346,7 @@
           </article>
           <article class="status-card partial">
             <h3>Closed-loop tracking proof</h3>
-            <p>`PE9/PE10` pulse path, `TIM2(PA0/PB3)` real encoder path, optional virtual feedback path까지는 정리됐다. 다만 authoritative real encoder truth는 아직 hardware bring-up 이슈가 남아 있다.</p>
+            <p>`26-04-05` log 기준으로 `TIM2(PA0/PB3)` real encoder path에서 -20 / 20 / 30 / 40 deg 정착은 확인됐다. 다만 stale / cross-check / scope-correlated authoritative truth와 transient speed closure는 아직 남아 있다.</p>
             <span class="state-tag">partial</span>
           </article>
           <article class="status-card partial">
@@ -373,13 +375,13 @@
         <div class="dual-grid">
           <article class="card">
             <div class="trace-header">
-              <h3>Actual control trace</h3>
-              <span class="trace-badge measured">measured</span>
-            </div>
-            <svg id="actual-trace" viewBox="0 0 640 260" class="trace-svg" aria-label="Measured steering response chart"></svg>
-            <p class="caption">
-              최근 bench에서는 target과 output은 정상적으로 변한다. 대신 real encoder chain은 `[ENCDBG]`와 scope로 따로 봐야 하는 상태라 final hardware closure는 아직 남아 있다.
-            </p>
+            <h3>Actual control trace</h3>
+            <span class="trace-badge measured">measured</span>
+          </div>
+          <svg id="actual-trace" viewBox="0 0 640 260" class="trace-svg" aria-label="Measured steering response chart"></svg>
+          <p class="caption">
+              `26-04-05` run에서는 20 deg target이 19.987 deg까지 수렴해 최종각은 잘 맞았다. 대신 large-step settling은 14~16 s 수준이고, rapid step은 중간 목표가 `REPLACED`로 자주 끊겨 transient tuning이 아직 필요하다.
+          </p>
             <img class="plot-image" src="../../putty_log/plots/control_trace.png" alt="Control trace plot generated from PuTTY log">
           </article>
 
@@ -400,6 +402,8 @@
               <li>`EncoderReader_GetCount()`는 이제 centered raw가 아니라 누적 `unwrap` count를 사용한다.</li>
               <li>CSV에는 `enc_cnt`, `enc_raw`, `req_hz`, `applied_hz`, `out_active`, `rev_guard`, `cmd_id/state/result`가 함께 남는다.</li>
               <li>현재 encoder 입력은 `TIM2`, `PA0/PB3` 기준으로 본다.</li>
+              <li>`26-04-05` log에서는 `-20 / 20 / 30 / 40 deg`가 모두 약 0.02 deg 이내로 정착했고 `enc_cnt`도 선형에 가깝게 증가했다.</li>
+              <li>반대로 rapid step 구간에서는 `CMD_ABORT ... REPLACED`가 반복되어, 현재 병목이 각도 변환 오류보다 응답 속도와 step pacing 쪽임을 보여준다.</li>
               <li>`[ENCDBG]`는 실제 TIM2 `cnt/delta/A/B`를 그대로 찍고, virtual feedback은 controller-only bench에서만 선택적으로 사용한다.</li>
               <li>latency evidence는 유효하지만 strict timing 분석 시 blocking UART logging 조건을 분리해서 해석해야 한다.</li>
             </ul>
@@ -459,13 +463,13 @@
 
         <div class="issue-grid">
           <article class="issue-card critical">
-            <h3>P0. Real encoder truth still unstable</h3>
+            <h3>P0. Transient tracking is still too slow</h3>
             <p>
-              현재 bench에서는 software pulse path와 controller 구조는 설명 가능하지만,
-              실제 encoder truth는 `TIM2(PA0/PB3)`와 hardware signal integrity를 더 닫아야 한다.
-              그래서 real closed-loop proof를 authoritative evidence로 쓰기 어렵다.
+              최근 log 기준으로 최종각은 잘 맞지만, rapid step에서는 중간 명령이 대부분 `REPLACED`로 끊기고
+              40 / 30 / 20 deg large step settling time도 약 14~16 s다.
+              즉 현재 핵심 병목은 단순 변환 오류보다 응답 속도와 transient tuning 쪽이다.
             </p>
-            <span class="evidence">Evidence: `TIM2(PA0/PB3)`, `[ENCDBG]`, real A/B amplitude imbalance observation</span>
+            <span class="evidence">Evidence: `CMD_ABORT ... REPLACED`, `CMD_REACHED settling_ms=16088 / 14788 / 14506`</span>
           </article>
 
           <article class="issue-card warning">
@@ -498,7 +502,7 @@
           <article class="issue-card warning">
             <h3>P1. Fault latch and sensor cross-check missing</h3>
             <p>
-              encoder unwrap은 들어갔지만 stale sensor, wrong-direction, encoder-ADC cross-check, latched clear policy는 아직 정식 fault taxonomy로 닫히지 않았다.
+              encoder unwrap과 settled tracking proof는 들어갔지만 stale sensor, wrong-direction, encoder-ADC cross-check, latched clear policy는 아직 정식 fault taxonomy로 닫히지 않았다.
             </p>
             <span class="evidence">Need: richer fault reason + clear policy</span>
           </article>
@@ -549,6 +553,46 @@
 
         <div id="runtime-flow" class="runtime-flow"></div>
         <div id="runtime-atlas-grid" class="runtime-atlas-grid"></div>
+      </section>
+
+      <section id="codeguide" class="panel">
+        <div class="section-head">
+          <p class="eyebrow">Code Guide</p>
+          <h2>각 코드 영역은 어떤 역할을 하고 어떻게 이어지는가</h2>
+          <p class="section-copy">
+            `runtime atlas`가 파일별 입출력 지도를 보여준다면, 이 섹션은
+            <strong>왜 이 코드가 존재하는지</strong>와 <strong>실행 순서에서 어떻게 이어지는지</strong>를
+            설명한다. 특히 현재 기본 빌드는 keyboard bench지만, 실제 시험으로 넘어갈 때는
+            `project_params.h`의 입력 소스 설정 하나로 UDP path로 전환하는 구조라는 점까지 같이 본다.
+          </p>
+        </div>
+
+        <div class="status-banner">
+          현재 기본 경로는 `APP_RUNTIME_INPUT_SOURCE_KEYBOARD`이며, 실제 UDP 시험으로 전환할 때는
+          `project_params.h`의 `APP_RUNTIME_INPUT_SOURCE`를 `APP_RUNTIME_INPUT_SOURCE_UDP`로 바꾸면 된다.
+        </div>
+
+        <article class="card code-area-flow-card">
+          <h3>실행 순서로 보면</h3>
+          <div id="code-area-flow" class="code-area-flow"></div>
+        </article>
+
+        <div id="code-area-grid" class="code-area-grid"></div>
+      </section>
+
+      <section id="modulebriefs" class="panel">
+        <div class="section-head">
+          <p class="eyebrow">Module Briefs</p>
+          <h2>파일별로 자세히 보면 무엇을 맡고 어떻게 동작하는가</h2>
+          <p class="section-copy">
+            이 섹션은 `command lifecycle` 설명처럼 각 소스 파일을 개별 브리프로 풀어쓴 항목이다.
+            `position_control`, `pulse_control`, `encoder_reader`, `ethernet_communication`,
+            `homing`, `relay_control`, `position_control_diag`, `position_control_safety`,
+            `adc_potentiometer`를 각각 어떤 입력으로 동작하고 어떤 상태를 남기는지 기준으로 정리했다.
+          </p>
+        </div>
+
+        <div id="module-brief-grid" class="module-brief-grid"></div>
       </section>
 
       <section id="code" class="panel">

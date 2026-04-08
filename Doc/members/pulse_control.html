@@ -27,6 +27,7 @@
         <span class="chip">관련 상위 REQ: REQ-P0-002</span>
         <span class="chip">관련 상위 REQ: REQ-P1-001</span>
         <span class="chip">관련 상위 REQ: REQ-P2-001</span>
+        <span class="chip">기준 코드: 2026-04-06</span>
       </div>
 
       <div class="hero-grid section">
@@ -55,6 +56,29 @@
         </article>
       </div>
     </header>
+
+    <section class="panel">
+      <p class="eyebrow">2026-04-05 Log Review</p>
+      <h2>26-04-05 로그 기준 재판정</h2>
+      <div class="hero-grid section">
+        <article class="hero-card">
+          <h3>로그로 확인된 것</h3>
+          <ul>
+            <li><code>requested / applied Hz</code>, output, encoder 응답이 함께 기록되어 actuator path가 실제 motion으로 이어지는 기본 흐름은 설명 가능하다.</li>
+            <li>40 / 30 / 20 deg step에서 output이 줄어들며 최종적으로 <code>CMD_REACHED</code>와 output 0 상태까지 간다.</li>
+            <li>이번 run은 pulse path가 전혀 안 먹는 상태가 아니라, 느리지만 목표각까지는 도달하는 상태라는 점을 보여준다.</li>
+          </ul>
+        </article>
+        <article class="hero-card">
+          <h3>아직 로그로 남은 문제</h3>
+          <ul>
+            <li>scope / drive monitor / <code>PE9</code> / <code>PE10</code> wave matrix는 아직 없어 waveform 품질을 직접 증명하진 못한다.</li>
+            <li><code>constants.h</code>의 1 MHz와 runtime 100 kHz clamp 불일치 문제는 여전히 문서/코드 정리가 필요하다.</li>
+            <li>ready / servo / EMG 기반 output inhibit는 이번 로그로도 아직 미구현 상태다.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
 
     <section class="panel">
       <p class="eyebrow">Current Baseline</p>
@@ -246,7 +270,7 @@
     </section>
 
     <div class="footer">
-      Last updated: 2026-03-30<br>
+      Last updated: 2026-04-06<br>
       Source baseline: `pulse_control.c`, `pulse_control.h`, `app_runtime.c`, `constants.h`
     </div>
   </main>

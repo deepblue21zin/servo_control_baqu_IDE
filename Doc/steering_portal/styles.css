@@ -825,6 +825,69 @@ input[type="range"] {
   margin-top: 14px;
 }
 
+.code-area-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.code-area-step,
+.code-area-card {
+  background: rgba(248, 251, 254, 0.94);
+  border-radius: 22px;
+  padding: 18px 20px;
+  border: 1px solid rgba(33, 73, 122, 0.08);
+}
+
+.code-area-step h4,
+.code-area-card h3 {
+  margin-top: 12px;
+  margin-bottom: 10px;
+}
+
+.code-area-flow-card {
+  margin-top: 18px;
+}
+
+.code-area-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.code-area-head h3 {
+  margin-top: 12px;
+}
+
+.module-brief-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.module-brief-card {
+  background: rgba(248, 251, 254, 0.94);
+  border-radius: 24px;
+  padding: 22px;
+  border: 1px solid rgba(33, 73, 122, 0.08);
+}
+
+.module-brief-card h3 {
+  margin-top: 14px;
+  margin-bottom: 12px;
+}
+
+.module-brief-block + .module-brief-block {
+  margin-top: 14px;
+}
+
+.module-brief-block h4 {
+  margin: 0 0 10px;
+  font-size: 0.98rem;
+}
+
 .log-snippet {
   margin: 12px 0 0;
   padding: 16px;
@@ -974,6 +1037,9 @@ input[type="range"] {
   .analysis-phase-grid,
   .runtime-flow,
   .runtime-atlas-grid,
+  .code-area-flow,
+  .code-area-grid,
+  .module-brief-grid,
   .status-grid,
   .issue-grid,
   .team-grid,
@@ -1000,6 +1066,9 @@ input[type="range"] {
   .analysis-phase-grid,
   .runtime-flow,
   .runtime-atlas-grid,
+  .code-area-flow,
+  .code-area-grid,
+  .module-brief-grid,
   .status-grid,
   .issue-grid,
   .team-grid,

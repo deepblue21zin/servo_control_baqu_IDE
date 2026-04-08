@@ -5,7 +5,7 @@
 ## 1. 현재 프로젝트 기준 핵심 정보
 
 - MCU: `STM32F429ZI`
-- Encoder feedback: `TIM4`
+- Encoder feedback: `TIM2`
 - Pulse output: `TIM1_CH1 -> PE9`
 - Direction output: `PE10`
 - Debug UART: `USART3` (`PD8/PD9`, ST-LINK VCP)
@@ -23,7 +23,7 @@
 
 - `Core/Inc/debug_vars.h`
 - `Core/Src/debug_vars.c`
-- `Core/Src/position_control.c`
+- `Core/Src/position_control_diag.c`
 
 단위는 아래처럼 해석하면 된다.
 
@@ -32,7 +32,7 @@
 - `dbg_pwm_cmd`
   - 제어기 출력 주파수 명령의 signed debug 값
 - `dbg_enc_raw`
-  - `TIM4` raw counter (`0~65535`)
+  - `TIM2` raw counter (`0~65535`)
 - `dbg_fault_flags`
   - 비트 플래그
 
@@ -55,7 +55,7 @@
 
 - `PE9`: pulse output
 - `PE10`: direction output
-- `PD12/PD13`: encoder A/B
+- `PA0/PB3`: encoder A/B
 - `PD14/PD15`: SVON / EMG
 - `PD8/PD9`: debug UART
 - `PB0/PB7`: line driver enable
@@ -178,7 +178,7 @@ CubeMonitor는 상태 추세를 보는 도구로 쓰는 것이 좋다.
 
 ## 7. 빠른 첫 테스트 추천
 
-현재 프로젝트는 `KEYBOARD_TEST_MODE`가 있으므로 UDP 없이도 벤치 테스트가 가능하다.
+현재 프로젝트는 `APP_RUNTIME_INPUT_SOURCE = APP_RUNTIME_INPUT_SOURCE_KEYBOARD` 기준으로 UDP 없이도 벤치 테스트가 가능하다.
 
 권장 순서:
 

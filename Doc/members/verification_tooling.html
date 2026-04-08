@@ -27,7 +27,7 @@
         <span class="chip">Owner: Verification &amp; Tooling</span>
         <span class="chip">관련 상위 REQ: REQ-P1-004</span>
         <span class="chip">관련 상위 REQ: REQ-P2-002</span>
-        <span class="chip">기준 코드: 2026-03-30</span>
+        <span class="chip">기준 코드: 2026-04-06</span>
       </div>
 
       <div class="hero-grid section">
@@ -55,6 +55,29 @@
         </article>
       </div>
     </header>
+
+    <section class="panel">
+      <p class="eyebrow">2026-04-05 Log Review</p>
+      <h2>26-04-05 로그 기준 재판정</h2>
+      <div class="hero-grid section">
+        <article class="hero-card">
+          <h3>로그로 확인된 것</h3>
+          <ul>
+            <li>이번 run만으로도 <code>CMD_ABORT ... REPLACED</code>, <code>CMD_REACHED</code>, steady-state 오차, settling time을 같은 파일에서 재구성할 수 있다.</li>
+            <li>PuTTY raw log, plot script, portal trace를 같은 실험에 연결할 수 있는 최소 evidence skeleton은 이미 충분히 강하다.</li>
+            <li>CubeMonitor 가이드는 현재 <code>TIM2(PA0/PB3)</code> baseline으로 동기화돼 있어 온보딩 문서 드리프트가 한 단계 줄었다.</li>
+          </ul>
+        </article>
+        <article class="hero-card">
+          <h3>아직 로그로 남은 문제</h3>
+          <ul>
+            <li>run ID, Git SHA, portal snapshot, PNG, raw log를 자동으로 한 manifest에 묶는 흐름은 아직 없다.</li>
+            <li>strict latency와 interactive UART logging을 분리하는 async logging 체계도 여전히 미완성이다.</li>
+            <li>즉 도구는 강하지만 submission-ready evidence pack 자동화는 아직 부족하다.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
 
     <section class="panel">
       <p class="eyebrow">Current Baseline</p>
@@ -97,7 +120,7 @@
             <td class="mono">Doc/cubemonitor_setup_guide.md</td>
             <td>CubeMonitor 기본 사용 흐름을 설명한다.</td>
             <td>툴 온보딩 가이드로는 도움이 된다.</td>
-            <td>현재 문서에는 `TIM4`와 예전 핀 설명이 남아 있어 최신 `TIM2(PA0/PB3)` baseline과 어긋난다.</td>
+            <td>기본 흐름은 최신 `TIM2(PA0/PB3)` baseline으로 맞춰졌지만, run manifest와 signal dictionary까지 자동 연결되지는 않는다.</td>
           </tr>
         </tbody>
       </table>
@@ -128,10 +151,10 @@
           </p>
         </article>
         <article class="issue-card warning">
-          <h3>문서 드리프트가 있다</h3>
+          <h3>문서와 artifact 연결 규칙이 아직 약하다</h3>
           <p>
-            예를 들어 CubeMonitor 가이드는 아직 TIM4 기준 설명이 남아 있다.
-            도구 문서는 가장 먼저 낡기 쉬우므로 current baseline과 동기화가 중요하다.
+            주요 온보딩 문서는 최신화됐지만, 어떤 plot과 portal snapshot이 어떤 raw log/run과 연결되는지 자동으로 남지 않는다.
+            도구 문서는 최신 baseline과 함께 run metadata까지 묶여야 오래 버틴다.
           </p>
         </article>
       </div>
@@ -233,7 +256,7 @@
     </section>
 
     <div class="footer">
-      Last updated: 2026-03-30<br>
+      Last updated: 2026-04-06<br>
       Source baseline: `latency_profiler.c`, `position_control_diag.c`, `debug_vars.h`, `putty_log/plot_putty_log.py`, `Doc/putty`
     </div>
   </main>

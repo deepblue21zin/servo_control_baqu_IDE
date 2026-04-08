@@ -1,6 +1,7 @@
 #include "app_runtime.h"
 
 #include "main.h"
+#include "can_runtime.h"
 #include "gpio.h"
 #include "iwdg.h"
 #include "lwip.h"
@@ -25,10 +26,29 @@ extern volatile uint8_t interrupt_flag;
 
 static uint32_t g_latency_report_seq = 0U;
 static uint32_t g_debug_print_divider = 0U;
-#if APP_RUNTIME_KEYBOARD_TEST_MODE
+#if APP_RUNTIME_CAN_ENABLE
+static uint8_t g_can_rx_log_enabled = (uint8_t)APP_RUNTIME_CAN_RX_LOG_ENABLE;
+#endif
+#if APP_RUNTIME_INPUT_SOURCE_IS_KEYBOARD
+typedef enum {
+    KB_SCENARIO_IDLE = 0,
+    KB_SCENARIO_RAMP_UP,
+    KB_SCENARIO_PEAK_HOLD,
+    KB_SCENARIO_RAMP_DOWN
+} AppRuntime_KeyboardScenarioPhase_t;
+
+typedef struct {
+    uint8_t active;
+    AppRuntime_KeyboardScenarioPhase_t phase;
+    uint32_t next_step_ms;
+} AppRuntime_KeyboardScenario_t;
+
 static float g_keyboard_target_steer_deg = 0.0f;
 static char g_keyboard_line_buf[32] = {0};
 static uint8_t g_keyboard_line_len = 0U;
+static AppRuntime_KeyboardScenario_t g_keyboard_scenario = {0};
+static float AppRuntime_KeyboardClampSteeringDeg(float steering_deg);
+static void AppRuntime_KeyboardScenarioStop(const char *reason);
 #else
 static SteerMode_t g_prev_mode = STEER_MODE_NONE;
 static SteerMode_t g_current_mode = STEER_MODE_NONE;
@@ -118,6 +138,174 @@ static float AppRuntime_TargetMotorDegToSteeringDeg(float motor_deg)
 {
     return MotorDegToSteeringDeg(motor_deg);
 }
+
+/* Print which command-input build profile is active so bench logs explain why UDP is or isn't serviced. */
+static void AppRuntime_PrintInputSourceSummary(void)
+{
+#if APP_RUNTIME_INPUT_SOURCE_IS_KEYBOARD
+    printf("[AppRuntime] input=KEYBOARD_TEST. UDP path is intentionally not serviced in this build.\r\n");
+    printf("[AppRuntime] switch APP_RUNTIME_INPUT_SOURCE to APP_RUNTIME_INPUT_SOURCE_UDP in project_params.h for real UDP tests.\r\n");
+#else
+    printf("[AppRuntime] input=UDP. Keyboard bench path is disabled in this build.\r\n");
+    printf("[AppRuntime] configure UDP sender/packet settings in project_params.h before real tests.\r\n");
+#endif
+}
+
+#if APP_RUNTIME_CAN_ENABLE
+static int16_t AppRuntime_CanDegToDeciDeg(float deg)
+{
+    if (deg > 3276.7f) {
+        return 32767;
+    }
+    if (deg < -3276.8f) {
+        return -32768;
+    }
+    return (int16_t)(deg * 10.0f);
+}
+
+static void AppRuntime_CanPrintFrame(const char *tag, const CAN_Frame_t *frame)
+{
+    printf("[CAN][%s] id=0x%03lX dlc=%u ext=%u rtr=%u data=%02X %02X %02X %02X %02X %02X %02X %02X\r\n",
+           tag,
+           (unsigned long)frame->id,
+           (unsigned int)frame->dlc,
+           (unsigned int)frame->is_extended,
+           (unsigned int)frame->is_remote,
+           (unsigned int)frame->data[0],
+           (unsigned int)frame->data[1],
+           (unsigned int)frame->data[2],
+           (unsigned int)frame->data[3],
+           (unsigned int)frame->data[4],
+           (unsigned int)frame->data[5],
+           (unsigned int)frame->data[6],
+           (unsigned int)frame->data[7]);
+}
+
+static void AppRuntime_CanSendStatusFrame(void)
+{
+    PositionControl_State_t state = PositionControl_GetState();
+    CommandLifecycle_t cmd = PositionControl_GetCommandLifecycle();
+    int16_t current_x10 = AppRuntime_CanDegToDeciDeg(AppRuntime_TargetMotorDegToSteeringDeg(state.current_angle));
+    int16_t target_x10 = AppRuntime_CanDegToDeciDeg(AppRuntime_TargetMotorDegToSteeringDeg(state.target_angle));
+    int16_t error_x10 = AppRuntime_CanDegToDeciDeg(AppRuntime_TargetMotorDegToSteeringDeg(state.error));
+    uint8_t payload[8];
+    int ret = 0;
+
+    payload[0] = (uint8_t)(current_x10 & 0xFF);
+    payload[1] = (uint8_t)((current_x10 >> 8) & 0xFF);
+    payload[2] = (uint8_t)(target_x10 & 0xFF);
+    payload[3] = (uint8_t)((target_x10 >> 8) & 0xFF);
+    payload[4] = (uint8_t)(error_x10 & 0xFF);
+    payload[5] = (uint8_t)((error_x10 >> 8) & 0xFF);
+    payload[6] = (uint8_t)state.mode;
+    payload[7] = (uint8_t)cmd.state;
+
+    ret = CAN_Runtime_SendStd((uint16_t)APP_RUNTIME_CAN_STATUS_STDID, payload, 8U);
+    printf("[CAN] status tx ret=%d id=0x%03X cur=%.2f tgt=%.2f err=%.2f mode=%d cmd=%d\r\n",
+           ret,
+           APP_RUNTIME_CAN_STATUS_STDID,
+           AppRuntime_TargetMotorDegToSteeringDeg(state.current_angle),
+           AppRuntime_TargetMotorDegToSteeringDeg(state.target_angle),
+           AppRuntime_TargetMotorDegToSteeringDeg(state.error),
+           (int)state.mode,
+           (int)cmd.state);
+}
+
+static void AppRuntime_HandleCanControlCommand(uint8_t command)
+{
+    switch (command) {
+    case 0U:
+        PositionControl_Disable();
+        printf("[CAN] control command: disable\r\n");
+        break;
+    case 1U:
+        PositionControl_Enable();
+        printf("[CAN] control command: enable\r\n");
+        break;
+    case 2U:
+        PositionControl_EmergencyStop();
+        printf("[CAN] control command: estop\r\n");
+        break;
+    case 3U:
+#if APP_RUNTIME_INPUT_SOURCE_IS_KEYBOARD
+        AppRuntime_KeyboardScenarioStop("CAN center command");
+        g_keyboard_target_steer_deg = 0.0f;
+#endif
+        PositionControl_SetTargetWithSource(AppRuntime_TargetSteeringDegToMotorDeg(0.0f), CMD_SRC_SERVICE);
+        printf("[CAN] control command: center\r\n");
+        break;
+    case 4U:
+        AppRuntime_CanSendStatusFrame();
+        break;
+    default:
+        printf("[CAN] unknown control command=%u\r\n", (unsigned int)command);
+        break;
+    }
+}
+
+static void AppRuntime_HandleCanFrame(const CAN_Frame_t *frame)
+{
+    if (frame->is_remote != 0U) {
+        printf("[CAN] remote frame ignored id=0x%03lX\r\n", (unsigned long)frame->id);
+        return;
+    }
+
+    if (frame->id == APP_RUNTIME_CAN_CMD_STEER_STDID) {
+        int16_t steer_x10 = (int16_t)(((uint16_t)frame->data[1] << 8) | frame->data[0]);
+        float steering_deg = ((float)steer_x10) * 0.1f;
+        int ret = 0;
+
+#if APP_RUNTIME_INPUT_SOURCE_IS_KEYBOARD
+        AppRuntime_KeyboardScenarioStop("CAN steering command");
+        g_keyboard_target_steer_deg = AppRuntime_KeyboardClampSteeringDeg(steering_deg);
+        steering_deg = g_keyboard_target_steer_deg;
+#endif
+        ret = PositionControl_SetTargetWithSource(AppRuntime_TargetSteeringDegToMotorDeg(steering_deg),
+                                                  CMD_SRC_SERVICE);
+        printf("[CAN] steer cmd=%.1f deg ret=%d\r\n", steering_deg, ret);
+        return;
+    }
+
+    if (frame->id == APP_RUNTIME_CAN_CMD_CONTROL_STDID) {
+        AppRuntime_HandleCanControlCommand(frame->data[0]);
+        return;
+    }
+
+    if (frame->id == APP_RUNTIME_CAN_QUERY_STDID) {
+        AppRuntime_CanSendStatusFrame();
+        return;
+    }
+}
+
+static void AppRuntime_ServiceCan(void)
+{
+    CAN_Frame_t frame = {0};
+
+    CAN_Runtime_Service();
+
+    while (CAN_Runtime_Pop(&frame) != 0U) {
+        if (g_can_rx_log_enabled != 0U) {
+            AppRuntime_CanPrintFrame("rx", &frame);
+        }
+        AppRuntime_HandleCanFrame(&frame);
+    }
+}
+
+static void AppRuntime_SendCanTestFrame(void)
+{
+    const uint8_t payload[8] = {'C', 'A', 'N', 'T', 'E', 'S', 'T', 0U};
+    int ret = CAN_Runtime_SendStd((uint16_t)APP_RUNTIME_CAN_TEST_TX_STDID, payload, 8U);
+
+    printf("[CAN] test tx ret=%d id=0x%03X mode=%s\r\n",
+           ret,
+           APP_RUNTIME_CAN_TEST_TX_STDID,
+           (APP_RUNTIME_CAN_MODE == APP_RUNTIME_CAN_MODE_LOOPBACK) ? "LOOPBACK" : "NORMAL");
+}
+#else
+#define AppRuntime_ServiceCan() ((void)0)
+#define AppRuntime_SendCanTestFrame() ((void)0)
+#define AppRuntime_CanSendStatusFrame() ((void)0)
+#endif
 
 #if APP_RUNTIME_PERIODIC_CSV_LOG_ENABLE
 /* Print the CSV schema once so bench logs remain self-describing. */
@@ -285,7 +473,7 @@ static void AppRuntime_ServiceEncoderRuntimeDiag(void)
 #endif
 }
 
-#if APP_RUNTIME_KEYBOARD_TEST_MODE
+#if APP_RUNTIME_INPUT_SOURCE_IS_KEYBOARD
 /* Clamp keyboard-entered steering angles to the allowed steering envelope. */
 static float AppRuntime_KeyboardClampSteeringDeg(float steering_deg)
 {
@@ -303,6 +491,122 @@ static void AppRuntime_KeyboardClearLine(void)
 {
     g_keyboard_line_len = 0U;
     g_keyboard_line_buf[0] = '\0';
+}
+
+static void AppRuntime_KeyboardApplyTarget(void);
+
+static uint8_t AppRuntime_KeyboardScenarioConfigValid(void)
+{
+#if APP_RUNTIME_KEYBOARD_SCENARIO_ENABLE
+    if (APP_RUNTIME_KEYBOARD_SCENARIO_STEP_DEG <= 0.0f) {
+        return 0U;
+    }
+    if (APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_DEG < APP_RUNTIME_KEYBOARD_SCENARIO_STEP_DEG) {
+        return 0U;
+    }
+    if (APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_DEG > MAX_STEERING_ANGLE) {
+        return 0U;
+    }
+    return 1U;
+#else
+    return 0U;
+#endif
+}
+
+static void AppRuntime_KeyboardScenarioStop(const char *reason)
+{
+    if (g_keyboard_scenario.active == 0U) {
+        return;
+    }
+
+    g_keyboard_scenario.active = 0U;
+    g_keyboard_scenario.phase = KB_SCENARIO_IDLE;
+    g_keyboard_scenario.next_step_ms = 0U;
+
+    if (reason != NULL) {
+        printf("[KB][scenario] stop: %s\r\n", reason);
+    }
+}
+
+static void AppRuntime_KeyboardScenarioStart(void)
+{
+    if (AppRuntime_KeyboardScenarioConfigValid() == 0U) {
+        printf("[KB][scenario] invalid config: step=%.1f peak=%.1f\r\n",
+               APP_RUNTIME_KEYBOARD_SCENARIO_STEP_DEG,
+               APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_DEG);
+        return;
+    }
+
+    g_keyboard_scenario.active = 1U;
+    g_keyboard_scenario.phase = KB_SCENARIO_RAMP_UP;
+    g_keyboard_scenario.next_step_ms = HAL_GetTick() + APP_RUNTIME_KEYBOARD_SCENARIO_STEP_HOLD_MS;
+
+    g_keyboard_target_steer_deg = 0.0f;
+    printf("[KB][scenario] start right turn: 0 -> %.1f -> ... -> %.1f -> 0 deg, step_hold=%lu ms, peak_hold=%lu ms\r\n",
+           APP_RUNTIME_KEYBOARD_SCENARIO_STEP_DEG,
+           APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_DEG,
+           (unsigned long)APP_RUNTIME_KEYBOARD_SCENARIO_STEP_HOLD_MS,
+           (unsigned long)APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_HOLD_MS);
+    AppRuntime_KeyboardApplyTarget();
+}
+
+static void AppRuntime_KeyboardScenarioService(void)
+{
+    uint32_t now_ms = 0U;
+    float next_target_deg = 0.0f;
+
+    if (g_keyboard_scenario.active == 0U) {
+        return;
+    }
+
+    if (PositionControl_GetMode() == CTRL_MODE_EMERGENCY) {
+        AppRuntime_KeyboardScenarioStop("controller in emergency");
+        return;
+    }
+
+    now_ms = HAL_GetTick();
+    if ((int32_t)(now_ms - g_keyboard_scenario.next_step_ms) < 0) {
+        return;
+    }
+
+    switch (g_keyboard_scenario.phase) {
+    case KB_SCENARIO_RAMP_UP:
+        next_target_deg = g_keyboard_target_steer_deg + APP_RUNTIME_KEYBOARD_SCENARIO_STEP_DEG;
+        if (next_target_deg >= APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_DEG) {
+            g_keyboard_target_steer_deg = APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_DEG;
+            AppRuntime_KeyboardApplyTarget();
+            g_keyboard_scenario.phase = KB_SCENARIO_PEAK_HOLD;
+            g_keyboard_scenario.next_step_ms = now_ms + APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_HOLD_MS;
+        } else {
+            g_keyboard_target_steer_deg = AppRuntime_KeyboardClampSteeringDeg(next_target_deg);
+            AppRuntime_KeyboardApplyTarget();
+            g_keyboard_scenario.next_step_ms = now_ms + APP_RUNTIME_KEYBOARD_SCENARIO_STEP_HOLD_MS;
+        }
+        break;
+
+    case KB_SCENARIO_PEAK_HOLD:
+        g_keyboard_scenario.phase = KB_SCENARIO_RAMP_DOWN;
+        g_keyboard_scenario.next_step_ms = now_ms;
+        break;
+
+    case KB_SCENARIO_RAMP_DOWN:
+        next_target_deg = g_keyboard_target_steer_deg - APP_RUNTIME_KEYBOARD_SCENARIO_STEP_DEG;
+        if (next_target_deg <= 0.0f) {
+            g_keyboard_target_steer_deg = 0.0f;
+            AppRuntime_KeyboardApplyTarget();
+            AppRuntime_KeyboardScenarioStop("completed");
+        } else {
+            g_keyboard_target_steer_deg = AppRuntime_KeyboardClampSteeringDeg(next_target_deg);
+            AppRuntime_KeyboardApplyTarget();
+            g_keyboard_scenario.next_step_ms = now_ms + APP_RUNTIME_KEYBOARD_SCENARIO_STEP_HOLD_MS;
+        }
+        break;
+
+    case KB_SCENARIO_IDLE:
+    default:
+        AppRuntime_KeyboardScenarioStop("invalid state");
+        break;
+    }
 }
 
 /* Print a human-readable control snapshot for keyboard bench testing. */
@@ -349,9 +653,22 @@ static void AppRuntime_KeyboardApplyTarget(void)
 /* Print the interactive keyboard bench-test help text. */
 static void AppRuntime_KeyboardPrintHelp(void)
 {
-    printf("[KB] A:left D:right S:center E:enable Q:disable X:estop P:print L:csv H:help step=%.1f deg\r\n",
+    printf("[KB] A:left D:right S:center R:right-scenario C:cancel-scenario E:enable Q:disable X:estop P:print L:csv H:help step=%.1f deg\r\n",
            APP_RUNTIME_KEYBOARD_STEP_DEG);
     printf("[KB] numeric target: type steering deg then Enter. ex) 5, -3.5, 0\r\n");
+#if APP_RUNTIME_CAN_ENABLE
+    printf("[KB] N:can-status M:can-test-tx J:can-rx-log-toggle (steer=0x%03X ctrl=0x%03X query=0x%03X)\r\n",
+           APP_RUNTIME_CAN_CMD_STEER_STDID,
+           APP_RUNTIME_CAN_CMD_CONTROL_STDID,
+           APP_RUNTIME_CAN_QUERY_STDID);
+#endif
+#if APP_RUNTIME_KEYBOARD_SCENARIO_ENABLE
+    printf("[KB] right scenario: 0 -> %.1f -> ... -> %.1f -> 0 deg, hold=%lu ms, peak_hold=%lu ms\r\n",
+           APP_RUNTIME_KEYBOARD_SCENARIO_STEP_DEG,
+           APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_DEG,
+           (unsigned long)APP_RUNTIME_KEYBOARD_SCENARIO_STEP_HOLD_MS,
+           (unsigned long)APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_HOLD_MS);
+#endif
 }
 
 /* Parse the buffered numeric steering target and apply it. */
@@ -387,6 +704,7 @@ static void AppRuntime_KeyboardProcessInput(void)
     case '\r':
     case '\n':
         if (g_keyboard_line_len > 0U) {
+            AppRuntime_KeyboardScenarioStop("manual numeric target");
             AppRuntime_KeyboardApplyTypedTarget();
         }
         break;
@@ -402,6 +720,7 @@ static void AppRuntime_KeyboardProcessInput(void)
     case 'a':
     case 'A':
         AppRuntime_KeyboardClearLine();
+        AppRuntime_KeyboardScenarioStop("manual left step");
         g_keyboard_target_steer_deg = AppRuntime_KeyboardClampSteeringDeg(
             g_keyboard_target_steer_deg - APP_RUNTIME_KEYBOARD_STEP_DEG);
         AppRuntime_KeyboardApplyTarget();
@@ -410,6 +729,7 @@ static void AppRuntime_KeyboardProcessInput(void)
     case 'd':
     case 'D':
         AppRuntime_KeyboardClearLine();
+        AppRuntime_KeyboardScenarioStop("manual right step");
         g_keyboard_target_steer_deg = AppRuntime_KeyboardClampSteeringDeg(
             g_keyboard_target_steer_deg + APP_RUNTIME_KEYBOARD_STEP_DEG);
         AppRuntime_KeyboardApplyTarget();
@@ -418,13 +738,27 @@ static void AppRuntime_KeyboardProcessInput(void)
     case 's':
     case 'S':
         AppRuntime_KeyboardClearLine();
+        AppRuntime_KeyboardScenarioStop("manual center");
         g_keyboard_target_steer_deg = 0.0f;
         AppRuntime_KeyboardApplyTarget();
+        break;
+
+    case 'r':
+    case 'R':
+        AppRuntime_KeyboardClearLine();
+        AppRuntime_KeyboardScenarioStart();
+        break;
+
+    case 'c':
+    case 'C':
+        AppRuntime_KeyboardClearLine();
+        AppRuntime_KeyboardScenarioStop("operator cancel");
         break;
 
     case 'e':
     case 'E':
         AppRuntime_KeyboardClearLine();
+        AppRuntime_KeyboardScenarioStop("control enable");
         PositionControl_Enable();
         printf("[KB] control enabled\r\n");
         break;
@@ -432,6 +766,7 @@ static void AppRuntime_KeyboardProcessInput(void)
     case 'q':
     case 'Q':
         AppRuntime_KeyboardClearLine();
+        AppRuntime_KeyboardScenarioStop("control disable");
         PositionControl_Disable();
         printf("[KB] control disabled\r\n");
         break;
@@ -439,6 +774,7 @@ static void AppRuntime_KeyboardProcessInput(void)
     case 'x':
     case 'X':
         AppRuntime_KeyboardClearLine();
+        AppRuntime_KeyboardScenarioStop("emergency stop");
         PositionControl_EmergencyStop();
         printf("[KB] emergency stop\r\n");
         break;
@@ -463,10 +799,38 @@ static void AppRuntime_KeyboardProcessInput(void)
 #endif
         break;
 
+    case 'j':
+    case 'J':
+        AppRuntime_KeyboardClearLine();
+#if APP_RUNTIME_CAN_ENABLE
+        g_can_rx_log_enabled = (uint8_t)(g_can_rx_log_enabled == 0U ? 1U : 0U);
+        printf("[CAN] rx log %s\r\n", (g_can_rx_log_enabled != 0U) ? "enabled" : "disabled");
+#else
+        printf("[CAN] feature disabled at build time\r\n");
+#endif
+        break;
+
     case 'h':
     case 'H':
         AppRuntime_KeyboardClearLine();
         AppRuntime_KeyboardPrintHelp();
+        break;
+
+    case 'm':
+    case 'M':
+        AppRuntime_KeyboardClearLine();
+        AppRuntime_SendCanTestFrame();
+        break;
+
+    case 'n':
+    case 'N':
+        AppRuntime_KeyboardClearLine();
+#if APP_RUNTIME_CAN_ENABLE
+        CAN_Runtime_PrintStatus();
+        AppRuntime_CanSendStatusFrame();
+#else
+        printf("[CAN] feature disabled at build time\r\n");
+#endif
         break;
 
     default:
@@ -499,7 +863,7 @@ static void AppRuntime_ConfigureDirectionPin(void)
     HAL_GPIO_Init(GPIOE, &gpio_init);
 }
 
-#if !APP_RUNTIME_KEYBOARD_TEST_MODE
+#if APP_RUNTIME_INPUT_SOURCE_IS_UDP
 /* Process UDP mode changes and map received packets into controller commands. */
 static void AppRuntime_ServiceUdpComms(void)
 {
@@ -603,7 +967,7 @@ static void AppRuntime_PrintPeriodicDiag(void)
 static void AppRuntime_ServiceFastTick(void)
 {
 #if APP_RUNTIME_AUTO_FIXED_PULSE_TEST
-#if !APP_RUNTIME_KEYBOARD_TEST_MODE
+#if APP_RUNTIME_INPUT_SOURCE_IS_UDP
     if (g_current_mode == STEER_MODE_AUTO) {
         PulseControl_SetFrequency(APP_RUNTIME_AUTO_FIXED_PULSE_HZ);
     } else {
@@ -646,6 +1010,20 @@ void AppRuntime_Init(void)
 #endif
     PositionControl_Init();
 
+#if APP_RUNTIME_CAN_ENABLE
+#if APP_RUNTIME_CAN_AUTO_START
+    {
+        int can_ret = CAN_Runtime_Start();
+        printf("[CAN] start ret=%d mode=%s bitrate=500000 rx_log=%s\r\n",
+               can_ret,
+               (APP_RUNTIME_CAN_MODE == APP_RUNTIME_CAN_MODE_LOOPBACK) ? "LOOPBACK" : "NORMAL",
+               (g_can_rx_log_enabled != 0U) ? "ON" : "OFF");
+    }
+#else
+    printf("[CAN] init complete. auto start is OFF.\r\n");
+#endif
+#endif
+
     Relay_ServoOn();
     HAL_Delay(500);
 
@@ -663,8 +1041,11 @@ void AppRuntime_Init(void)
 #endif
     AppRuntime_ResetVirtualEncoder();
     PositionControl_SetTargetWithSource(AppRuntime_TargetSteeringDegToMotorDeg(0.0f), CMD_SRC_LOCALTEST);
-#if APP_RUNTIME_KEYBOARD_TEST_MODE
+#if APP_RUNTIME_INPUT_SOURCE_IS_KEYBOARD
     g_keyboard_target_steer_deg = 0.0f;
+    g_keyboard_scenario.active = 0U;
+    g_keyboard_scenario.phase = KB_SCENARIO_IDLE;
+    g_keyboard_scenario.next_step_ms = 0U;
 #else
     g_prev_mode = STEER_MODE_NONE;
     g_current_mode = STEER_MODE_NONE;
@@ -673,11 +1054,12 @@ void AppRuntime_Init(void)
 #if APP_RUNTIME_PERIODIC_CSV_LOG_ENABLE
     g_periodic_csv_enabled = 1U;
 #endif
+    AppRuntime_PrintInputSourceSummary();
 #if APP_RUNTIME_AUTO_START_CONTROL_ENABLE
     PositionControl_Enable();
 #endif
 
-#if APP_RUNTIME_KEYBOARD_TEST_MODE
+#if APP_RUNTIME_INPUT_SOURCE_IS_KEYBOARD
     AppRuntime_KeyboardPrintHelp();
     AppRuntime_PrintPeriodicCsvHeader();
 #else
@@ -688,12 +1070,15 @@ void AppRuntime_Init(void)
 /* Run one application super-loop iteration on top of the CubeMX main loop. */
 void AppRuntime_RunIteration(void)
 {
-#if APP_RUNTIME_KEYBOARD_TEST_MODE
+#if APP_RUNTIME_INPUT_SOURCE_IS_KEYBOARD
     LAT_BEGIN(LAT_STAGE_COMMS);
     AppRuntime_KeyboardProcessInput();
+    AppRuntime_KeyboardScenarioService();
+    AppRuntime_ServiceCan();
     LAT_END(LAT_STAGE_COMMS);
 #else
     AppRuntime_ServiceUdpComms();
+    AppRuntime_ServiceCan();
 #endif
 
     if (interrupt_flag != 0U) {

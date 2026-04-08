@@ -27,7 +27,7 @@
         <span class="chip">Owner: Startup / Homing / Relay</span>
         <span class="chip">관련 상위 REQ: REQ-P0-003</span>
         <span class="chip">연결 파트: Sensor / Pulse / Control</span>
-        <span class="chip">기준 코드: 2026-03-30</span>
+        <span class="chip">기준 코드: 2026-04-06</span>
       </div>
 
       <div class="hero-grid section">
@@ -55,6 +55,28 @@
         </article>
       </div>
     </header>
+
+    <section class="panel">
+      <p class="eyebrow">2026-04-05 Log Review</p>
+      <h2>26-04-05 로그 기준 재판정</h2>
+      <div class="hero-grid section">
+        <article class="hero-card">
+          <h3>로그로 확인된 것</h3>
+          <ul>
+            <li>이번 run에서도 별도 startup state log나 homing sequence 없이 바로 제어 동작이 진행되어, auto servo on + auto enable baseline이 그대로 남아 있음을 보여준다.</li>
+            <li>즉 bring-up 편의성은 유지되지만, homing / ready / arm contract는 아직 시스템 운전 조건에 통합되지 않았다.</li>
+          </ul>
+        </article>
+        <article class="hero-card">
+          <h3>아직 로그로 못 닫은 것</h3>
+          <ul>
+            <li><code>BOOT -&gt; HOMING -&gt; READY -&gt; ARMED -&gt; RUN</code> state machine evidence가 없다.</li>
+            <li>SVON, EMG, pulse allow truth table과 clear/recovery 절차도 이번 로그로는 여전히 확인되지 않는다.</li>
+            <li>ADC validity 기반 homing 성공 / 실패 판단은 실행 경로에 올라오지 않았다.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
 
     <section class="panel">
       <p class="eyebrow">Current Baseline</p>
@@ -245,7 +267,7 @@
     </section>
 
     <div class="footer">
-      Last updated: 2026-03-30<br>
+      Last updated: 2026-04-06<br>
       Source baseline: `relay_control.c`, `homing.c`, `app_runtime.c`, `position_control.c`
     </div>
   </main>

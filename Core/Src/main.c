@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "can.h"
 #include "iwdg.h"
 #include "lwip.h"
 #include "tim.h"
@@ -97,6 +98,7 @@ int main(void)
   MX_IWDG_Init();
   MX_LWIP_Init();
   MX_TIM2_Init();
+  MX_CAN1_Init();
   /* USER CODE BEGIN 2 */
   AppRuntime_Init();
   /* USER CODE END 2 */
