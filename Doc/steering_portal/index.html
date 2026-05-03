@@ -17,7 +17,7 @@
           아키텍처, 동작 방식, 증거, 다음 개발 방향을 한 번에 이해하도록 정리한 로컬 설명 포털이다.
         </p>
         <p class="baseline">
-          Current baseline: 2026-04-05 keyboard bench evidence with `main.c -> app_runtime.c` split, real `TIM2(PA0/PB3)` settled tracking at -20 / 20 / 30 / 40 deg, command lifecycle trace, and optional virtual feedback path for controller-only bench tests
+          Current baseline: 2026-05-01 keyboard bench with TIM2 primary feedback, RS422 USART2 PA3 position-count receiver, Putty Z zero command, CSV/ENCDBG/RS422 logs, and a documented competition-readiness gap list for speed, calibration, double-check, and safety closure
         </p>
       </div>
 
@@ -346,7 +346,7 @@
           </article>
           <article class="status-card partial">
             <h3>Closed-loop tracking proof</h3>
-            <p>`26-04-05` log 기준으로 `TIM2(PA0/PB3)` real encoder path에서 -20 / 20 / 30 / 40 deg 정착은 확인됐다. 다만 stale / cross-check / scope-correlated authoritative truth와 transient speed closure는 아직 남아 있다.</p>
+            <p>`26-04-05` log 기준으로 `TIM2(PA0/PB3)` real encoder path에서 -20 / 20 / 30 / 40 deg 정착은 확인됐고, `26-05-01` 기준 RS422 수신/zero 보정도 추가됐다. 다만 TIM2-RS422 자동 cross-check, scope-correlated authoritative truth, transient speed closure는 아직 남아 있다.</p>
             <span class="state-tag">partial</span>
           </article>
           <article class="status-card partial">
@@ -356,7 +356,7 @@
           </article>
           <article class="status-card risk">
             <h3>System readiness contract</h3>
-            <p>boot-time auto-enable, fault latch, encoder-ADC cross-check, stale sensor contract가 아직 없다. reached/timeout/abort lifecycle와 encoder unwrap은 반영된 상태다.</p>
+            <p>벤치 편의상 emergency latch, ADC homing, direction plausibility가 완화되어 있다. 대회용으로는 READY/ARM/RUN/ESTOP_LATCH 상태기계, fault clear policy, RS422/TIM2 cross-check contract가 필요하다.</p>
             <span class="state-tag">gap</span>
           </article>
         </div>
@@ -401,7 +401,7 @@
             <ul class="plain-list">
               <li>`EncoderReader_GetCount()`는 이제 centered raw가 아니라 누적 `unwrap` count를 사용한다.</li>
               <li>CSV에는 `enc_cnt`, `enc_raw`, `req_hz`, `applied_hz`, `out_active`, `rev_guard`, `cmd_id/state/result`가 함께 남는다.</li>
-              <li>현재 encoder 입력은 `TIM2`, `PA0/PB3` 기준으로 본다.</li>
+              <li>현재 제어 기준 encoder 입력은 `TIM2`, `PA0/PB3`이고, RS422는 `USART2_RX=PA3`에서 double-check 후보로 수신한다.</li>
               <li>`26-04-05` log에서는 `-20 / 20 / 30 / 40 deg`가 모두 약 0.02 deg 이내로 정착했고 `enc_cnt`도 선형에 가깝게 증가했다.</li>
               <li>반대로 rapid step 구간에서는 `CMD_ABORT ... REPLACED`가 반복되어, 현재 병목이 각도 변환 오류보다 응답 속도와 step pacing 쪽임을 보여준다.</li>
               <li>`[ENCDBG]`는 실제 TIM2 `cnt/delta/A/B`를 그대로 찍고, virtual feedback은 controller-only bench에서만 선택적으로 사용한다.</li>
@@ -641,6 +641,14 @@
           <a class="link-card" href="../README.md">
             <strong>Documentation Index</strong>
             <span>README, REQ, member docs, latency docs</span>
+          </a>
+          <a class="link-card" href="../system_beginner_guide.md">
+            <strong>Beginner System Guide</strong>
+            <span>목표, 구성, 코드 구조, 데이터 흐름, 함수 역할, 현재 상태, 보완 방향</span>
+          </a>
+          <a class="link-card" href="../steering_motor_competition_readiness.md">
+            <strong>Competition Readiness</strong>
+            <span>현재 조향 모터 구성, RS422/TIM2 비교, 대회 준비 부족점과 개발 순서</span>
           </a>
           <a class="link-card" href="../matlab_simulink_application_plan.md">
             <strong>MATLAB / Simulink Plan</strong>

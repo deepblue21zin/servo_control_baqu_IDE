@@ -1,23 +1,27 @@
 #include "app_runtime.h"
 
 #include "main.h"
-#include "can_runtime.h"
 #include "gpio.h"
 #include "iwdg.h"
 #include "lwip.h"
 #include "tim.h"
 #include "usart.h"
 
+#include "adc_potentiometer.h"
+#include "can_encoder_bridge.h"
 #include "constants.h"
 #include "encoder_reader.h"
 #include "ethernet_communication.h"
+#include "homing.h"
 #include "latency_profiler.h"
 #include "project_params.h"
 #include "position_control.h"
 #include "position_control_diag.h"
 #include "pulse_control.h"
 #include "relay_control.h"
+#include "rs422_encoder_uart.h"
 
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -26,35 +30,51 @@ extern volatile uint8_t interrupt_flag;
 
 static uint32_t g_latency_report_seq = 0U;
 static uint32_t g_debug_print_divider = 0U;
-#if APP_RUNTIME_CAN_ENABLE
-static uint8_t g_can_rx_log_enabled = (uint8_t)APP_RUNTIME_CAN_RX_LOG_ENABLE;
-#endif
-#if APP_RUNTIME_INPUT_SOURCE_IS_KEYBOARD
-typedef enum {
-    KB_SCENARIO_IDLE = 0,
-    KB_SCENARIO_RAMP_UP,
-    KB_SCENARIO_PEAK_HOLD,
-    KB_SCENARIO_RAMP_DOWN
-} AppRuntime_KeyboardScenarioPhase_t;
-
-typedef struct {
-    uint8_t active;
-    AppRuntime_KeyboardScenarioPhase_t phase;
-    uint32_t next_step_ms;
-} AppRuntime_KeyboardScenario_t;
-
+#if APP_RUNTIME_KEYBOARD_TEST_MODE
 static float g_keyboard_target_steer_deg = 0.0f;
 static char g_keyboard_line_buf[32] = {0};
 static uint8_t g_keyboard_line_len = 0U;
-static AppRuntime_KeyboardScenario_t g_keyboard_scenario = {0};
-static float AppRuntime_KeyboardClampSteeringDeg(float steering_deg);
-static void AppRuntime_KeyboardScenarioStop(const char *reason);
 #else
 static SteerMode_t g_prev_mode = STEER_MODE_NONE;
 static SteerMode_t g_current_mode = STEER_MODE_NONE;
 #endif
 #if APP_RUNTIME_PERIODIC_CSV_LOG_ENABLE
 static uint8_t g_periodic_csv_enabled = 1U;
+#endif
+
+#if APP_RUNTIME_SENSOR_DIAG_ENABLE
+#define APP_SENSOR_WARN_ENCODER_STALE        (1UL << 0)
+#define APP_SENSOR_WARN_ADC_STALE            (1UL << 1)
+#define APP_SENSOR_WARN_CROSSCHECK           (1UL << 2)
+#define APP_SENSOR_WARN_VELOCITY             (1UL << 3)
+#define APP_SENSOR_WARN_ACCEL                (1UL << 4)
+#define APP_SENSOR_WARN_ADC_JUMP             (1UL << 5)
+#define APP_SENSOR_WARN_ADC_STUCK            (1UL << 6)
+#define APP_SENSOR_WARN_DIR_MISMATCH         (1UL << 7)
+
+#define APP_SENSOR_FAULT_ENCODER_STALE       (1UL << 16)
+#define APP_SENSOR_FAULT_ADC_STALE           (1UL << 17)
+#define APP_SENSOR_FAULT_ADC_INVALID         (1UL << 18)
+#define APP_SENSOR_FAULT_CROSSCHECK          (1UL << 19)
+#define APP_SENSOR_FAULT_VELOCITY            (1UL << 20)
+#define APP_SENSOR_FAULT_ACCEL               (1UL << 21)
+#define APP_SENSOR_FAULT_DIR_MISMATCH        (1UL << 22)
+
+typedef struct {
+    EncoderSample_t encoder;
+    ADC_PotSample_t adc;
+    ADC_PotCalibration_t adc_calibration;
+    float crosscheck_error_deg;
+    uint32_t warn_flags;
+    uint32_t fault_flags;
+    uint32_t crosscheck_condition_start_ms;
+    uint32_t direction_condition_start_ms;
+    const char *last_reason;
+} AppRuntime_SensorDiag_t;
+
+static AppRuntime_SensorDiag_t g_sensor_diag = {
+    .last_reason = "none"
+};
 #endif
 
 #if APP_RUNTIME_VIRTUAL_ENCODER_LOG_ENABLE
@@ -139,179 +159,316 @@ static float AppRuntime_TargetMotorDegToSteeringDeg(float motor_deg)
     return MotorDegToSteeringDeg(motor_deg);
 }
 
-/* Print which command-input build profile is active so bench logs explain why UDP is or isn't serviced. */
-static void AppRuntime_PrintInputSourceSummary(void)
+#if APP_RUNTIME_SENSOR_DIAG_ENABLE
+static const char* AppRuntime_SensorReasonString(uint32_t warn_flags, uint32_t fault_flags)
 {
-#if APP_RUNTIME_INPUT_SOURCE_IS_KEYBOARD
-    printf("[AppRuntime] input=KEYBOARD_TEST. UDP path is intentionally not serviced in this build.\r\n");
-    printf("[AppRuntime] switch APP_RUNTIME_INPUT_SOURCE to APP_RUNTIME_INPUT_SOURCE_UDP in project_params.h for real UDP tests.\r\n");
+    if ((fault_flags & APP_SENSOR_FAULT_ENCODER_STALE) != 0U) {
+        return "encoder_stale";
+    }
+    if ((fault_flags & APP_SENSOR_FAULT_ADC_STALE) != 0U) {
+        return "adc_stale";
+    }
+    if ((fault_flags & APP_SENSOR_FAULT_ADC_INVALID) != 0U) {
+        return "adc_invalid";
+    }
+    if ((fault_flags & APP_SENSOR_FAULT_CROSSCHECK) != 0U) {
+        return "sensor_crosscheck";
+    }
+    if ((fault_flags & APP_SENSOR_FAULT_VELOCITY) != 0U) {
+        return "encoder_velocity";
+    }
+    if ((fault_flags & APP_SENSOR_FAULT_ACCEL) != 0U) {
+        return "encoder_accel";
+    }
+    if ((fault_flags & APP_SENSOR_FAULT_DIR_MISMATCH) != 0U) {
+        return "direction_mismatch";
+    }
+
+    if ((warn_flags & APP_SENSOR_WARN_ENCODER_STALE) != 0U) {
+        return "encoder_stale_warn";
+    }
+    if ((warn_flags & APP_SENSOR_WARN_ADC_STALE) != 0U) {
+        return "adc_stale_warn";
+    }
+    if ((warn_flags & APP_SENSOR_WARN_CROSSCHECK) != 0U) {
+        return "sensor_crosscheck_warn";
+    }
+    if ((warn_flags & APP_SENSOR_WARN_VELOCITY) != 0U) {
+        return "encoder_velocity_warn";
+    }
+    if ((warn_flags & APP_SENSOR_WARN_ACCEL) != 0U) {
+        return "encoder_accel_warn";
+    }
+    if ((warn_flags & APP_SENSOR_WARN_ADC_JUMP) != 0U) {
+        return "adc_jump_warn";
+    }
+    if ((warn_flags & APP_SENSOR_WARN_ADC_STUCK) != 0U) {
+        return "adc_stuck_warn";
+    }
+    if ((warn_flags & APP_SENSOR_WARN_DIR_MISMATCH) != 0U) {
+        return "direction_mismatch_warn";
+    }
+
+    return "none";
+}
+
+static void AppRuntime_ResetSensorDiag(void)
+{
+    memset(&g_sensor_diag, 0, sizeof(g_sensor_diag));
+    g_sensor_diag.last_reason = "none";
+#if APP_RUNTIME_ADC_POT_ENABLE
+    (void)ADC_Pot_GetCalibration(&g_sensor_diag.adc_calibration);
 #else
-    printf("[AppRuntime] input=UDP. Keyboard bench path is disabled in this build.\r\n");
-    printf("[AppRuntime] configure UDP sender/packet settings in project_params.h before real tests.\r\n");
+    g_sensor_diag.adc.validity = ADC_POT_VALID;
 #endif
 }
 
-#if APP_RUNTIME_CAN_ENABLE
-static int16_t AppRuntime_CanDegToDeciDeg(float deg)
+static void AppRuntime_PrintSensorContract(void)
 {
-    if (deg > 3276.7f) {
-        return 32767;
-    }
-    if (deg < -3276.8f) {
-        return -32768;
-    }
-    return (int16_t)(deg * 10.0f);
-}
-
-static void AppRuntime_CanPrintFrame(const char *tag, const CAN_Frame_t *frame)
-{
-    printf("[CAN][%s] id=0x%03lX dlc=%u ext=%u rtr=%u data=%02X %02X %02X %02X %02X %02X %02X %02X\r\n",
-           tag,
-           (unsigned long)frame->id,
-           (unsigned int)frame->dlc,
-           (unsigned int)frame->is_extended,
-           (unsigned int)frame->is_remote,
-           (unsigned int)frame->data[0],
-           (unsigned int)frame->data[1],
-           (unsigned int)frame->data[2],
-           (unsigned int)frame->data[3],
-           (unsigned int)frame->data[4],
-           (unsigned int)frame->data[5],
-           (unsigned int)frame->data[6],
-           (unsigned int)frame->data[7]);
-}
-
-static void AppRuntime_CanSendStatusFrame(void)
-{
-    PositionControl_State_t state = PositionControl_GetState();
-    CommandLifecycle_t cmd = PositionControl_GetCommandLifecycle();
-    int16_t current_x10 = AppRuntime_CanDegToDeciDeg(AppRuntime_TargetMotorDegToSteeringDeg(state.current_angle));
-    int16_t target_x10 = AppRuntime_CanDegToDeciDeg(AppRuntime_TargetMotorDegToSteeringDeg(state.target_angle));
-    int16_t error_x10 = AppRuntime_CanDegToDeciDeg(AppRuntime_TargetMotorDegToSteeringDeg(state.error));
-    uint8_t payload[8];
-    int ret = 0;
-
-    payload[0] = (uint8_t)(current_x10 & 0xFF);
-    payload[1] = (uint8_t)((current_x10 >> 8) & 0xFF);
-    payload[2] = (uint8_t)(target_x10 & 0xFF);
-    payload[3] = (uint8_t)((target_x10 >> 8) & 0xFF);
-    payload[4] = (uint8_t)(error_x10 & 0xFF);
-    payload[5] = (uint8_t)((error_x10 >> 8) & 0xFF);
-    payload[6] = (uint8_t)state.mode;
-    payload[7] = (uint8_t)cmd.state;
-
-    ret = CAN_Runtime_SendStd((uint16_t)APP_RUNTIME_CAN_STATUS_STDID, payload, 8U);
-    printf("[CAN] status tx ret=%d id=0x%03X cur=%.2f tgt=%.2f err=%.2f mode=%d cmd=%d\r\n",
-           ret,
-           APP_RUNTIME_CAN_STATUS_STDID,
-           AppRuntime_TargetMotorDegToSteeringDeg(state.current_angle),
-           AppRuntime_TargetMotorDegToSteeringDeg(state.target_angle),
-           AppRuntime_TargetMotorDegToSteeringDeg(state.error),
-           (int)state.mode,
-           (int)cmd.state);
-}
-
-static void AppRuntime_HandleCanControlCommand(uint8_t command)
-{
-    switch (command) {
-    case 0U:
-        PositionControl_Disable();
-        printf("[CAN] control command: disable\r\n");
-        break;
-    case 1U:
-        PositionControl_Enable();
-        printf("[CAN] control command: enable\r\n");
-        break;
-    case 2U:
-        PositionControl_EmergencyStop();
-        printf("[CAN] control command: estop\r\n");
-        break;
-    case 3U:
-#if APP_RUNTIME_INPUT_SOURCE_IS_KEYBOARD
-        AppRuntime_KeyboardScenarioStop("CAN center command");
-        g_keyboard_target_steer_deg = 0.0f;
+#if APP_RUNTIME_ADC_POT_ENABLE
+    printf("[SENCFG] +steering=%s +motor=%s +encoder_count=%s DIR_PIN_1=%s adc_raw_inc=%s\r\n",
+           (SENSOR_POSITIVE_STEERING_IS_CW != 0) ? "CW" : "CCW",
+           (SENSOR_POSITIVE_MOTOR_IS_CW != 0) ? "CW" : "CCW",
+           (ENCODER_COUNT_POLARITY >= 0) ? "CW" : "CCW",
+           (SENSOR_DIR_PIN_ONE_IS_CW != 0) ? "CW" : "CCW",
+           (ADC_POT_STEERING_POLARITY >= 0) ? "+steering" : "-steering");
+#else
+    printf("[SENCFG] +steering=%s +motor=%s +encoder_count=%s DIR_PIN_1=%s adc_pot=disabled\r\n",
+           (SENSOR_POSITIVE_STEERING_IS_CW != 0) ? "CW" : "CCW",
+           (SENSOR_POSITIVE_MOTOR_IS_CW != 0) ? "CW" : "CCW",
+           (ENCODER_COUNT_POLARITY >= 0) ? "CW" : "CCW",
+           (SENSOR_DIR_PIN_ONE_IS_CW != 0) ? "CW" : "CCW");
 #endif
-        PositionControl_SetTargetWithSource(AppRuntime_TargetSteeringDegToMotorDeg(0.0f), CMD_SRC_SERVICE);
-        printf("[CAN] control command: center\r\n");
-        break;
-    case 4U:
-        AppRuntime_CanSendStatusFrame();
-        break;
-    default:
-        printf("[CAN] unknown control command=%u\r\n", (unsigned int)command);
-        break;
-    }
 }
 
-static void AppRuntime_HandleCanFrame(const CAN_Frame_t *frame)
+static void AppRuntime_LogSensorState(const char *level,
+                                      uint32_t warn_flags,
+                                      uint32_t fault_flags)
 {
-    if (frame->is_remote != 0U) {
-        printf("[CAN] remote frame ignored id=0x%03lX\r\n", (unsigned long)frame->id);
-        return;
-    }
-
-    if (frame->id == APP_RUNTIME_CAN_CMD_STEER_STDID) {
-        int16_t steer_x10 = (int16_t)(((uint16_t)frame->data[1] << 8) | frame->data[0]);
-        float steering_deg = ((float)steer_x10) * 0.1f;
-        int ret = 0;
-
-#if APP_RUNTIME_INPUT_SOURCE_IS_KEYBOARD
-        AppRuntime_KeyboardScenarioStop("CAN steering command");
-        g_keyboard_target_steer_deg = AppRuntime_KeyboardClampSteeringDeg(steering_deg);
-        steering_deg = g_keyboard_target_steer_deg;
-#endif
-        ret = PositionControl_SetTargetWithSource(AppRuntime_TargetSteeringDegToMotorDeg(steering_deg),
-                                                  CMD_SRC_SERVICE);
-        printf("[CAN] steer cmd=%.1f deg ret=%d\r\n", steering_deg, ret);
-        return;
-    }
-
-    if (frame->id == APP_RUNTIME_CAN_CMD_CONTROL_STDID) {
-        AppRuntime_HandleCanControlCommand(frame->data[0]);
-        return;
-    }
-
-    if (frame->id == APP_RUNTIME_CAN_QUERY_STDID) {
-        AppRuntime_CanSendStatusFrame();
-        return;
-    }
+    printf("[SENSOR][%s] reason=%s warn=0x%08lX fault=0x%08lX enc=%.3f adc=%.3f xerr=%.3f enc_age=%lu adc_age=%lu enc_valid=0x%02lX adc_valid=0x%02lX calib_v=%lu calib_crc=0x%08lX\r\n",
+           level,
+           g_sensor_diag.last_reason,
+           (unsigned long)warn_flags,
+           (unsigned long)fault_flags,
+           g_sensor_diag.encoder.steering_deg,
+           g_sensor_diag.adc.calibrated_angle_deg,
+           g_sensor_diag.crosscheck_error_deg,
+           (unsigned long)g_sensor_diag.encoder.age_ms,
+           (unsigned long)g_sensor_diag.adc.age_ms,
+           (unsigned long)g_sensor_diag.encoder.validity,
+           (unsigned long)g_sensor_diag.adc.validity,
+           (unsigned long)g_sensor_diag.adc_calibration.version,
+           (unsigned long)g_sensor_diag.adc_calibration.checksum);
 }
 
-static void AppRuntime_ServiceCan(void)
+static uint8_t AppRuntime_SensorsReadyForControl(void)
 {
-    CAN_Frame_t frame = {0};
+    if ((APP_RUNTIME_ADC_POT_ENABLE != 0) &&
+        (APP_RUNTIME_AUTO_HOME_ON_BOOT != 0) &&
+        (Homing_IsComplete() == 0U)) {
+        g_sensor_diag.last_reason = Homing_GetLastFailureReason();
+        return 0U;
+    }
 
-    CAN_Runtime_Service();
+    if ((APP_RUNTIME_EMERGENCY_LATCH_ENABLE != 0) && (g_sensor_diag.fault_flags != 0U)) {
+        return 0U;
+    }
 
-    while (CAN_Runtime_Pop(&frame) != 0U) {
-        if (g_can_rx_log_enabled != 0U) {
-            AppRuntime_CanPrintFrame("rx", &frame);
+    if ((g_sensor_diag.encoder.validity & (ENCODER_FAULT_STALE | ENCODER_INVALID_NOT_INIT)) != 0U) {
+        g_sensor_diag.last_reason = "encoder_not_ready";
+        return 0U;
+    }
+
+    if (APP_RUNTIME_ADC_POT_ENABLE != 0) {
+        if ((g_sensor_diag.adc.validity & (ADC_POT_INVALID_NOT_INIT |
+                                           ADC_POT_INVALID_DISCONNECT |
+                                           ADC_POT_INVALID_TIMEOUT |
+                                           ADC_POT_INVALID_RANGE)) != 0U) {
+            g_sensor_diag.last_reason = "adc_not_ready";
+            return 0U;
         }
-        AppRuntime_HandleCanFrame(&frame);
+    }
+
+    return 1U;
+}
+
+static void AppRuntime_RequestControlEnable(const char *source)
+{
+    if (AppRuntime_SensorsReadyForControl() == 0U) {
+        printf("[SENSOR][BLOCK] enable=%s reason=%s warn=0x%08lX fault=0x%08lX homing=%u\r\n",
+               source,
+               g_sensor_diag.last_reason,
+               (unsigned long)g_sensor_diag.warn_flags,
+               (unsigned long)g_sensor_diag.fault_flags,
+               (unsigned int)Homing_IsComplete());
+        return;
+    }
+
+    PositionControl_Enable();
+}
+
+static void AppRuntime_ServiceSensorSupervisor(void)
+{
+    PulseControl_Status_t pulse_status = PulseControl_GetStatus();
+    uint32_t now_ms = HAL_GetTick();
+    uint32_t prev_warn_flags = g_sensor_diag.warn_flags;
+    uint32_t prev_fault_flags = g_sensor_diag.fault_flags;
+    uint32_t warn_flags = 0U;
+    uint32_t fault_flags = 0U;
+    float delta_steer_deg = 0.0f;
+    float abs_crosscheck_error_deg = 0.0f;
+    uint8_t encoder_ok = 0U;
+    uint8_t adc_ok = 0U;
+
+    EncoderReader_Service();
+#if APP_RUNTIME_ADC_POT_ENABLE
+    ADC_Pot_Service();
+#endif
+
+    encoder_ok = EncoderReader_GetSample(&g_sensor_diag.encoder);
+#if APP_RUNTIME_ADC_POT_ENABLE
+    adc_ok = ADC_Pot_GetSample(&g_sensor_diag.adc);
+    (void)ADC_Pot_GetCalibration(&g_sensor_diag.adc_calibration);
+#else
+    g_sensor_diag.adc.validity = ADC_POT_VALID;
+    g_sensor_diag.adc.age_ms = 0U;
+#endif
+
+    if ((encoder_ok == 0U) || ((g_sensor_diag.encoder.validity & ENCODER_INVALID_NOT_INIT) != 0U)) {
+        fault_flags |= APP_SENSOR_FAULT_ENCODER_STALE;
+    }
+    if ((g_sensor_diag.encoder.validity & ENCODER_WARN_STALE) != 0U) {
+        warn_flags |= APP_SENSOR_WARN_ENCODER_STALE;
+    }
+    if ((g_sensor_diag.encoder.validity & ENCODER_FAULT_STALE) != 0U) {
+        fault_flags |= APP_SENSOR_FAULT_ENCODER_STALE;
+    }
+    if ((g_sensor_diag.encoder.validity & ENCODER_WARN_VELOCITY) != 0U) {
+        warn_flags |= APP_SENSOR_WARN_VELOCITY;
+    }
+    if ((g_sensor_diag.encoder.validity & ENCODER_FAULT_VELOCITY) != 0U) {
+        fault_flags |= APP_SENSOR_FAULT_VELOCITY;
+    }
+    if ((g_sensor_diag.encoder.validity & ENCODER_WARN_ACCEL) != 0U) {
+        warn_flags |= APP_SENSOR_WARN_ACCEL;
+    }
+    if ((g_sensor_diag.encoder.validity & ENCODER_FAULT_ACCEL) != 0U) {
+        fault_flags |= APP_SENSOR_FAULT_ACCEL;
+    }
+
+    if (APP_RUNTIME_ADC_POT_ENABLE != 0) {
+        if ((adc_ok == 0U) || ((g_sensor_diag.adc.validity & ADC_POT_INVALID_NOT_INIT) != 0U)) {
+            fault_flags |= APP_SENSOR_FAULT_ADC_STALE;
+        }
+        if (g_sensor_diag.adc.age_ms >= ADC_POT_SAMPLE_STALE_WARN_MS) {
+            warn_flags |= APP_SENSOR_WARN_ADC_STALE;
+        }
+        if ((g_sensor_diag.adc.age_ms >= ADC_POT_SAMPLE_STALE_FAULT_MS) ||
+            ((g_sensor_diag.adc.validity & ADC_POT_INVALID_TIMEOUT) != 0U)) {
+            fault_flags |= APP_SENSOR_FAULT_ADC_STALE;
+        }
+        if ((g_sensor_diag.adc.validity & (ADC_POT_INVALID_DISCONNECT | ADC_POT_INVALID_RANGE)) != 0U) {
+            fault_flags |= APP_SENSOR_FAULT_ADC_INVALID;
+        }
+        if ((g_sensor_diag.adc.validity & ADC_POT_INVALID_JUMP) != 0U) {
+            warn_flags |= APP_SENSOR_WARN_ADC_JUMP;
+        }
+        if ((g_sensor_diag.adc.validity & ADC_POT_INVALID_STUCK) != 0U) {
+            warn_flags |= APP_SENSOR_WARN_ADC_STUCK;
+        }
+    }
+
+    g_sensor_diag.crosscheck_error_deg = 0.0f;
+    if ((APP_RUNTIME_ADC_POT_ENABLE != 0) &&
+        (encoder_ok != 0U) && (adc_ok != 0U) &&
+        ((fault_flags & (APP_SENSOR_FAULT_ENCODER_STALE |
+                         APP_SENSOR_FAULT_ADC_STALE |
+                         APP_SENSOR_FAULT_ADC_INVALID)) == 0U)) {
+        g_sensor_diag.crosscheck_error_deg =
+            g_sensor_diag.encoder.steering_deg - g_sensor_diag.adc.calibrated_angle_deg;
+        abs_crosscheck_error_deg = fabsf(g_sensor_diag.crosscheck_error_deg);
+
+        if (abs_crosscheck_error_deg >= SENSOR_CROSSCHECK_WARN_STEERING_DEG) {
+            if (g_sensor_diag.crosscheck_condition_start_ms == 0U) {
+                g_sensor_diag.crosscheck_condition_start_ms = now_ms;
+            }
+            if ((now_ms - g_sensor_diag.crosscheck_condition_start_ms) >= SENSOR_CROSSCHECK_WARN_PERSIST_MS) {
+                warn_flags |= APP_SENSOR_WARN_CROSSCHECK;
+            }
+            if ((abs_crosscheck_error_deg >= SENSOR_CROSSCHECK_FAULT_STEERING_DEG) &&
+                ((now_ms - g_sensor_diag.crosscheck_condition_start_ms) >= SENSOR_CROSSCHECK_FAULT_PERSIST_MS)) {
+                fault_flags |= APP_SENSOR_FAULT_CROSSCHECK;
+            }
+        } else {
+            g_sensor_diag.crosscheck_condition_start_ms = 0U;
+        }
+    } else {
+        g_sensor_diag.crosscheck_condition_start_ms = 0U;
+    }
+
+    if ((SENSOR_DIRECTION_PLAUSIBILITY_ENABLE != 0) &&
+        (pulse_status.output_active != 0U) &&
+        (pulse_status.applied_frequency_hz >= SENSOR_DIRECTION_MIN_APPLIED_HZ)) {
+        int32_t expected_sign = (pulse_status.direction == DIR_CW) ? 1 : -1;
+        int32_t actual_sign = 0;
+
+        delta_steer_deg = MotorDegToSteeringDeg((float)g_sensor_diag.encoder.delta_count * ENCODER_DEG_PER_COUNT);
+        if (delta_steer_deg > SENSOR_DIRECTION_MIN_STEERING_DELTA_DEG) {
+            actual_sign = 1;
+        } else if (delta_steer_deg < -SENSOR_DIRECTION_MIN_STEERING_DELTA_DEG) {
+            actual_sign = -1;
+        }
+
+        if ((actual_sign != 0) && (actual_sign != expected_sign)) {
+            if (g_sensor_diag.direction_condition_start_ms == 0U) {
+                g_sensor_diag.direction_condition_start_ms = now_ms;
+            }
+            if ((now_ms - g_sensor_diag.direction_condition_start_ms) >= SENSOR_DIRECTION_WARN_PERSIST_MS) {
+                warn_flags |= APP_SENSOR_WARN_DIR_MISMATCH;
+            }
+            if ((now_ms - g_sensor_diag.direction_condition_start_ms) >= SENSOR_DIRECTION_FAULT_PERSIST_MS) {
+                fault_flags |= APP_SENSOR_FAULT_DIR_MISMATCH;
+            }
+        } else {
+            g_sensor_diag.direction_condition_start_ms = 0U;
+        }
+    } else {
+        g_sensor_diag.direction_condition_start_ms = 0U;
+    }
+
+    g_sensor_diag.warn_flags = warn_flags;
+    g_sensor_diag.fault_flags = fault_flags;
+    g_sensor_diag.last_reason = AppRuntime_SensorReasonString(warn_flags, fault_flags);
+
+    if ((fault_flags != prev_fault_flags) || (warn_flags != prev_warn_flags)) {
+        if (fault_flags != 0U) {
+            AppRuntime_LogSensorState("FAULT", warn_flags, fault_flags);
+        } else if (warn_flags != 0U) {
+            AppRuntime_LogSensorState("WARN", warn_flags, fault_flags);
+        } else {
+            AppRuntime_LogSensorState("CLEAR", warn_flags, fault_flags);
+        }
+    }
+
+    if ((APP_RUNTIME_EMERGENCY_LATCH_ENABLE != 0) &&
+        (fault_flags != 0U) &&
+        (prev_fault_flags == 0U)) {
+        PositionControl_EmergencyStop();
     }
 }
-
-static void AppRuntime_SendCanTestFrame(void)
-{
-    const uint8_t payload[8] = {'C', 'A', 'N', 'T', 'E', 'S', 'T', 0U};
-    int ret = CAN_Runtime_SendStd((uint16_t)APP_RUNTIME_CAN_TEST_TX_STDID, payload, 8U);
-
-    printf("[CAN] test tx ret=%d id=0x%03X mode=%s\r\n",
-           ret,
-           APP_RUNTIME_CAN_TEST_TX_STDID,
-           (APP_RUNTIME_CAN_MODE == APP_RUNTIME_CAN_MODE_LOOPBACK) ? "LOOPBACK" : "NORMAL");
-}
 #else
-#define AppRuntime_ServiceCan() ((void)0)
-#define AppRuntime_SendCanTestFrame() ((void)0)
-#define AppRuntime_CanSendStatusFrame() ((void)0)
+#define AppRuntime_ResetSensorDiag() ((void)0)
+#define AppRuntime_PrintSensorContract() ((void)0)
+#define AppRuntime_SensorsReadyForControl() (1U)
+#define AppRuntime_RequestControlEnable(source) PositionControl_Enable()
+#define AppRuntime_ServiceSensorSupervisor() ((void)0)
 #endif
 
 #if APP_RUNTIME_PERIODIC_CSV_LOG_ENABLE
 /* Print the CSV schema once so bench logs remain self-describing. */
 static void AppRuntime_PrintPeriodicCsvHeader(void)
 {
-    printf("CSV_HEADER,ms,mode,target_deg,current_deg,error_deg,output,dir,enc_cnt,enc_raw,req_hz,applied_hz,out_active,rev_guard,cmd_id,cmd_state,cmd_result\r\n");
+    printf("CSV_HEADER,ms,mode,target_deg,current_deg,error_deg,output,dir,enc_cnt,enc_raw,enc_deg,adc_deg,xerr_deg,enc_age_ms,adc_age_ms,enc_valid,adc_valid,sen_warn,sen_fault,sen_reason,req_hz,applied_hz,out_active,rev_guard,cmd_id,cmd_state,cmd_result\r\n");
 }
 
 /* Emit a throttled CSV telemetry row for offline log analysis. */
@@ -325,6 +482,29 @@ static void AppRuntime_ServicePeriodicCsv(void)
     GPIO_PinState dir_state = HAL_GPIO_ReadPin(DIR_PIN_GPIO_Port, DIR_PIN_Pin);
     int32_t enc_count = AppRuntime_GetDisplayEncoderCount();
     uint32_t enc_raw = AppRuntime_GetDisplayEncoderRaw();
+#if APP_RUNTIME_SENSOR_DIAG_ENABLE
+    float enc_steering_deg = g_sensor_diag.encoder.steering_deg;
+    float adc_steering_deg = g_sensor_diag.adc.calibrated_angle_deg;
+    float crosscheck_error_deg = g_sensor_diag.crosscheck_error_deg;
+    uint32_t enc_age_ms = g_sensor_diag.encoder.age_ms;
+    uint32_t adc_age_ms = g_sensor_diag.adc.age_ms;
+    uint32_t enc_validity = g_sensor_diag.encoder.validity;
+    uint32_t adc_validity = g_sensor_diag.adc.validity;
+    uint32_t sensor_warn_flags = g_sensor_diag.warn_flags;
+    uint32_t sensor_fault_flags = g_sensor_diag.fault_flags;
+    const char *sensor_reason = g_sensor_diag.last_reason;
+#else
+    float enc_steering_deg = 0.0f;
+    float adc_steering_deg = 0.0f;
+    float crosscheck_error_deg = 0.0f;
+    uint32_t enc_age_ms = 0U;
+    uint32_t adc_age_ms = 0U;
+    uint32_t enc_validity = 0U;
+    uint32_t adc_validity = 0U;
+    uint32_t sensor_warn_flags = 0U;
+    uint32_t sensor_fault_flags = 0U;
+    const char *sensor_reason = "none";
+#endif
 
     if (g_periodic_csv_enabled == 0U) {
         return;
@@ -335,7 +515,7 @@ static void AppRuntime_ServicePeriodicCsv(void)
     }
     last_ms = now_ms;
 
-    printf("CSV,%lu,%d,%.3f,%.3f,%.3f,%.0f,%d,%ld,%lu,%ld,%lu,%u,%u,%lu,%d,%d\r\n",
+    printf("CSV,%lu,%d,%.3f,%.3f,%.3f,%.0f,%d,%ld,%lu,%.3f,%.3f,%.3f,%lu,%lu,0x%02lX,0x%02lX,0x%08lX,0x%08lX,%s,%ld,%lu,%u,%u,%lu,%d,%d\r\n",
            (unsigned long)now_ms,
            (int)PositionControl_GetMode(),
            AppRuntime_TargetMotorDegToSteeringDeg(s.target_angle),
@@ -345,6 +525,16 @@ static void AppRuntime_ServicePeriodicCsv(void)
            (int)dir_state,
            (long)enc_count,
            (unsigned long)enc_raw,
+           enc_steering_deg,
+           adc_steering_deg,
+           crosscheck_error_deg,
+           (unsigned long)enc_age_ms,
+           (unsigned long)adc_age_ms,
+           (unsigned long)enc_validity,
+           (unsigned long)adc_validity,
+           (unsigned long)sensor_warn_flags,
+           (unsigned long)sensor_fault_flags,
+           sensor_reason,
            (long)pulse_status.requested_frequency_hz,
            (unsigned long)pulse_status.applied_frequency_hz,
            (unsigned int)pulse_status.output_active,
@@ -429,6 +619,7 @@ static void AppRuntime_ServiceEncoderRuntimeDiag(void)
     uint32_t cc2e = 0U;
     GPIO_PinState enc_a_state = GPIO_PIN_RESET;
     GPIO_PinState enc_b_state = GPIO_PIN_RESET;
+    EncoderSample_t encoder_sample = {0};
 
     if ((uint32_t)(now_ms - last_ms) < APP_RUNTIME_ENCODER_DIAG_PERIOD_MS) {
         return;
@@ -450,12 +641,18 @@ static void AppRuntime_ServiceEncoderRuntimeDiag(void)
     cc2e = ((ccer & TIM_CCER_CC2E) != 0U) ? 1U : 0U;
     enc_a_state = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0);
     enc_b_state = HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_3);
+    (void)EncoderReader_GetSample(&encoder_sample);
 
-    printf("[ENCDBG] ms=%lu cnt=%lu prev=%lu delta=%ld A=%d B=%d CEN=%lu SMS=%lu CC1S=%lu CC2S=%lu CC1E=%lu CC2E=%lu CR1=0x%04lX SMCR=0x%04lX CCMR1=0x%04lX CCER=0x%04lX\r\n",
+    printf("[ENCDBG] ms=%lu cnt=%lu prev=%lu raw_delta=%ld signed_delta=%ld steer=%.3f motor=%.3f dir_pin=%d enc_valid=0x%02lX A=%d B=%d CEN=%lu SMS=%lu CC1S=%lu CC2S=%lu CC1E=%lu CC2E=%lu CR1=0x%04lX SMCR=0x%04lX CCMR1=0x%04lX CCER=0x%04lX\r\n",
            (unsigned long)now_ms,
            (unsigned long)cnt,
            (unsigned long)prev_cnt,
            (long)delta,
+           (long)encoder_sample.delta_count,
+           encoder_sample.steering_deg,
+           encoder_sample.motor_deg,
+           (int)HAL_GPIO_ReadPin(DIR_PIN_GPIO_Port, DIR_PIN_Pin),
+           (unsigned long)encoder_sample.validity,
            (int)enc_a_state,
            (int)enc_b_state,
            (unsigned long)cen,
@@ -473,7 +670,7 @@ static void AppRuntime_ServiceEncoderRuntimeDiag(void)
 #endif
 }
 
-#if APP_RUNTIME_INPUT_SOURCE_IS_KEYBOARD
+#if APP_RUNTIME_KEYBOARD_TEST_MODE
 /* Clamp keyboard-entered steering angles to the allowed steering envelope. */
 static float AppRuntime_KeyboardClampSteeringDeg(float steering_deg)
 {
@@ -493,122 +690,6 @@ static void AppRuntime_KeyboardClearLine(void)
     g_keyboard_line_buf[0] = '\0';
 }
 
-static void AppRuntime_KeyboardApplyTarget(void);
-
-static uint8_t AppRuntime_KeyboardScenarioConfigValid(void)
-{
-#if APP_RUNTIME_KEYBOARD_SCENARIO_ENABLE
-    if (APP_RUNTIME_KEYBOARD_SCENARIO_STEP_DEG <= 0.0f) {
-        return 0U;
-    }
-    if (APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_DEG < APP_RUNTIME_KEYBOARD_SCENARIO_STEP_DEG) {
-        return 0U;
-    }
-    if (APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_DEG > MAX_STEERING_ANGLE) {
-        return 0U;
-    }
-    return 1U;
-#else
-    return 0U;
-#endif
-}
-
-static void AppRuntime_KeyboardScenarioStop(const char *reason)
-{
-    if (g_keyboard_scenario.active == 0U) {
-        return;
-    }
-
-    g_keyboard_scenario.active = 0U;
-    g_keyboard_scenario.phase = KB_SCENARIO_IDLE;
-    g_keyboard_scenario.next_step_ms = 0U;
-
-    if (reason != NULL) {
-        printf("[KB][scenario] stop: %s\r\n", reason);
-    }
-}
-
-static void AppRuntime_KeyboardScenarioStart(void)
-{
-    if (AppRuntime_KeyboardScenarioConfigValid() == 0U) {
-        printf("[KB][scenario] invalid config: step=%.1f peak=%.1f\r\n",
-               APP_RUNTIME_KEYBOARD_SCENARIO_STEP_DEG,
-               APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_DEG);
-        return;
-    }
-
-    g_keyboard_scenario.active = 1U;
-    g_keyboard_scenario.phase = KB_SCENARIO_RAMP_UP;
-    g_keyboard_scenario.next_step_ms = HAL_GetTick() + APP_RUNTIME_KEYBOARD_SCENARIO_STEP_HOLD_MS;
-
-    g_keyboard_target_steer_deg = 0.0f;
-    printf("[KB][scenario] start right turn: 0 -> %.1f -> ... -> %.1f -> 0 deg, step_hold=%lu ms, peak_hold=%lu ms\r\n",
-           APP_RUNTIME_KEYBOARD_SCENARIO_STEP_DEG,
-           APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_DEG,
-           (unsigned long)APP_RUNTIME_KEYBOARD_SCENARIO_STEP_HOLD_MS,
-           (unsigned long)APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_HOLD_MS);
-    AppRuntime_KeyboardApplyTarget();
-}
-
-static void AppRuntime_KeyboardScenarioService(void)
-{
-    uint32_t now_ms = 0U;
-    float next_target_deg = 0.0f;
-
-    if (g_keyboard_scenario.active == 0U) {
-        return;
-    }
-
-    if (PositionControl_GetMode() == CTRL_MODE_EMERGENCY) {
-        AppRuntime_KeyboardScenarioStop("controller in emergency");
-        return;
-    }
-
-    now_ms = HAL_GetTick();
-    if ((int32_t)(now_ms - g_keyboard_scenario.next_step_ms) < 0) {
-        return;
-    }
-
-    switch (g_keyboard_scenario.phase) {
-    case KB_SCENARIO_RAMP_UP:
-        next_target_deg = g_keyboard_target_steer_deg + APP_RUNTIME_KEYBOARD_SCENARIO_STEP_DEG;
-        if (next_target_deg >= APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_DEG) {
-            g_keyboard_target_steer_deg = APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_DEG;
-            AppRuntime_KeyboardApplyTarget();
-            g_keyboard_scenario.phase = KB_SCENARIO_PEAK_HOLD;
-            g_keyboard_scenario.next_step_ms = now_ms + APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_HOLD_MS;
-        } else {
-            g_keyboard_target_steer_deg = AppRuntime_KeyboardClampSteeringDeg(next_target_deg);
-            AppRuntime_KeyboardApplyTarget();
-            g_keyboard_scenario.next_step_ms = now_ms + APP_RUNTIME_KEYBOARD_SCENARIO_STEP_HOLD_MS;
-        }
-        break;
-
-    case KB_SCENARIO_PEAK_HOLD:
-        g_keyboard_scenario.phase = KB_SCENARIO_RAMP_DOWN;
-        g_keyboard_scenario.next_step_ms = now_ms;
-        break;
-
-    case KB_SCENARIO_RAMP_DOWN:
-        next_target_deg = g_keyboard_target_steer_deg - APP_RUNTIME_KEYBOARD_SCENARIO_STEP_DEG;
-        if (next_target_deg <= 0.0f) {
-            g_keyboard_target_steer_deg = 0.0f;
-            AppRuntime_KeyboardApplyTarget();
-            AppRuntime_KeyboardScenarioStop("completed");
-        } else {
-            g_keyboard_target_steer_deg = AppRuntime_KeyboardClampSteeringDeg(next_target_deg);
-            AppRuntime_KeyboardApplyTarget();
-            g_keyboard_scenario.next_step_ms = now_ms + APP_RUNTIME_KEYBOARD_SCENARIO_STEP_HOLD_MS;
-        }
-        break;
-
-    case KB_SCENARIO_IDLE:
-    default:
-        AppRuntime_KeyboardScenarioStop("invalid state");
-        break;
-    }
-}
-
 /* Print a human-readable control snapshot for keyboard bench testing. */
 static void AppRuntime_KeyboardPrintControlSnapshot(const char *reason)
 {
@@ -618,8 +699,25 @@ static void AppRuntime_KeyboardPrintControlSnapshot(const char *reason)
     GPIO_PinState dir_state = HAL_GPIO_ReadPin(DIR_PIN_GPIO_Port, DIR_PIN_Pin);
     int32_t enc_count = AppRuntime_GetDisplayEncoderCount();
     uint32_t enc_raw = AppRuntime_GetDisplayEncoderRaw();
+#if APP_RUNTIME_SENSOR_DIAG_ENABLE
+    float adc_steering_deg = g_sensor_diag.adc.calibrated_angle_deg;
+    float crosscheck_error_deg = g_sensor_diag.crosscheck_error_deg;
+    uint32_t encoder_validity = g_sensor_diag.encoder.validity;
+    uint32_t adc_validity = g_sensor_diag.adc.validity;
+    uint32_t sensor_warn_flags = g_sensor_diag.warn_flags;
+    uint32_t sensor_fault_flags = g_sensor_diag.fault_flags;
+    const char *sensor_reason = g_sensor_diag.last_reason;
+#else
+    float adc_steering_deg = 0.0f;
+    float crosscheck_error_deg = 0.0f;
+    uint32_t encoder_validity = 0U;
+    uint32_t adc_validity = 0U;
+    uint32_t sensor_warn_flags = 0U;
+    uint32_t sensor_fault_flags = 0U;
+    const char *sensor_reason = "none";
+#endif
 
-    printf("[KB][%s] T=%.2fdeg C=%.2fdeg E=%.2fdeg O=%.0f DIR=%d ENC=%ld RAW=%lu REQ=%ld AP=%lu RUN=%u REV=%u CMD=%lu/%s/%s\r\n",
+    printf("[KB][%s] T=%.2fdeg C=%.2fdeg E=%.2fdeg O=%.0f DIR=%d ENC=%ld RAW=%lu ADC=%.2f XERR=%.2f EV=0x%02lX AV=0x%02lX SW=0x%08lX SF=0x%08lX SR=%s REQ=%ld AP=%lu RUN=%u REV=%u CMD=%lu/%s/%s\r\n",
            reason,
            AppRuntime_TargetMotorDegToSteeringDeg(s.target_angle),
            AppRuntime_TargetMotorDegToSteeringDeg(s.current_angle),
@@ -628,6 +726,13 @@ static void AppRuntime_KeyboardPrintControlSnapshot(const char *reason)
            (int)dir_state,
            (long)enc_count,
            (unsigned long)enc_raw,
+           adc_steering_deg,
+           crosscheck_error_deg,
+           (unsigned long)encoder_validity,
+           (unsigned long)adc_validity,
+           (unsigned long)sensor_warn_flags,
+           (unsigned long)sensor_fault_flags,
+           sensor_reason,
            (long)pulse_status.requested_frequency_hz,
            (unsigned long)pulse_status.applied_frequency_hz,
            (unsigned int)pulse_status.output_active,
@@ -643,6 +748,12 @@ static void AppRuntime_KeyboardApplyTarget(void)
     float motor_target_deg = SteeringDegToMotorDeg(g_keyboard_target_steer_deg);
     int ret = PositionControl_SetTargetWithSource(motor_target_deg, CMD_SRC_KEYBOARD);
 
+#if APP_RUNTIME_KEYBOARD_AUTO_ENABLE_ON_TARGET
+    if (ret == POS_CTRL_OK) {
+        AppRuntime_RequestControlEnable("keyboard_target");
+    }
+#endif
+
     printf("[KB] target steer=%.1f deg motor=%.1f deg ret=%d\r\n",
            g_keyboard_target_steer_deg,
            motor_target_deg,
@@ -650,25 +761,41 @@ static void AppRuntime_KeyboardApplyTarget(void)
     AppRuntime_KeyboardPrintControlSnapshot("target");
 }
 
+/* Define the current bench position as zero for both TIM2 and RS422 references. */
+static void AppRuntime_KeyboardZeroCurrentPosition(void)
+{
+    Rs422Encoder_Status_t rs422_status = {0};
+    uint8_t rs422_has_frame = Rs422Encoder_GetLatest(&rs422_status);
+    uint8_t rs422_zero_ok = 0U;
+
+    PositionControl_Disable();
+    PulseControl_Stop();
+    EncoderReader_Reset();
+
+#if RS422_ENCODER_READER_ENABLE
+    if (rs422_has_frame != 0U) {
+        rs422_zero_ok = Rs422Encoder_SetZeroCurrent();
+    }
+#endif
+
+    PositionControl_Reset();
+    g_keyboard_target_steer_deg = 0.0f;
+    (void)PositionControl_SetTargetWithSource(0.0f, CMD_SRC_KEYBOARD);
+
+    printf("[KB] zero set tim2=reset rs422=%s raw=%ld zero=%ld frames=%lu\r\n",
+           (rs422_zero_ok != 0U) ? "set" : ((rs422_has_frame != 0U) ? "failed" : "no_frame"),
+           (long)rs422_status.last_count,
+           (long)rs422_status.last_count,
+           (unsigned long)rs422_status.frames);
+    AppRuntime_KeyboardPrintControlSnapshot("zero");
+}
+
 /* Print the interactive keyboard bench-test help text. */
 static void AppRuntime_KeyboardPrintHelp(void)
 {
-    printf("[KB] A:left D:right S:center R:right-scenario C:cancel-scenario E:enable Q:disable X:estop P:print L:csv H:help step=%.1f deg\r\n",
+    printf("[KB] A:left D:right S:center Z:zero E:enable Q:disable X:estop P:print L:csv H:help step=%.1f deg\r\n",
            APP_RUNTIME_KEYBOARD_STEP_DEG);
     printf("[KB] numeric target: type steering deg then Enter. ex) 5, -3.5, 0\r\n");
-#if APP_RUNTIME_CAN_ENABLE
-    printf("[KB] N:can-status M:can-test-tx J:can-rx-log-toggle (steer=0x%03X ctrl=0x%03X query=0x%03X)\r\n",
-           APP_RUNTIME_CAN_CMD_STEER_STDID,
-           APP_RUNTIME_CAN_CMD_CONTROL_STDID,
-           APP_RUNTIME_CAN_QUERY_STDID);
-#endif
-#if APP_RUNTIME_KEYBOARD_SCENARIO_ENABLE
-    printf("[KB] right scenario: 0 -> %.1f -> ... -> %.1f -> 0 deg, hold=%lu ms, peak_hold=%lu ms\r\n",
-           APP_RUNTIME_KEYBOARD_SCENARIO_STEP_DEG,
-           APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_DEG,
-           (unsigned long)APP_RUNTIME_KEYBOARD_SCENARIO_STEP_HOLD_MS,
-           (unsigned long)APP_RUNTIME_KEYBOARD_SCENARIO_PEAK_HOLD_MS);
-#endif
 }
 
 /* Parse the buffered numeric steering target and apply it. */
@@ -704,7 +831,6 @@ static void AppRuntime_KeyboardProcessInput(void)
     case '\r':
     case '\n':
         if (g_keyboard_line_len > 0U) {
-            AppRuntime_KeyboardScenarioStop("manual numeric target");
             AppRuntime_KeyboardApplyTypedTarget();
         }
         break;
@@ -720,7 +846,6 @@ static void AppRuntime_KeyboardProcessInput(void)
     case 'a':
     case 'A':
         AppRuntime_KeyboardClearLine();
-        AppRuntime_KeyboardScenarioStop("manual left step");
         g_keyboard_target_steer_deg = AppRuntime_KeyboardClampSteeringDeg(
             g_keyboard_target_steer_deg - APP_RUNTIME_KEYBOARD_STEP_DEG);
         AppRuntime_KeyboardApplyTarget();
@@ -729,7 +854,6 @@ static void AppRuntime_KeyboardProcessInput(void)
     case 'd':
     case 'D':
         AppRuntime_KeyboardClearLine();
-        AppRuntime_KeyboardScenarioStop("manual right step");
         g_keyboard_target_steer_deg = AppRuntime_KeyboardClampSteeringDeg(
             g_keyboard_target_steer_deg + APP_RUNTIME_KEYBOARD_STEP_DEG);
         AppRuntime_KeyboardApplyTarget();
@@ -738,35 +862,25 @@ static void AppRuntime_KeyboardProcessInput(void)
     case 's':
     case 'S':
         AppRuntime_KeyboardClearLine();
-        AppRuntime_KeyboardScenarioStop("manual center");
         g_keyboard_target_steer_deg = 0.0f;
         AppRuntime_KeyboardApplyTarget();
         break;
 
-    case 'r':
-    case 'R':
+    case 'z':
+    case 'Z':
         AppRuntime_KeyboardClearLine();
-        AppRuntime_KeyboardScenarioStart();
-        break;
-
-    case 'c':
-    case 'C':
-        AppRuntime_KeyboardClearLine();
-        AppRuntime_KeyboardScenarioStop("operator cancel");
+        AppRuntime_KeyboardZeroCurrentPosition();
         break;
 
     case 'e':
     case 'E':
         AppRuntime_KeyboardClearLine();
-        AppRuntime_KeyboardScenarioStop("control enable");
-        PositionControl_Enable();
-        printf("[KB] control enabled\r\n");
+        AppRuntime_RequestControlEnable("keyboard");
         break;
 
     case 'q':
     case 'Q':
         AppRuntime_KeyboardClearLine();
-        AppRuntime_KeyboardScenarioStop("control disable");
         PositionControl_Disable();
         printf("[KB] control disabled\r\n");
         break;
@@ -774,7 +888,6 @@ static void AppRuntime_KeyboardProcessInput(void)
     case 'x':
     case 'X':
         AppRuntime_KeyboardClearLine();
-        AppRuntime_KeyboardScenarioStop("emergency stop");
         PositionControl_EmergencyStop();
         printf("[KB] emergency stop\r\n");
         break;
@@ -799,38 +912,10 @@ static void AppRuntime_KeyboardProcessInput(void)
 #endif
         break;
 
-    case 'j':
-    case 'J':
-        AppRuntime_KeyboardClearLine();
-#if APP_RUNTIME_CAN_ENABLE
-        g_can_rx_log_enabled = (uint8_t)(g_can_rx_log_enabled == 0U ? 1U : 0U);
-        printf("[CAN] rx log %s\r\n", (g_can_rx_log_enabled != 0U) ? "enabled" : "disabled");
-#else
-        printf("[CAN] feature disabled at build time\r\n");
-#endif
-        break;
-
     case 'h':
     case 'H':
         AppRuntime_KeyboardClearLine();
         AppRuntime_KeyboardPrintHelp();
-        break;
-
-    case 'm':
-    case 'M':
-        AppRuntime_KeyboardClearLine();
-        AppRuntime_SendCanTestFrame();
-        break;
-
-    case 'n':
-    case 'N':
-        AppRuntime_KeyboardClearLine();
-#if APP_RUNTIME_CAN_ENABLE
-        CAN_Runtime_PrintStatus();
-        AppRuntime_CanSendStatusFrame();
-#else
-        printf("[CAN] feature disabled at build time\r\n");
-#endif
         break;
 
     default:
@@ -863,7 +948,7 @@ static void AppRuntime_ConfigureDirectionPin(void)
     HAL_GPIO_Init(GPIOE, &gpio_init);
 }
 
-#if APP_RUNTIME_INPUT_SOURCE_IS_UDP
+#if !APP_RUNTIME_KEYBOARD_TEST_MODE
 /* Process UDP mode changes and map received packets into controller commands. */
 static void AppRuntime_ServiceUdpComms(void)
 {
@@ -894,8 +979,7 @@ static void AppRuntime_ServiceUdpComms(void)
         }
     } else if ((mode == STEER_MODE_AUTO || mode == STEER_MODE_MANUAL) &&
                (g_prev_mode == STEER_MODE_NONE || g_prev_mode == STEER_MODE_ESTOP)) {
-        Relay_EmergencyRelease();
-        PositionControl_Enable();
+        AppRuntime_RequestControlEnable("udp_mode");
     }
 
     if (EthComm_ConsumeEmergencyRequest()) {
@@ -930,9 +1014,26 @@ static void AppRuntime_PrintPeriodicDiag(void)
     float target_steer_deg = AppRuntime_TargetMotorDegToSteeringDeg(s.target_angle);
     float current_steer_deg = AppRuntime_TargetMotorDegToSteeringDeg(s.current_angle);
     float error_steer_deg = AppRuntime_TargetMotorDegToSteeringDeg(s.error);
+#if APP_RUNTIME_SENSOR_DIAG_ENABLE
+    float adc_steering_deg = g_sensor_diag.adc.calibrated_angle_deg;
+    float crosscheck_error_deg = g_sensor_diag.crosscheck_error_deg;
+    uint32_t encoder_validity = g_sensor_diag.encoder.validity;
+    uint32_t adc_validity = g_sensor_diag.adc.validity;
+    uint32_t sensor_warn_flags = g_sensor_diag.warn_flags;
+    uint32_t sensor_fault_flags = g_sensor_diag.fault_flags;
+    const char *sensor_reason = g_sensor_diag.last_reason;
+#else
+    float adc_steering_deg = 0.0f;
+    float crosscheck_error_deg = 0.0f;
+    uint32_t encoder_validity = 0U;
+    uint32_t adc_validity = 0U;
+    uint32_t sensor_warn_flags = 0U;
+    uint32_t sensor_fault_flags = 0U;
+    const char *sensor_reason = "none";
+#endif
 
 #if LATENCY_LOG_ENABLE
-    printf("[DIAG] MODE:%d CMD:%lu/%s/%s Tst:%.2f Cst:%.2f Est:%.2f O:%.0f REQ:%ld AP:%lu ARR:%lu CCR:%lu DIR:%d RUN:%u REV:%u ENC:%ld RAW:%lu\r\n",
+    printf("[DIAG] MODE:%d CMD:%lu/%s/%s Tst:%.2f Cst:%.2f Est:%.2f O:%.0f DIR:%d ENC:%ld RAW:%lu ADC:%.2f XERR:%.2f EV:0x%02lX AV:0x%02lX SW:0x%08lX SF:0x%08lX SR:%s REQ:%ld AP:%lu ARR:%lu CCR:%lu RUN:%u REV:%u\r\n",
            (int)PositionControl_GetMode(),
            (unsigned long)cmd.command_id,
            PositionControlDiag_CommandStateString(cmd.state),
@@ -941,15 +1042,22 @@ static void AppRuntime_PrintPeriodicDiag(void)
            current_steer_deg,
            error_steer_deg,
            s.output,
+           (int)dir_state,
+           (long)enc_count,
+           (unsigned long)enc_raw,
+           adc_steering_deg,
+           crosscheck_error_deg,
+           (unsigned long)encoder_validity,
+           (unsigned long)adc_validity,
+           (unsigned long)sensor_warn_flags,
+           (unsigned long)sensor_fault_flags,
+           sensor_reason,
            (long)pulse_status.requested_frequency_hz,
            (unsigned long)pulse_status.applied_frequency_hz,
            (unsigned long)pulse_status.autoreload,
            (unsigned long)pulse_status.compare,
-           (int)dir_state,
            (unsigned int)pulse_status.output_active,
-           (unsigned int)pulse_status.reverse_guard_active,
-           (long)enc_count,
-           (unsigned long)enc_raw);
+           (unsigned int)pulse_status.reverse_guard_active);
 #else
     (void)pulse_status;
     (void)enc_count;
@@ -960,14 +1068,24 @@ static void AppRuntime_PrintPeriodicDiag(void)
     (void)target_steer_deg;
     (void)current_steer_deg;
     (void)error_steer_deg;
+    (void)adc_steering_deg;
+    (void)crosscheck_error_deg;
+    (void)encoder_validity;
+    (void)adc_validity;
+    (void)sensor_warn_flags;
+    (void)sensor_fault_flags;
+    (void)sensor_reason;
 #endif
 }
 
 /* Service the 1 ms application path that runs from the timer interrupt flag. */
 static void AppRuntime_ServiceFastTick(void)
 {
+    AppRuntime_UpdateVirtualEncoder();
+    AppRuntime_ServiceSensorSupervisor();
+
 #if APP_RUNTIME_AUTO_FIXED_PULSE_TEST
-#if APP_RUNTIME_INPUT_SOURCE_IS_UDP
+#if !APP_RUNTIME_KEYBOARD_TEST_MODE
     if (g_current_mode == STEER_MODE_AUTO) {
         PulseControl_SetFrequency(APP_RUNTIME_AUTO_FIXED_PULSE_HZ);
     } else {
@@ -979,8 +1097,6 @@ static void AppRuntime_ServiceFastTick(void)
 #else
     PositionControl_Update();
 #endif
-
-    AppRuntime_UpdateVirtualEncoder();
 
     AppRuntime_ServiceEncoderRuntimeDiag();
 
@@ -1008,20 +1124,16 @@ void AppRuntime_Init(void)
 #else
     EncoderReader_EnableVirtualFeedback(0U);
 #endif
-    PositionControl_Init();
-
-#if APP_RUNTIME_CAN_ENABLE
-#if APP_RUNTIME_CAN_AUTO_START
-    {
-        int can_ret = CAN_Runtime_Start();
-        printf("[CAN] start ret=%d mode=%s bitrate=500000 rx_log=%s\r\n",
-               can_ret,
-               (APP_RUNTIME_CAN_MODE == APP_RUNTIME_CAN_MODE_LOOPBACK) ? "LOOPBACK" : "NORMAL",
-               (g_can_rx_log_enabled != 0U) ? "ON" : "OFF");
-    }
-#else
-    printf("[CAN] init complete. auto start is OFF.\r\n");
+#if APP_RUNTIME_ADC_POT_ENABLE
+    ADC_Pot_Init(NULL);
 #endif
+    Homing_Init();
+    PositionControl_Init();
+#if CAN_ENCODER_BRIDGE_ENABLE
+    (void)CanEncoderBridge_Init();
+#endif
+#if RS422_ENCODER_READER_ENABLE
+    (void)Rs422Encoder_Init();
 #endif
 
     Relay_ServoOn();
@@ -1032,6 +1144,8 @@ void AppRuntime_Init(void)
         HAL_UART_Transmit(&huart3, (uint8_t *)msg, strlen(msg), 100);
     }
 
+    AppRuntime_PrintSensorContract();
+
 #if APP_RUNTIME_VIRTUAL_ENCODER_LOG_ENABLE
     printf("[VENC] Putty ENC/RAW uses pulse-integrated virtual encoder display.\r\n");
 #endif
@@ -1040,12 +1154,24 @@ void AppRuntime_Init(void)
     EncoderReader_Reset();
 #endif
     AppRuntime_ResetVirtualEncoder();
+    AppRuntime_ResetSensorDiag();
+
+#if (APP_RUNTIME_AUTO_HOME_ON_BOOT && APP_RUNTIME_ADC_POT_ENABLE)
+    if (Homing_FindZero() != 0) {
+        printf("[Homing] Boot homing failed: reason=%s xerr=%.3f deg\r\n",
+               Homing_GetLastFailureReason(),
+               Homing_GetLastCrosscheckErrorDeg());
+    }
+#endif
+
+    EncoderReader_Service();
+#if APP_RUNTIME_ADC_POT_ENABLE
+    ADC_Pot_Service();
+#endif
+    AppRuntime_ServiceSensorSupervisor();
     PositionControl_SetTargetWithSource(AppRuntime_TargetSteeringDegToMotorDeg(0.0f), CMD_SRC_LOCALTEST);
-#if APP_RUNTIME_INPUT_SOURCE_IS_KEYBOARD
+#if APP_RUNTIME_KEYBOARD_TEST_MODE
     g_keyboard_target_steer_deg = 0.0f;
-    g_keyboard_scenario.active = 0U;
-    g_keyboard_scenario.phase = KB_SCENARIO_IDLE;
-    g_keyboard_scenario.next_step_ms = 0U;
 #else
     g_prev_mode = STEER_MODE_NONE;
     g_current_mode = STEER_MODE_NONE;
@@ -1054,12 +1180,11 @@ void AppRuntime_Init(void)
 #if APP_RUNTIME_PERIODIC_CSV_LOG_ENABLE
     g_periodic_csv_enabled = 1U;
 #endif
-    AppRuntime_PrintInputSourceSummary();
 #if APP_RUNTIME_AUTO_START_CONTROL_ENABLE
-    PositionControl_Enable();
+    AppRuntime_RequestControlEnable("boot_auto");
 #endif
 
-#if APP_RUNTIME_INPUT_SOURCE_IS_KEYBOARD
+#if APP_RUNTIME_KEYBOARD_TEST_MODE
     AppRuntime_KeyboardPrintHelp();
     AppRuntime_PrintPeriodicCsvHeader();
 #else
@@ -1070,15 +1195,19 @@ void AppRuntime_Init(void)
 /* Run one application super-loop iteration on top of the CubeMX main loop. */
 void AppRuntime_RunIteration(void)
 {
-#if APP_RUNTIME_INPUT_SOURCE_IS_KEYBOARD
+#if CAN_ENCODER_BRIDGE_ENABLE
+    CanEncoderBridge_Service();
+#endif
+#if RS422_ENCODER_READER_ENABLE
+    Rs422Encoder_Service();
+#endif
+
+#if APP_RUNTIME_KEYBOARD_TEST_MODE
     LAT_BEGIN(LAT_STAGE_COMMS);
     AppRuntime_KeyboardProcessInput();
-    AppRuntime_KeyboardScenarioService();
-    AppRuntime_ServiceCan();
     LAT_END(LAT_STAGE_COMMS);
 #else
     AppRuntime_ServiceUdpComms();
-    AppRuntime_ServiceCan();
 #endif
 
     if (interrupt_flag != 0U) {

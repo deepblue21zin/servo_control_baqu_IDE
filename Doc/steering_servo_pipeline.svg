@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1860" height="285" viewBox="0 0 1860 285" role="img" aria-labelledby="title desc">
+  <title id="title">Autonomous Steering Servo Control Pipeline</title>
+  <desc id="desc">Current servo controller pipeline from command input to telemetry viewer.</desc>
+  <defs>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#0b1730" flood-opacity="0.18"/>
+    </filter>
+    <linearGradient id="cardFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1f3a61"/>
+      <stop offset="1" stop-color="#182e4d"/>
+    </linearGradient>
+    <linearGradient id="iconFill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#244b82"/>
+      <stop offset="1" stop-color="#1e3f70"/>
+    </linearGradient>
+    <style>
+      .bg { fill: #f3f5f8; }
+      .card { fill: url(#cardFill); stroke: #284a76; stroke-width: 1.2; filter: url(#cardShadow); }
+      .badge { fill: #3b82f6; }
+      .badgeText { fill: #eef6ff; font-family: "Segoe UI", "Malgun Gothic", Arial, sans-serif; font-size: 18px; font-weight: 800; }
+      .iconBox { fill: url(#iconFill); }
+      .icon { stroke: #49a0ff; stroke-width: 4.2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .iconFillShape { fill: #49a0ff; stroke: none; }
+      .label { fill: #ecf3ff; font-family: "Segoe UI", "Malgun Gothic", Arial, sans-serif; font-size: 21px; font-weight: 800; text-anchor: middle; }
+      .sub { fill: #93a7c2; font-family: "Segoe UI", "Malgun Gothic", Arial, sans-serif; font-size: 13px; font-weight: 700; text-anchor: middle; }
+      .arrow { fill: none; stroke: #2f83ee; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+      .hairline { stroke: rgba(48, 76, 118, 0.24); stroke-width: 1; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1860" height="285"/>
+  <line class="hairline" x1="0" y1="6" x2="1860" y2="6"/>
+  <line class="hairline" x1="0" y1="279" x2="1860" y2="279"/>
+
+  <!-- 1 -->
+  <g transform="translate(30 34)">
+    <rect class="card" width="160" height="217" rx="11"/>
+    <rect class="badge" x="14" y="-10" width="29" height="25" rx="5"/>
+    <text class="badgeText" x="28.5" y="8">1</text>
+    <rect class="iconBox" x="54" y="27" width="52" height="52" rx="12"/>
+    <path class="icon" d="M64 52h32M70 43h20M70 61h20"/>
+    <circle class="iconFillShape" cx="98" cy="43" r="3"/>
+    <circle class="iconFillShape" cx="98" cy="61" r="3"/>
+    <text class="label" x="80" y="124">
+      <tspan x="80">Command</tspan>
+      <tspan x="80" dy="25">Input</tspan>
+    </text>
+    <text class="sub" x="80" y="176">Keyboard/UDP/CAN</text>
+    <text class="sub" x="80" y="196">steering_deg</text>
+  </g>
+
+  <!-- 2 -->
+  <g transform="translate(235 34)">
+    <rect class="card" width="160" height="217" rx="11"/>
+    <rect class="badge" x="14" y="-10" width="29" height="25" rx="5"/>
+    <text class="badgeText" x="28.5" y="8">2</text>
+    <rect class="iconBox" x="54" y="27" width="52" height="52" rx="12"/>
+    <path class="icon" d="M68 43h25l-8-8M93 43l-8 8M92 63H67l8-8M67 63l8 8"/>
+    <text class="label" x="80" y="124">
+      <tspan x="80">Runtime</tspan>
+      <tspan x="80" dy="25">Dispatch</tspan>
+    </text>
+    <text class="sub" x="80" y="176">AppRuntime</text>
+    <text class="sub" x="80" y="196">mode / source</text>
+  </g>
+
+  <!-- 3 -->
+  <g transform="translate(440 34)">
+    <rect class="card" width="160" height="217" rx="11"/>
+    <rect class="badge" x="14" y="-10" width="29" height="25" rx="5"/>
+    <text class="badgeText" x="28.5" y="8">3</text>
+    <rect class="iconBox" x="54" y="27" width="52" height="52" rx="12"/>
+    <path class="icon" d="M66 63l14-22 14 22M72 63h16M94 43l5-5M99 38l5 5"/>
+    <text class="label" x="80" y="124">
+      <tspan x="80">Target</tspan>
+      <tspan x="80" dy="25">Convert</tspan>
+    </text>
+    <text class="sub" x="80" y="176">steering -> motor</text>
+    <text class="sub" x="80" y="196">x12.5 gear</text>
+  </g>
+
+  <!-- 4 -->
+  <g transform="translate(645 34)">
+    <rect class="card" width="160" height="217" rx="11"/>
+    <rect class="badge" x="14" y="-10" width="29" height="25" rx="5"/>
+    <text class="badgeText" x="28.5" y="8">4</text>
+    <rect class="iconBox" x="54" y="27" width="52" height="52" rx="12"/>
+    <circle class="icon" cx="80" cy="53" r="14"/>
+    <path class="icon" d="M80 39v14l10 7M66 68h28"/>
+    <text class="label" x="80" y="124">
+      <tspan x="80">Feedback</tspan>
+      <tspan x="80" dy="25">Sense</tspan>
+    </text>
+    <text class="sub" x="80" y="176">TIM2 Encoder</text>
+    <text class="sub" x="80" y="196">count -> mdeg</text>
+  </g>
+
+  <!-- 5 -->
+  <g transform="translate(850 34)">
+    <rect class="card" width="160" height="217" rx="11"/>
+    <rect class="badge" x="14" y="-10" width="29" height="25" rx="5"/>
+    <text class="badgeText" x="28.5" y="8">5</text>
+    <rect class="iconBox" x="54" y="27" width="52" height="52" rx="12"/>
+    <path class="icon" d="M66 66h30M69 61l10-16 9 8 8-13"/>
+    <circle class="iconFillShape" cx="79" cy="45" r="3.2"/>
+    <circle class="iconFillShape" cx="88" cy="53" r="3.2"/>
+    <circle class="iconFillShape" cx="96" cy="40" r="3.2"/>
+    <text class="label" x="80" y="124">
+      <tspan x="80">Position</tspan>
+      <tspan x="80" dy="25">PID Loop</tspan>
+    </text>
+    <text class="sub" x="80" y="176">1 ms control</text>
+    <text class="sub" x="80" y="196">error -> pulse_hz</text>
+  </g>
+
+  <!-- 6 -->
+  <g transform="translate(1055 34)">
+    <rect class="card" width="160" height="217" rx="11"/>
+    <rect class="badge" x="14" y="-10" width="29" height="25" rx="5"/>
+    <text class="badgeText" x="28.5" y="8">6</text>
+    <rect class="iconBox" x="54" y="27" width="52" height="52" rx="12"/>
+    <path class="icon" d="M80 37l17 7v10c0 11-7 18-17 23-10-5-17-12-17-23V44l17-7z"/>
+    <path class="icon" d="M72 56l6 6 11-13"/>
+    <text class="label" x="80" y="124">
+      <tspan x="80">Safety</tspan>
+      <tspan x="80" dy="25">Guard</tspan>
+    </text>
+    <text class="sub" x="80" y="176">limit / tracking</text>
+    <text class="sub" x="80" y="196">timeout / ESTOP</text>
+  </g>
+
+  <!-- 7 -->
+  <g transform="translate(1260 34)">
+    <rect class="card" width="160" height="217" rx="11"/>
+    <rect class="badge" x="14" y="-10" width="29" height="25" rx="5"/>
+    <text class="badgeText" x="28.5" y="8">7</text>
+    <rect class="iconBox" x="54" y="27" width="52" height="52" rx="12"/>
+    <path class="icon" d="M64 58h8V44h11v28h11V58h6"/>
+    <path class="icon" d="M65 39h30"/>
+    <text class="label" x="80" y="124">
+      <tspan x="80">Pulse</tspan>
+      <tspan x="80" dy="25">Output</tspan>
+    </text>
+    <text class="sub" x="80" y="176">TIM1 PWM + DIR</text>
+    <text class="sub" x="80" y="196">PE9 / PE10</text>
+  </g>
+
+  <!-- 8 -->
+  <g transform="translate(1465 34)">
+    <rect class="card" width="160" height="217" rx="11"/>
+    <rect class="badge" x="14" y="-10" width="29" height="25" rx="5"/>
+    <text class="badgeText" x="28.5" y="8">8</text>
+    <rect class="iconBox" x="54" y="27" width="52" height="52" rx="12"/>
+    <circle class="icon" cx="80" cy="53" r="17"/>
+    <path class="icon" d="M80 36v8M80 62v8M63 53h8M89 53h8M68 41l6 6M86 59l6 6M92 41l-6 6M74 59l-6 6"/>
+    <text class="label" x="80" y="124">
+      <tspan x="80">Servo</tspan>
+      <tspan x="80" dy="25">Drive</tspan>
+    </text>
+    <text class="sub" x="80" y="176">LS XDL-L7SA</text>
+    <text class="sub" x="80" y="196">motor / steering</text>
+  </g>
+
+  <!-- 9 -->
+  <g transform="translate(1670 34)">
+    <rect class="card" width="160" height="217" rx="11"/>
+    <rect class="badge" x="14" y="-10" width="29" height="25" rx="5"/>
+    <text class="badgeText" x="28.5" y="8">9</text>
+    <rect class="iconBox" x="54" y="27" width="52" height="52" rx="12"/>
+    <path class="icon" d="M65 43h30M65 53h30M65 63h19"/>
+    <circle class="iconFillShape" cx="94" cy="64" r="4"/>
+    <path class="icon" d="M93 64l8 8"/>
+    <text class="label" x="80" y="124">
+      <tspan x="80">Telemetry</tspan>
+      <tspan x="80" dy="25">Viewer</tspan>
+    </text>
+    <text class="sub" x="80" y="176">CSV / ENCDBG</text>
+    <text class="sub" x="80" y="196">PuTTY Viewer</text>
+  </g>
+
+  <path class="arrow" d="M205 143l11 11-11 11"/>
+  <path class="arrow" d="M410 143l11 11-11 11"/>
+  <path class="arrow" d="M615 143l11 11-11 11"/>
+  <path class="arrow" d="M820 143l11 11-11 11"/>
+  <path class="arrow" d="M1025 143l11 11-11 11"/>
+  <path class="arrow" d="M1230 143l11 11-11 11"/>
+  <path class="arrow" d="M1435 143l11 11-11 11"/>
+  <path class="arrow" d="M1640 143l11 11-11 11"/>
+</svg>

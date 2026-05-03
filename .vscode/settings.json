@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "putty_log/putty.log": "csv",
+    "putty_log/*.log": "csv",
+    "putty_log/26-*": "csv"
+  }
+}

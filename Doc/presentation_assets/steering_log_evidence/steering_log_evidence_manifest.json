@@ -1,0 +1,82 @@
+{
+  "skill_applied": "radar-evidence-visuals workflow adapted to steering servo logs",
+  "source_log": "putty_log/26-04-05",
+  "generated_dir": "Doc/presentation_assets/steering_log_evidence",
+  "generated_images": [
+    "steering_tracking_evidence_26-04-05.png",
+    "steering_lifecycle_evidence_26-04-05.png",
+    "steering_latency_evidence_26-04-05.png"
+  ],
+  "counts": {
+    "csv_rows": 1205,
+    "encdbg_records": 1205,
+    "cmd_start": 36,
+    "cmd_reached": 3,
+    "cmd_abort": 33,
+    "latency_stage_rows": 88,
+    "latency_batches": 22
+  },
+  "reached_commands": [
+    {
+      "id": 97,
+      "target": 40.0,
+      "start_ms": 308365,
+      "start_deg": 5.915,
+      "end_ms": 324453,
+      "settling_ms": 16088,
+      "final_deg": 39.989,
+      "final_error": 0.011
+    },
+    {
+      "id": 98,
+      "target": 30.0,
+      "start_ms": 337430,
+      "start_deg": 39.739,
+      "end_ms": 352218,
+      "settling_ms": 14788,
+      "final_deg": 29.993,
+      "final_error": 0.007
+    },
+    {
+      "id": 99,
+      "target": 20.0,
+      "start_ms": 356640,
+      "start_deg": 29.991,
+      "end_ms": 371146,
+      "settling_ms": 14506,
+      "final_deg": 19.984,
+      "final_error": 0.016
+    }
+  ],
+  "latency_stage_stats": {
+    "Sense": {
+      "avg_avg_us": 4.074545454545455,
+      "max_p99_us": 4.117,
+      "max_us": 4.833,
+      "n": 22
+    },
+    "Control": {
+      "avg_avg_us": 3.996090909090908,
+      "max_p99_us": 9.467,
+      "max_us": 10.172,
+      "n": 22
+    },
+    "Actuate": {
+      "avg_avg_us": 7.777045454545452,
+      "max_p99_us": 7.8,
+      "max_us": 15.833,
+      "n": 22
+    },
+    "Comms": {
+      "avg_avg_us": 2.3500000000000005,
+      "max_p99_us": 2.389,
+      "max_us": 3.1,
+      "n": 22
+    }
+  },
+  "notes": [
+    "Green reached markers come from CMD_REACHED lines.",
+    "Red lifecycle segments come from CMD_ABORT lines with reason=REPLACED.",
+    "Latency chart is from logging-enabled bench condition; strict timing should be re-run with blocking UART separated."
+  ]
+}

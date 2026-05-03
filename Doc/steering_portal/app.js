@@ -5,9 +5,10 @@ const PORTAL_PULSE_PER_STEERING_DEG = PORTAL_STEERING_GEAR_RATIO / 0.003;
 const portalData = {
   kpis: [
     { label: "Loop period", value: "1 ms", note: "SysTick based control loop" },
-    { label: "Encoder mode", value: "TIM2 + virtual option", note: "PA0/PB3 real path with optional pulse-integrated bench feedback" },
-    { label: "Bench default", value: "Keyboard input", note: "현재 기본은 keyboard bench + real TIM2 diag이며, 실제 UDP 시험 전환은 project_params.h의 입력 소스 설정 한 곳에서 바꾼다." },
-    { label: "Latest bench", value: "2026-04-05", note: "real TIM2 log 기준 -20 / 20 / 30 / 40 deg가 약 0.02 deg 이내로 정착했지만, large-step settling은 아직 14~16 s 수준이다." }
+    { label: "Feedback mode", value: "TIM2 primary + RS422 candidate", note: "현재 제어는 TIM2 인크리멘탈 기준이고, RS422는 USART2 PA3에서 수신/zero 보정 후 double-check 후보로 검증 중이다." },
+    { label: "Bench default", value: "Keyboard + RS422 log", note: "Putty keyboard bench, periodic CSV, real TIM2 diag, RS422 status log가 켜져 있으며 Z 명령으로 현재 위치를 테스트 0도로 재정의한다." },
+    { label: "Latest baseline", value: "2026-05-01", note: "RS422 4-byte count 수신, raw/relative count 출력, Z zero 명령, CAN 비활성화, 대회 준비 gap 문서화까지 반영됐다." },
+    { label: "Competition doc", value: "Doc/steering_motor_competition_readiness.md", note: "현재 구성, 인크리멘탈/RS422 비교, 대회용 조향 시스템까지 부족한 점과 권장 개발 순서를 정리한 문서다." }
   ],
   latency: [
     { name: "Sense", avg: 4.075, p99: 4.117 },
@@ -21,10 +22,10 @@ const portalData = {
     current: [20.510, 20.438, 20.364, 20.306, 20.251, 20.226, 20.197, 20.137, 20.007, 19.984, 19.987]
   },
   evaluation: {
-    score: 76,
-    verdict: "26-04-05 real TIM2 bench log 기준으로 최종 정착각은 꽤 정확하지만, transient speed와 startup/fail-safe closure가 아직 현업 완성도를 제한한다.",
+    score: 78,
+    verdict: "TIM2 인크리멘탈 제어에 RS422 위치 수신과 Z zero 기준이 추가되어 sensor strategy는 좋아졌지만, 속도 12.5배 튜닝과 실차 safety closure가 아직 대회 준비도를 제한한다.",
     summary:
-      "현업 관점에서 이 프로젝트는 이제 단순한 구조 설명용 데모를 넘어, real TIM2 bench log로 실제 settled angle accuracy를 보여준 steering sub-controller baseline이라고 설명할 수 있다. 2026-04-05 run에서는 -20 / 20 / 30 / 40 deg가 약 0.02 deg 이내로 정착했고 `CMD_REACHED`, linear `enc_cnt`, `CSV + ENCDBG` evidence도 남았다. 다만 rapid step에서는 `CMD_ABORT ... REPLACED`가 많고 large-step settling time이 14~16 s라 transient tuning, startup state machine, fault latch, sensor stale/cross-check가 아직 남아 있어 현재 평점은 약 76%가 적절하다.",
+      "현업 관점에서 이 프로젝트는 TIM2 기반 폐루프 제어 baseline에 RS422 서보드라이브 위치값 수신/zero 보정이 붙은 bring-up 단계라고 설명할 수 있다. `Z` 명령으로 테스트 0도를 맞추고 TIM2와 RS422를 비교할 준비는 됐지만, 아직 RS422는 primary feedback이 아니며 12.5배 속도 요구, 차량 중앙 calibration, fault latch, startup state machine, 실차 evidence pack이 남아 있어 현재 평점은 약 78%가 적절하다.",
     interviewer:
       "면접에서는 '목표각 변환이 맞고 real feedback으로 최종각까지 닫힌다'는 점을 먼저 말하고, 그 다음 '응답 속도와 safety closure는 아직 bring-up 중'이라고 정직하게 이어가는 편이 가장 강하다. 특히 `26-04-05` 로그에서 `CMD_REACHED`, steady-state error, `CMD_ABORT ... REPLACED`, settling time을 함께 보여주면 제어기 해석 능력과 자기평가 능력을 동시에 드러낼 수 있다.",
     categories: [
@@ -40,18 +41,18 @@ const portalData = {
       },
       {
         name: "Actuator Interface",
-        score: 79,
-        detail: "requested/applied Hz, reverse guard, direction polarity macro가 추가되며 actuator 계약이 좋아졌고, recent log에서도 실제 motion이 target reach로 이어지는 점이 보인다. 다만 waveform matrix와 drive monitor 기반 proof는 아직 남아 있다."
+        score: 74,
+        detail: "requested/applied Hz, reverse guard, direction polarity macro가 있고 실제 motion도 보인다. 다만 현재 output limit/pulse clamp 때문에 조향 속도가 느리며, 12.5배 속도 요구를 만족하려면 pulse frequency 상승, drive 설정 확인, PID 재튜닝이 필요하다."
       },
       {
         name: "Sensor Truth",
-        score: 62,
-        detail: "현재 sensor path는 `TIM2(PA0/PB3)` real path와 optional virtual feedback path로 나뉜다. 26-04-05 log에서는 settled angle과 `enc_cnt` scaling이 내부적으로 일관되게 보였지만, stale fault, cross-check, scope-correlated authoritative closure는 아직 남아 있다."
+        score: 68,
+        detail: "현재 sensor path는 `TIM2(PA0/PB3)` primary와 `RS422(USART2 PA3)` candidate로 나뉜다. RS422 raw/relative count와 Z zero가 구현됐지만, TIM2-RS422 자동 cross-check fault와 scope-correlated authoritative closure는 아직 남아 있다."
       },
       {
         name: "Safety / Startup / Fail-safe",
-        score: 56,
-        detail: "ESTOP, lifecycle trace, failsafe profile 스위치는 존재한다. 반면 startup auto-enable, latched fault, clear policy, homing/ready gate, cross-check fault는 아직 미완성이다."
+        score: 52,
+        detail: "ESTOP, lifecycle trace, failsafe profile 스위치는 존재하지만 현재 벤치 편의상 emergency latch, ADC homing, direction plausibility가 완화되어 있다. 대회용으로는 READY/ARM/RUN/ESTOP_LATCH 상태기계와 clear policy를 복구해야 한다."
       },
       {
         name: "Verification Closure",

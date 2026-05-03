@@ -2,6 +2,12 @@
 
 STM32F429ZI 기반 조향 서브컨트롤러 프로젝트다. 상위 제어기에서 받은 `steering_deg` 명령을 내부 `motor_deg`, `enc_count`, `pulse_hz`로 변환하고, 1 ms 제어 루프에서 pulse/direction 출력, safety, telemetry를 함께 관리한다.
 
+## 0. Latest Update
+
+2026-05-01 현재 기준은 **TIM2 인크리멘탈 피드백으로 제어를 유지하면서 RS422 서보드라이브 위치값을 double-check 후보로 붙인 벤치 bring-up 상태**다. RS422는 `USART2_RX = PA3`, `38400 baud`, 4-byte signed count 수신/로그/zero 보정까지 구현됐고, Putty `Z` 명령으로 현재 위치를 테스트 0도로 재정의할 수 있다.
+
+대학생 자작자율주행 대회용 조향 시스템까지 남은 항목은 [`Doc/steering_motor_competition_readiness.md`](Doc/steering_motor_competition_readiness.md)에 정리했다. 핵심 gap은 RS422/TIM2 cross-check, 차량 직진 중앙 calibration, 12.5배 속도 튜닝, startup/ESTOP/fault latch 복구, 상위 제어기 timeout 계약이다.
+
 ## 1. Current Snapshot
 
 | 항목 | 현재 기준 |
@@ -14,7 +20,8 @@ STM32F429ZI 기반 조향 서브컨트롤러 프로젝트다. 상위 제어기�
 | Internal Unit | `motor_deg`, `enc_count`, `pulse_hz` |
 | Pulse Output | `PE9 = TIM1_CH1`, `PE10 = direction GPIO` |
 | Encoder Input | `PA0 = TIM2_CH1`, `PB3 = TIM2_CH2` |
-| Bench Default | `APP_RUNTIME_INPUT_SOURCE = APP_RUNTIME_INPUT_SOURCE_KEYBOARD`, periodic CSV ON, real encoder diag ON |
+| RS422 Feedback Candidate | `USART2_RX = PA3`, 38400 baud, 4-byte signed count, Putty `Z` zero command |
+| Bench Default | keyboard bench mode, periodic CSV ON, real encoder diag ON, RS422 status log ON |
 | Virtual Feedback | 코드 경로는 존재하지만 현재 기본값은 `OFF` |
 | Watchdog | IWDG 사용, 현재 설정 기준 약 32.8 s |
 | Runtime Trace | CSV, command lifecycle, latency batch, `[ENCDBG]` real TIM2 snapshot |
@@ -146,6 +153,9 @@ STM32F429ZI 기반 조향 서브컨트롤러 프로젝트다. 상위 제어기�
 | 문서 | 설명 |
 |---|---|
 | `Doc/README.md` | 문서 인덱스와 현재 runtime 기준 |
+| `Doc/system_beginner_guide.md` | 처음 보는 사람용 시스템 목표, 구조, 데이터 흐름, 함수 역할, 현재 상태, 보완 방향 설명서 |
+| `Doc/steering_motor_competition_readiness.md` | 현재 조향 모터 시스템 구성, 인크리멘탈/RS422 비교, 대회 참여까지 부족한 점과 권장 개발 순서 |
+| `Doc/embedded_c_ownership_plan.md` | AI 보조 개발에서 벗어나 핵심 C 코드와 TIM1/TIM2 레지스터 이해를 직접 소유하기 위한 취업 준비 실행 계획 |
 | `Doc/code_modules.md` | 모듈 역할과 ownership 관점 메모 |
 | `Doc/command_lifecycle_no_homing_spec.md` | no-homing lifecycle 명세 |
 | `Doc/REQ/steering_project_req_ownership_guide.html` | REQ / ownership / target state machine 정리 |
@@ -160,7 +170,7 @@ STM32F429ZI 기반 조향 서브컨트롤러 프로젝트다. 상위 제어기�
 | `Doc/putty/index.html` | `putty.log` bridge live, 타입 분류, 자동 해석, recording 저장용 로컬 뷰어 |
 | `putty_log/start_putty_live_viewer.ps1` | Python bridge, 브라우저, PuTTY logging을 한 번에 띄우는 런처 |
 | `Doc/doxygen/html/index.html` | 코드 브라우저와 역할 요약 |
-| `Doc/change_code/2026-04-06.md` | 오늘 변경 이력 |
+| `Doc/change_code/2026-05-01.md` | 최신 RS422/Z zero/대회 준비 문서 변경 이력 |
 
 현재 실제 팀원 할당을 바로 내려야 할 때는 `Doc/members/position_control.html`, `Doc/members/adc_encoder.html`, `Doc/members/pulse_control.html`, `Doc/members/homing_relay.html`, `Doc/members/ethernet_integration.html`, `Doc/members/verification_tooling.html` 순서로 보면 전체 워크스트림을 한 번에 정리할 수 있다.
 MATLAB / Simulink를 이제 붙이려면 `Doc/matlab_simulink_application_plan.md`를 먼저 보고, 그 다음 `Doc/putty/index.html`과 현재 CSV / ENCDBG 로그를 같이 보는 흐름을 추천한다.
@@ -178,6 +188,6 @@ MATLAB / Simulink를 이제 붙이려면 `Doc/matlab_simulink_application_plan.m
 
 ## 11. One-Line Summary
 
-현재 프로젝트는 `TIM2 real encoder debug`와 `virtual feedback bench`를 모두 가진 1 ms steering sub-controller baseline이며, 다음 핵심 과제는 **실제 encoder truth와 startup safety contract를 닫는 것**이다.
+현재 프로젝트는 `TIM2` 인크리멘탈 제어를 유지하면서 `RS422` 서보드라이브 위치값을 double-check 후보로 붙인 1 ms steering sub-controller baseline이며, 다음 핵심 과제는 **TIM2/RS422 cross-check, 12.5배 속도 튜닝, 차량 중앙 calibration, startup safety contract**를 닫는 것이다.
 
-Last updated: 2026-04-06
+Last updated: 2026-05-01

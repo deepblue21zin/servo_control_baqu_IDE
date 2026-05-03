@@ -709,19 +709,33 @@ void PositionControl_EmergencyStop(void)
     }
 
     control_enabled = false;
+#if APP_RUNTIME_EMERGENCY_LATCH_ENABLE
     control_mode = CTRL_MODE_EMERGENCY;
     state.mode = CTRL_MODE_EMERGENCY;
+#else
+    control_mode = CTRL_MODE_IDLE;
+    state.mode = CTRL_MODE_IDLE;
+#endif
     state.output = 0.0f;
     PulseControl_Stop();
     pid_state.integral = 0.0f;
     Relay_Emergency();
 
+#if APP_RUNTIME_EMERGENCY_LATCH_ENABLE
     POSCTRL_LOG(DEBUG_ERROR,
                 "[PosCtrl] EMERGENCY STOP! FLT=%d Ang:%.1f Err:%.1f Vel:%.1f\r\n",
                 (int)fault_flag,
                 state.current_angle,
                 state.error,
                 measured_velocity_deg_per_s);
+#else
+    POSCTRL_LOG(DEBUG_WARNING,
+                "[PosCtrl] Bench stop, emergency latch disabled. FLT=%d Ang:%.1f Err:%.1f Vel:%.1f\r\n",
+                (int)fault_flag,
+                state.current_angle,
+                state.error,
+                measured_velocity_deg_per_s);
+#endif
 
     measured_velocity_deg_per_s = 0.0f;
     PositionControl_SyncDiagState();
