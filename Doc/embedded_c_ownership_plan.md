@@ -45,9 +45,9 @@
 | P0 | `Core/Src/position_control_safety.c` | angle limit, tracking error, velocity/timeout fail-safe 기준 |
 | P0 | `Core/Src/position_control.c` | PID 출력, command lifecycle, enable/disable, emergency path |
 | P0 | `Core/Src/app_runtime.c` | 1 ms loop, keyboard/UDP input source, CSV/ENCDBG 출력, watchdog refresh |
-| P1 | `Core/Inc/project_params.h` | 시험 모드, safety profile, pulse/UDP/CAN/latency 파라미터 ownership |
+| P1 | `Core/Inc/project_params.h` | 시험 모드, safety profile, pulse/UDP/RS422/latency 파라미터 ownership |
 | P1 | `Core/Inc/constants.h` | gear ratio, encoder scale, steering/motor unit 변환 기준 |
-| P1 | `Core/Src/can_runtime.c` | CAN frame 처리, queue/status/send helper, timeout과 로그 |
+| P1 | `Core/Src/rs422_encoder_uart.c` | RS422 encoder frame 수신, zero 보정, TIM2 cross-check 로그 |
 
 이 파일들을 모두 완벽히 외울 필요는 없다. 하지만 아래 질문에는 답할 수 있어야 한다.
 

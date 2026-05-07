@@ -43,7 +43,7 @@
 | Direction Output | `PE10 = GPIO` |
 | Encoder Input | `PA0 = TIM2_CH1`, `PB3 = TIM2_CH2` |
 | Debug UART | USART3, `printf()` 출력 |
-| Communication | Keyboard bench 기본, UDP/CAN 경로 존재 |
+| Communication | Keyboard bench 기본, UDP 경로와 RS422 feedback 경로 존재 |
 | Watchdog | IWDG 사용 |
 
 ### 2.2 소프트웨어 구성
@@ -52,7 +52,7 @@
 
 ```text
 CubeMX 초기화 계층
-  main.c, gpio.c, tim.c, usart.c, adc.c, can.c, lwip.c
+  main.c, gpio.c, tim.c, usart.c, adc.c, lwip.c
 
 Application Runtime 계층
   app_runtime.c
@@ -64,10 +64,10 @@ Application Runtime 계층
 
 입출력 계층
   encoder_reader.c
+  rs422_encoder_uart.c
   pulse_control.c
   relay_control.c
   ethernet_communication.c
-  can_runtime.c
 
 계측/문서화 계층
   latency_profiler.c
@@ -84,7 +84,7 @@ Application Runtime 계층
 
 ```text
 1. 목표 입력
-   keyboard / UDP / CAN에서 목표 조향각을 받음
+   keyboard / UDP에서 목표 조향각을 받음
 
 2. 단위 변환
    steering_deg -> motor_deg
@@ -175,7 +175,7 @@ main()
   -> MX_IWDG_Init()
   -> MX_LWIP_Init()
   -> MX_TIM2_Init()
-  -> MX_CAN1_Init()
+  -> MX_USART2_UART_Init()
   -> AppRuntime_Init()
   -> while(1)
        -> AppRuntime_RunIteration()
@@ -197,8 +197,8 @@ Relay_Init()
 PulseControl_Init()
 EncoderReader_Init()
 EncoderReader_EnableVirtualFeedback(...)
+Rs422Encoder_Init()
 PositionControl_Init()
-CAN_Runtime_Start()
 Relay_ServoOn()
 EncoderReader_Reset()
 PositionControl_SetTargetWithSource(0 deg)
@@ -226,7 +226,7 @@ Keyboard help / CSV header 출력 또는 UDP 초기화
 ```text
 1. Keyboard 입력 처리
 2. Keyboard scenario 처리
-3. CAN 수신/명령 처리
+3. RS422 encoder 수신 처리
 4. 1 ms interrupt_flag가 있으면 PositionControl_Update()
 5. CSV 로그 출력
 6. latency batch 출력 여부 확인
@@ -242,7 +242,7 @@ UDP 빌드로 바꾸면 keyboard 대신 `MX_LWIP_Process()`와 UDP packet 처리
 | 파일 | 역할 | 핵심 입력 | 핵심 출력 |
 |---|---|---|---|
 | `Core/Src/main.c` | CubeMX 초기화와 runtime 호출 | 전원/리셋 | `AppRuntime_Init`, `AppRuntime_RunIteration` |
-| `Core/Src/app_runtime.c` | 전체 실행 흐름, 입력, 로그, watchdog 관리 | keyboard/UDP/CAN, 1 ms flag | target command, CSV, ENCDBG |
+| `Core/Src/app_runtime.c` | 전체 실행 흐름, 입력, 로그, watchdog 관리 | keyboard/UDP/RS422, 1 ms flag | target command, CSV, ENCDBG |
 | `Core/Src/position_control.c` | PID 위치 제어와 command lifecycle | target/current angle | pulse frequency command |
 | `Core/Src/position_control_safety.c` | 각도/오차/속도/timeout 안전 평가 | current/error/velocity | safe/fault result |
 | `Core/Src/position_control_diag.c` | 상태 문자열, debug vars, 요약 출력 | controller state | readable log/debug vars |
@@ -250,7 +250,7 @@ UDP 빌드로 바꾸면 keyboard 대신 `MX_LWIP_Process()`와 UDP packet 처리
 | `Core/Src/pulse_control.c` | PID 출력을 pulse/direction으로 변환 | signed pulse_hz | TIM1 PWM, DIR GPIO |
 | `Core/Src/relay_control.c` | servo on/off, emergency GPIO 제어 | enable/estop 요청 | SVON/EMG GPIO |
 | `Core/Src/ethernet_communication.c` | UDP 패킷 파싱, mode/target 저장 | ASMS 5B, PC 9B UDP | `AutoDrive_Packet_t`, mode |
-| `Core/Src/can_runtime.c` | CAN1 filter, RX queue, TX helper | CAN frame | command/status frame |
+| `Core/Src/rs422_encoder_uart.c` | RS422 encoder frame 수신과 zero 보정 | USART2 RX 4B frame | RS422 count/angle/status |
 | `Core/Src/latency_profiler.c` | Sense/Control/Actuate/Comms 시간 계측 | stage begin/end | avg/p99/max latency |
 | `Core/Inc/project_params.h` | 운영/시험 파라미터 통합 | build-time 설정 | 모듈별 설정값 |
 | `Core/Inc/constants.h` | 기구/센서/펄스 변환 상수 | 고정 상수 | 단위 변환 함수 |
@@ -268,7 +268,7 @@ UDP 빌드로 바꾸면 keyboard 대신 `MX_LWIP_Process()`와 UDP packet 처리
 | keyboard 문자 | USART3 | A/D/S/E/Q/X/P/L 등 명령 해석 | `PositionControl_*` |
 | numeric target | USART3 | 문자열을 float 목표각으로 변환 | `PositionControl_SetTargetWithSource()` |
 | UDP packet | LwIP | mode, steering angle, ESTOP 파싱 | `PositionControl_*` |
-| CAN frame | CAN1 | steering/control/query frame 해석 | `PositionControl_*`, status TX |
+| RS422 frame | USART2 RX | encoder count frame 해석, zero 기준 반영 | sensor supervisor, CSV/DIAG |
 | 1 ms flag | SysTick | fast tick 실행 여부 판단 | `PositionControl_Update()` |
 | controller state | `PositionControl_GetState()` | CSV/DIAG 로그로 변환 | UART 출력 |
 | encoder raw | TIM2 | `[ENCDBG]` 진단 출력 | UART 출력 |
@@ -283,7 +283,7 @@ UDP 빌드로 바꾸면 keyboard 대신 `MX_LWIP_Process()`와 UDP packet 처리
 | `AppRuntime_KeyboardProcessInput()` | UART 키 입력 처리 | keyboard bench 빌드 |
 | `AppRuntime_KeyboardApplyTarget()` | keyboard 목표각을 motor_deg로 변환해 controller에 전달 | A/D/S 또는 숫자 입력 후 |
 | `AppRuntime_ServiceUdpComms()` | UDP mode/target/timeout/ESTOP 처리 | UDP 빌드 |
-| `AppRuntime_ServiceCan()` | CAN RX queue를 비우고 command 처리 | CAN 활성화 시 |
+| `Rs422Encoder_Service()` | UART RX buffer를 비우고 encoder frame 처리 | super-loop마다 |
 | `AppRuntime_ServicePeriodicCsv()` | 주기 CSV telemetry 출력 | bench log 수집 |
 | `AppRuntime_ServiceEncoderRuntimeDiag()` | TIM2 raw register와 A/B 핀 상태 출력 | encoder truth 확인 |
 | `AppRuntime_TryLatencyAutoReport()` | latency batch 출력 | 샘플 수가 충분할 때 |
@@ -359,7 +359,7 @@ UDP 빌드로 바꾸면 keyboard 대신 `MX_LWIP_Process()`와 UDP packet 처리
 | `PositionControl_Init()` | PID 상태, lifecycle, safety limit 초기화 | 부팅 초기화 |
 | `PositionControl_Update()` | 1 ms 위치 제어 실행 | fast tick |
 | `PositionControl_SetTarget()` | 목표 motor_deg 설정 | source 구분이 필요 없을 때 |
-| `PositionControl_SetTargetWithSource()` | 목표 motor_deg와 command source 설정 | keyboard/UDP/CAN/service |
+| `PositionControl_SetTargetWithSource()` | 목표 motor_deg와 command source 설정 | keyboard/UDP/service |
 | `PositionControl_Enable()` | 제어 enable, emergency release | 운전 시작 |
 | `PositionControl_Disable()` | 제어 disable, pulse stop | 운전 중지 |
 | `PositionControl_EmergencyStop()` | pulse stop, relay emergency, EMERGENCY mode 진입 | ESTOP/fault |
@@ -553,31 +553,19 @@ MX_LWIP_Process()
 
 `EthComm_Init()`, `EthComm_Update()`, `EthComm_HandleLine()` 등은 legacy text command API다. 현재 주 런타임 경로에서는 사용하지 않고, 벤치/디버깅 호환 목적으로 남아 있다.
 
-### 6.8 `can_runtime.c`
-
-CAN 런타임은 CubeMX가 만든 `can.c/h` 위에 앱 계층 helper로 얹혀 있다. CubeMX 재생성으로 command path가 덮이지 않게 runtime helper를 분리한 구조다.
+### 6.8 `rs422_encoder_uart.c`
 
 #### 주요 함수
 
 | 함수 | 역할 |
 |---|---|
-| `CAN_Runtime_Init()` | CAN 설정, filter 설정, 상태 초기화 |
-| `CAN_Runtime_Start()` | CAN peripheral start |
-| `CAN_Runtime_Stop()` | CAN stop |
-| `CAN_Runtime_Service()` | RX FIFO drain, error polling |
-| `CAN_Runtime_SendStd()` | standard ID frame 송신 |
-| `CAN_Runtime_Pop()` | RX queue에서 frame 하나 꺼냄 |
-| `CAN_Runtime_GetStatus()` | CAN runtime status 반환 |
-| `CAN_Runtime_PrintStatus()` | CAN 상태 UART 출력 |
+| `Rs422Encoder_Init()` | RS422 reader 상태 초기화 |
+| `Rs422Encoder_Service()` | USART2 RX byte를 non-blocking으로 drain |
+| `Rs422Encoder_ProcessFrame()` | 4-byte signed count frame을 상대 count/angle로 변환 |
+| `Rs422Encoder_SetZeroCurrent()` | 현재 RS422 count를 steering zero 기준으로 저장 |
+| `Rs422Encoder_GetLatest()` | 최신 RS422 status 반환 |
 
-`app_runtime.c`는 CAN frame ID에 따라 아래 명령을 처리한다.
-
-| CAN ID | 의미 |
-|---|---|
-| `APP_RUNTIME_CAN_CMD_STEER_STDID` | signed int16, 0.1 deg 단위 steering target |
-| `APP_RUNTIME_CAN_CMD_CONTROL_STDID` | disable/enable/estop/center/status |
-| `APP_RUNTIME_CAN_QUERY_STDID` | status 요청 |
-| `APP_RUNTIME_CAN_STATUS_STDID` | current/target/error/mode/cmd 상태 응답 |
+현재 RS422 경로는 제어 primary feedback이 아니라 TIM2 encoder와 비교하는 feedback 후보로 운용한다.
 
 ### 6.9 `position_control_diag.c`
 
@@ -604,7 +592,7 @@ latency profiler는 제어 루프를 단계별로 나눠 실행 시간을 기록
 | `LAT_STAGE_SENSE` | 센서 읽기, dt/error 계산 |
 | `LAT_STAGE_CONTROL` | timeout, safety, PID 계산 |
 | `LAT_STAGE_ACTUATE` | pulse output 적용 |
-| `LAT_STAGE_COMMS` | keyboard/UDP/CAN 처리 |
+| `LAT_STAGE_COMMS` | keyboard/UDP 처리 |
 
 주요 API는 다음과 같다.
 
@@ -701,7 +689,7 @@ LATENCY_BATCH_END,seq=32
 - `AppRuntime` 기반 super-loop 구조 구성
 - keyboard bench 입력 경로 구현
 - UDP packet parsing 경로 구현
-- CAN runtime helper와 command/status frame 경로 구현
+- RS422 encoder frame 수신/zero 보정/TIM2 cross-check 경로 구현
 - 1 ms position control update 구조 구현
 - PID 기반 위치 제어 구현
 - command lifecycle 구현
@@ -839,7 +827,7 @@ LATENCY_BATCH_END,seq=32
 | 제어 주기 | position loop는 1 ms 주기로 실행되어야 한다 |
 | 목표 범위 | steering target은 -45 deg에서 +45 deg 사이여야 한다 |
 | 정착 오차 | steady-state error는 특정 조건에서 0.5 deg 이하여야 한다 |
-| 통신 timeout | UDP/CAN command가 300 ms 이상 없으면 safe state로 전환해야 한다 |
+| 통신 timeout | UDP command가 300 ms 이상 없으면 safe state로 전환해야 한다 |
 | ESTOP | ESTOP 발생 시 pulse output은 즉시 stop 되어야 한다 |
 | startup | homing 완료 전에는 actuator enable이 금지되어야 한다 |
 
@@ -900,7 +888,7 @@ run_2026-04-27_001/
 - encoder direction 반전
 - pulse output 강제 0
 - UDP packet drop
-- CAN bus-off
+- RS422 frame stale
 - target out-of-range
 - watchdog refresh 중단
 - ESTOP 반복 입력
@@ -939,7 +927,7 @@ run_2026-04-27_001/
    - 단위 변환과 gear ratio 이해
 
 4. `Core/Inc/project_params.h`
-   - 현재 bench/UDP/CAN/safety/log 설정 확인
+   - 현재 bench/UDP/RS422/safety/log 설정 확인
 
 5. `Core/Src/main.c`
    - 부팅과 runtime 호출 구조 확인

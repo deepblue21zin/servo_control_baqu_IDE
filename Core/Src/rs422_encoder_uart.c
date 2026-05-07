@@ -33,10 +33,20 @@ typedef struct {
 
 static Rs422Encoder_Context_t g_rs422_encoder;
 
+static int32_t Rs422Encoder_ApplyCountPolarity(int32_t count);
 static void Rs422Encoder_ProcessByte(uint8_t byte);
 static void Rs422Encoder_ProcessFrame(void);
 static void Rs422Encoder_DumpPartialIfIdle(uint32_t now_ms);
 static void Rs422Encoder_PrintStatusIfDue(uint32_t now_ms);
+
+static int32_t Rs422Encoder_ApplyCountPolarity(int32_t count)
+{
+#if ENCODER_COUNT_POLARITY < 0
+    return -count;
+#else
+    return count;
+#endif
+}
 
 int Rs422Encoder_Init(void)
 {
@@ -165,6 +175,7 @@ static void Rs422Encoder_ProcessFrame(void)
     } else {
         relative_count = encoder_count;
     }
+    relative_count = Rs422Encoder_ApplyCountPolarity(relative_count);
 
     motor_deg = (float)relative_count * ENCODER_DEG_PER_COUNT;
     steering_deg = MotorDegToSteeringDeg(motor_deg);

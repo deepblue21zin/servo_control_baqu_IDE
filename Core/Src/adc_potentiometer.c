@@ -47,6 +47,15 @@ static ADC_PotDiag_t g_pot_diag = {
     .initialized = 0U
 };
 
+static float ADC_Pot_ApplySteeringPolarity(float normalized)
+{
+#if ADC_POT_STEERING_POLARITY < 0
+    return 1.0f - normalized;
+#else
+    return normalized;
+#endif
+}
+
 static uint8_t ADC_Pot_ReadRaw(uint16_t *out_raw, uint32_t timeout_ms)
 {
     if ((out_raw == NULL) || (pot_config.hadc == NULL)) {
@@ -67,14 +76,18 @@ static uint8_t ADC_Pot_ReadRaw(uint16_t *out_raw, uint32_t timeout_ms)
 
 static float ADC_Pot_ConvertRawToAngle(uint16_t raw)
 {
+    float normalized = 0.0f;
+
     if (pot_config.max_raw <= pot_config.min_raw) {
         return pot_config.min_angle;
     }
 
+    normalized = (float)(raw - pot_config.min_raw) /
+                 (float)(pot_config.max_raw - pot_config.min_raw);
+    normalized = ADC_Pot_ApplySteeringPolarity(normalized);
+
     return pot_config.min_angle +
-           ((float)(raw - pot_config.min_raw) *
-            (pot_config.max_angle - pot_config.min_angle) /
-            (float)(pot_config.max_raw - pot_config.min_raw));
+           (normalized * (pot_config.max_angle - pot_config.min_angle));
 }
 
 static uint32_t ADC_Pot_GetCalibrationChecksum(void)

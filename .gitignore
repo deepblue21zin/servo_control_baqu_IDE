@@ -57,7 +57,16 @@ dkms.conf
 Debug/
 FETCH_HEAD
 .settings/
+.metadata/
+.vscode/
 Debug.launch.metadata/
+
+# Local OS/editor noise
+*.log
+*.tmp
+*.bak
+Thumbs.db
+.DS_Store
 
 # Doxygen generated documentation
 Doc/doxygen/

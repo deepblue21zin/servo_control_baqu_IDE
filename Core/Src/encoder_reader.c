@@ -32,7 +32,17 @@ typedef struct {
 
 static EncoderReader_State_t g_encoder = {0};
 
+static int32_t EncoderReader_ApplyCountPolarity(int32_t count);
 static int64_t EncoderReader_UpdateCount(void);
+
+static int32_t EncoderReader_ApplyCountPolarity(int32_t count)
+{
+#if ENCODER_COUNT_POLARITY < 0
+    return -count;
+#else
+    return count;
+#endif
+}
 
 static uint32_t EncoderReader_EvaluateValidity(const EncoderSample_t *sample)
 {
@@ -122,11 +132,12 @@ static int64_t EncoderReader_UpdateCount(void)
 {
     uint16_t raw = (uint16_t)__HAL_TIM_GET_COUNTER(&ENCODER_TIMER);
     int16_t signed_delta = (int16_t)(raw - g_encoder.prev_raw_count);
+    int32_t adjusted_delta = EncoderReader_ApplyCountPolarity((int32_t)signed_delta);
 
-    /* MODIFIED(Codex): unwrap the 16-bit hardware counter by interpreting the delta as int16_t. */
+    /* Unwrap the 16-bit hardware counter, then apply the configured encoder polarity. */
     g_encoder.raw_count = raw;
-    g_encoder.delta_count = (int32_t)signed_delta;
-    g_encoder.accum_count += (int32_t)signed_delta;
+    g_encoder.delta_count = adjusted_delta;
+    g_encoder.accum_count += adjusted_delta;
     g_encoder.prev_raw_count = raw;
     g_encoder.sample_tick_ms = HAL_GetTick();
 

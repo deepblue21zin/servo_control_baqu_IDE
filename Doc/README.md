@@ -22,10 +22,9 @@
 - `APP_RUNTIME_VIRTUAL_ENCODER_LOG_ENABLE = 0`
 - `APP_RUNTIME_PERIODIC_CSV_LOG_ENABLE = 1`
 - `RS422_ENCODER_READER_ENABLE = 1`
-- `APP_RUNTIME_CAN_ENABLE = 0`
 - `APP_RUNTIME_EMERGENCY_LATCH_ENABLE = 0`은 벤치 테스트 편의용 설정
 
-즉 현재 baseline은 keyboard bench, TIM2 encoder diag, RS422 위치값 로그가 켜진 bring-up 중심 빌드다. 실제 UDP/차량 시험으로 넘어가기 전에는 safety latch, startup arm 조건, 센서 cross-check를 복구해야 한다.
+즉 현재 baseline은 keyboard bench, TIM2 encoder diag, RS422 위치값 로그가 켜진 RS422-only bring-up 중심 빌드다. 실제 UDP/차량 시험으로 넘어가기 전에는 safety latch, startup arm 조건, 센서 cross-check를 복구해야 한다.
 
 ### 1.3 Current Bench Status
 
